@@ -1,0 +1,7 @@
+---
+import BaseLayout from '@/layouts/base-layout.astro';
+import { Gallery } from '@/components/gallery/gallery';
+---
+<BaseLayout title="Minimal IIIF | Admin">
+  <Gallery client:only="react" />
+</BaseLayout>
