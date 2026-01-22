@@ -19,6 +19,8 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { useImages, useToast } from '@/lib/hooks';
+import { SidebarInset, SidebarProvider } from '../ui/sidebar';
+import { AppSidebar } from '../layout/app-sidebar';
 
 export function Gallery() {
   const { viewMode, selectedImages } = useImageStore();
@@ -100,66 +102,72 @@ export function Gallery() {
   }, [deleteSelectedImages, toast])
 
   return (
-    <div className="h-screen flex flex-col bg-background">
-      <Header />
-      
-      <div className="flex-1 flex min-h-0">
-        <main className="flex-1 flex flex-col min-h-0">
-          <Toolbar 
-            onUploadClick={handleUploadClick}
-            onBulkDelete={handleBulkDelete}
-            isUploading={isUploading}
-            hasSelection={selectedImages.size > 0}
-          />
-          
-          <DropZone>
-            {viewMode === 'grid' ? (
-              <ImageGrid onEditMetadata={setMetadataImage} />
-            ) : (
-              <ImageTable onEditMetadata={setMetadataImage} />
-            )}
-          </DropZone>
-        </main>
+    <SidebarProvider className="w-auto">
+      <div className="h-screen flex flex-col bg-background">
+        <Header />
+        
+        <div className="flex-1 flex min-h-0">
+          <AppSidebar />
+
+          <SidebarInset>
+            <main className="grow flex flex-col min-h-0">            
+              <Toolbar 
+                onUploadClick={handleUploadClick}
+                onBulkDelete={handleBulkDelete}
+                isUploading={isUploading}
+                hasSelection={selectedImages.size > 0}
+              />
+              
+              <DropZone>
+                {viewMode === 'grid' ? (
+                  <ImageGrid onEditMetadata={setMetadataImage} />
+                ) : (
+                  <ImageTable onEditMetadata={setMetadataImage} />
+                )}
+              </DropZone>
+            </main>
+          </SidebarInset>
+        </div>
+        
+        {/* Hidden file input */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          multiple
+          accept="image/*"
+          className="hidden"
+          onChange={handleFileSelect}
+          disabled={isUploading}
+        />
+        
+        {/* Metadata dialog */}
+        <MetadataDialog
+          image={metadataImage}
+          open={!!metadataImage}
+          onOpenChange={(open) => !open && setMetadataImage(null)}
+        />
+        
+        {/* Bulk delete confirmation */}
+        <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete {selectedImages.size} images?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will permanently delete the selected images. This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction 
+                onClick={confirmBulkDelete}
+                className="bg-destructive text-white hover:bg-destructive/90"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
-      
-      {/* Hidden file input */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        multiple
-        accept="image/*"
-        className="hidden"
-        onChange={handleFileSelect}
-        disabled={isUploading}
-      />
-      
-      {/* Metadata dialog */}
-      <MetadataDialog
-        image={metadataImage}
-        open={!!metadataImage}
-        onOpenChange={(open) => !open && setMetadataImage(null)}
-      />
-      
-      {/* Bulk delete confirmation */}
-      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Delete {selectedImages.size} images?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete the selected images. This action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
-              onClick={confirmBulkDelete}
-              className="bg-destructive text-white hover:bg-destructive/90"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </div>
+    </SidebarProvider>
   )
 }

@@ -2,6 +2,7 @@ import { Grid, List, Trash2, Upload, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useImageStore } from '@/lib/store'
 import { Button } from '@/components/ui/button'
+import { SidebarTrigger } from '../ui/sidebar';
 
 interface ToolbarProps {
   isUploading: boolean;
@@ -42,7 +43,8 @@ export function Toolbar({ onUploadClick, onBulkDelete }: ToolbarProps) {
   return (
     <div className="h-14 border-b border-border bg-card flex items-center justify-between px-4">
       <div className="flex items-center gap-2">
-        {/* Breadcrumbs */}
+        <SidebarTrigger />
+
         <nav className="flex items-center gap-1 text-sm">
           {breadcrumbs.map((crumb, index) => (
             <span key={crumb.id} className="flex items-center gap-1">
