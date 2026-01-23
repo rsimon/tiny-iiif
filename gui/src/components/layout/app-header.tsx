@@ -1,12 +1,13 @@
-import { Blocks, Cloud, Grid3X3, Search, User } from 'lucide-react';
+import { Blocks, Search, User } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-export function Header() {
+export const AppHeader = () => {
+
   return (
     <header className="flex items-center px-4 py-3 gap-4 bg-linear-to-r border-b border-border from-slate-800 via-sky-950 to-slate-900">
       <div className="flex items-center gap-2.5">
-        <Blocks className="size-8 -rotate-6 text-slate-500" strokeWidth={1.25} />
+        <Blocks className="size-8 -rotate-4 text-slate-500" strokeWidth={1.25} />
         <span className="font-semibold text-slate-100 text-3xl tracking-wide">
           tiny<span className="text-slate-400">.iiif</span>
         </span>

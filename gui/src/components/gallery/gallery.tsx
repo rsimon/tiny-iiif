@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useRef, useCallback } from 'react';
 import { useImageStore } from '@/lib/store';
 import type { ImageFile } from '@/types';
-import { Header } from '../layout/header';
+import { AppHeader } from '../layout/app-header';
 import { Toolbar } from './toolbar';
 import { ImageGrid } from './image-grid'
 import { ImageTable } from './image-table'
@@ -103,14 +103,14 @@ export function Gallery() {
 
   return (
     <SidebarProvider className="w-auto">
-      <div className="h-screen flex flex-col bg-background">
-        <Header />
+      <div className="h-screen grow flex flex-col bg-background">
+        <AppHeader />
         
         <div className="flex-1 flex min-h-0">
           <AppSidebar />
 
           <SidebarInset>
-            <main className="grow flex flex-col min-h-0">            
+            <main className="grow flex flex-col min-h-0 bg-muted">            
               <Toolbar 
                 onUploadClick={handleUploadClick}
                 onBulkDelete={handleBulkDelete}

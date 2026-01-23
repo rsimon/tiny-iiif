@@ -1,68 +1,81 @@
+import { ChartLine, ChevronDown, ChevronLeft, Images, Library } from 'lucide-react';
+import { Button } from '../ui/button';
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  useSidebar
+} from '@/components/ui/sidebar';
+import { Collapsible, CollapsibleContent } from '../ui/collapsible';
+import { CollapsibleTrigger } from '@radix-ui/react-collapsible';
+import { cn } from '@/lib/utils';
 
-// Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-];
+export const AppSidebar = () => {
 
-export function AppSidebar() {
+  const { toggleSidebar, open } = useSidebar();
+
   return (
     <Sidebar collapsible="icon" className="sticky">
-      <SidebarHeader>
-
+      <SidebarHeader className="border-b h-14 flex justify-center items-end">
+        <Button
+          data-sidebar="trigger"
+          data-slot="sidebar-trigger"
+          variant="ghost"
+          size="icon"
+          onClick={toggleSidebar}>
+          <ChevronLeft 
+            className={cn(
+            'size-4 transition-transform duration-200',
+            open ? undefined : 'rotate-180'
+            )} />
+        </Button>
       </SidebarHeader>
 
       <SidebarContent>
         <SidebarMenu>
-          {items.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild>
-                <a href={item.url}>
-                  <item.icon />
-                  <span>{item.title}</span>
-                </a>
-              </SidebarMenuButton>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <a href="#">
+                <Images />
+                <span>Images</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+          <Collapsible className="group/collapsible">
+            <SidebarMenuItem>
+              <CollapsibleTrigger asChild>
+                <SidebarMenuButton>
+                  <Library />
+                  <span>Collections</span>
+                  <ChevronDown className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
+                </SidebarMenuButton>
+              </CollapsibleTrigger>
+
+              <CollapsibleContent>
+                <SidebarMenuSub>
+                  {/* TODO */}
+                </SidebarMenuSub>
+              </CollapsibleContent>
             </SidebarMenuItem>
-          ))}
+          </Collapsible>
+
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <a href="#">
+                <ChartLine />
+                <span>Traffic Analytics</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         </SidebarMenu>
       </SidebarContent>
     </Sidebar>
   )
+
 }
