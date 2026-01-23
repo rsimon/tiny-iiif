@@ -1,7 +1,10 @@
-import type { ViewMode } from '@/types';
+import type { ImageMetadata, ViewMode } from '@/types';
 import { create } from 'zustand';
 
 export interface UIState {
+
+  viewMode: ViewMode;
+  setViewMode: (mode: ViewMode) => void;
 
   currentPage: number;
   setCurrentPage: (page: number) => void;
@@ -13,12 +16,16 @@ export interface UIState {
   setSelectedImage: (id: string, selected: boolean) => void;
   setSelectedImageIds: (ids: string[]) => void;
 
-  viewMode: ViewMode;
-  setViewMode: (mode: ViewMode) => void;
+  currentPreview?: ImageMetadata;
+  setCurrentPreview: (image?: ImageMetadata) => void;
 
 }
 
 export const useUIState = create<UIState>((set) => ({
+
+  viewMode: 'grid',
+  setViewMode: mode => set({ viewMode: mode }),
+
   currentPage: 1,
   setCurrentPage: page => set({ currentPage: page }),
 
@@ -38,6 +45,7 @@ export const useUIState = create<UIState>((set) => ({
   }),
   setSelectedImageIds: ids => set({ selectedImageIds: new Set(ids) }),
 
-  viewMode: 'grid',
-  setViewMode: mode => set({ viewMode: mode })
+  currentPreview: undefined,
+  setCurrentPreview: image => set({ currentPreview: image })
+
 }));

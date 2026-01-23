@@ -7,12 +7,16 @@ import { ImageGrid } from './image-grid';
 import { useImages } from '@/hooks/use-images';
 import { useUIState } from '@/hooks/use-ui-state';
 import { ImageTable } from './image-table';
+import { IIIFPreview } from './iiif-preview';
 
 export const ImageGallery = () => {
 
   const { data: { images = [] } = {} } = useImages();
 
   const viewMode = useUIState(state => state.viewMode);
+  
+  const currentPreview = useUIState(state => state.currentPreview);
+  const setCurrentPreview = useUIState(state => state.setCurrentPreview);
 
   const onClickUpload = useCallback(() => {
 
@@ -48,6 +52,10 @@ export const ImageGallery = () => {
           </SidebarInset>
         </div>
       </div>
+
+      <IIIFPreview
+        image={currentPreview} 
+        onClose={() => setCurrentPreview(undefined)} />
     </SidebarProvider>
   )
 

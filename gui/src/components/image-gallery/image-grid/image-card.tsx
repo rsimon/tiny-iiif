@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
-import type { ImageMetadata } from '@/types';
 import { cn } from '@/lib/utils';
 import { getThumbnailURL } from '@/utils/get-thumbnail-url';
+import { useUIState } from '@/hooks/use-ui-state';
+import type { ImageMetadata } from '@/types';
 
 interface ImageCardProps {
 
@@ -21,13 +22,22 @@ const THUMBNAIL_WIDTH = Math.ceil(THUMBNAIL_HEIGHT * 4 / 3);
 
 export const ImageCard = (props: ImageCardProps) => {
 
+  const setCurrentPreview = useUIState(state => state.setCurrentPreview);
+
   const src = useMemo(() => (
     getThumbnailURL(props.image, THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT)
   ), [props.image]);
 
+  const onOpenPreview = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentPreview(props.image);
+  }
+
   return (
     <div className="group rounded-lg overflow-hidden image-card-shadow border transition-all duration-200 animate-fade-in cursor-grab active:cursor-grabbing">
-      <div className="relative aspect-4/3 overflow-hidden bg-muted">
+      <div 
+        className="relative aspect-4/3 overflow-hidden bg-muted"
+        onClick={onOpenPreview} >
         <img
           src={src}
           alt={props.image.filename}
@@ -39,6 +49,7 @@ export const ImageCard = (props: ImageCardProps) => {
         )}>
           <Checkbox
             checked={props.isSelected}
+            onClick={e => e.stopPropagation()}
             onCheckedChange={checked => props.onSelect(checked as boolean)}
             className="size-6 border-sky-950/40 rounded-full bg-white/60 data-[state=checked]:bg-green-600 data-[state=checked]:text-green-100 data-[state=checked]:border-green-100" />
         </div>
