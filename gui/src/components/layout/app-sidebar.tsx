@@ -21,12 +21,13 @@ export const AppSidebar = () => {
 
   return (
     <Sidebar collapsible="icon" className="sticky">
-      <SidebarHeader className="border-b h-14 flex justify-center items-end">
+      <SidebarHeader className="border-b h-16 flex justify-center items-end">
         <Button
           data-sidebar="trigger"
           data-slot="sidebar-trigger"
           variant="ghost"
           size="icon"
+          className="size-8"
           onClick={toggleSidebar}>
           <ChevronLeft 
             className={cn(

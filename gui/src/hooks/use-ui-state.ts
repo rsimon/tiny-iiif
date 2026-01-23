@@ -1,3 +1,4 @@
+import type { ViewMode } from '@/types';
 import { create } from 'zustand';
 
 export interface UIState {
@@ -10,7 +11,8 @@ export interface UIState {
 
   selectedImageIds: Set<string>;
 
-  viewMode: 'grid' | 'list';
+  viewMode: ViewMode;
+  setViewMode: (mode: ViewMode) => void;
 
 }
 
@@ -23,5 +25,6 @@ export const useUIState = create<UIState>((set) => ({
 
   selectedImageIds: new Set<string>([]),
 
-  viewMode: 'grid'
+  viewMode: 'grid',
+  setViewMode: mode => set({ viewMode: mode })
 }));
