@@ -43,7 +43,7 @@ export const ImageCard = (props: ImageCardProps) => {
   }, [id, width, height]);
 
   return (
-    <div className="group rounded-lg overflow-hidden border transition-all duration-200 animate-fade-in cursor-grab active:cursor-grabbing">
+    <div className="group rounded-lg overflow-hidden image-card-shadow border transition-all duration-200 animate-fade-in cursor-grab active:cursor-grabbing">
       <div className="relative aspect-4/3 overflow-hidden bg-muted">
         <img
           src={src}
@@ -59,6 +59,12 @@ export const ImageCard = (props: ImageCardProps) => {
             onCheckedChange={checked => setIsSelected(checked as boolean)}
             className="size-6 border-sky-950/40 rounded-full bg-white/60 data-[state=checked]:bg-green-600 data-[state=checked]:text-green-100 data-[state=checked]:border-green-100" />
         </div>
+      </div>
+
+      <div className="px-3 py-4 flex items-center justify-between bg-white">
+        <span className="text-sm font-medium text-card-foreground truncate flex-1">
+          {filename}
+        </span>
       </div>
     </div>
   )

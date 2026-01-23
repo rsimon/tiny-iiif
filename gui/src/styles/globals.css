@@ -217,6 +217,7 @@ html, body {
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --image-card-shadow: 220 14% 85%;
 }
 
 /*
@@ -268,4 +269,14 @@ html, body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@utility image-card-shadow {
+  box-shadow: 0 1px 3px 0 hsl(var(--image-card-shadow) / 0.1),
+              0 1px 2px -1px hsl(var(--image-card-shadow) / 0.1);
+}
+
+@utility image-card-shadow-hover {
+  box-shadow: 0 4px 6px -1px hsl(var(--image-card-shadow) / 0.15),
+              0 2px 4px -2px hsl(var(--image-card-shadow) / 0.1);
 }
