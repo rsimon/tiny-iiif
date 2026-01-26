@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
-import { AppHeader } from '../layout/app-header';
-import { AppSidebar } from '../layout/app-sidebar';
-import { SidebarInset, SidebarProvider } from '../ui/sidebar';
-import { Toolbar } from './toolbar';
-import { ImageGrid } from './image-grid';
+import { AppHeader } from '@/components/layout/app-header';
+import { AppSidebar } from '@/components/layout/app-sidebar';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { useImages } from '@/hooks/use-images';
 import { useUIState } from '@/hooks/use-ui-state';
+import { Toolbar } from './toolbar';
+import { ImageGrid } from './image-grid';
 import { ImageTable } from './image-table';
 import { IIIFPreview } from './iiif-preview';
 
@@ -41,7 +41,7 @@ export const ImageGallery = () => {
                 onClickUpload={onClickUpload}
                 onClickDelete={onClickDelete} />
 
-              <div className="flex-1 overflow-auto p-6">
+              <div className="p-6 grow">
                 {viewMode === 'grid' ? (
                   <ImageGrid images={images} />
                 ) : (

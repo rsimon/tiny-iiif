@@ -1,4 +1,6 @@
 import { useMemo } from 'react';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from "@dnd-kit/utilities";
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { getThumbnailURL } from '@/utils/get-thumbnail-url';
@@ -24,6 +26,20 @@ const THUMBNAIL_WIDTH = Math.ceil(THUMBNAIL_HEIGHT * 4 / 3);
 
 export const ImageCard = (props: ImageCardProps) => {
 
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging
+  } = useSortable({ id: props.image.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition
+  };
+
   const setCurrentPreview = useUIState(state => state.setCurrentPreview);
 
   const src = useMemo(() => (
@@ -36,14 +52,22 @@ export const ImageCard = (props: ImageCardProps) => {
   }
 
   return (
-    <div className="group rounded-lg overflow-hidden image-card-shadow border transition-all duration-200 animate-fade-in cursor-grab active:cursor-grabbing">
+    <div
+      {...listeners} 
+      {...attributes}  
+      ref={setNodeRef}     
+      style={style} 
+      className={cn(
+        'group rounded-lg overflow-hidden image-card-shadow border border-border/50 cursor-grab active:cursor-grabbing',
+        isDragging ? 'z-50 opacity-30' : 'transition-all duration-200 animate-fade-in'
+      )}>
       <div 
         className="relative aspect-4/3 overflow-hidden bg-muted"
-        onClick={onOpenPreview} >
+        onClick={onOpenPreview}>
         <img
           src={src}
           alt={props.image.filename}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 pointer-events-none" />
+          className="w-full h-full object-cover group-hover:scale-105 pointer-events-none" />
 
         <div className={cn(
           'absolute top-3 left-3',
