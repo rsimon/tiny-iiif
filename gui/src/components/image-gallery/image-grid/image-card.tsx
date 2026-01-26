@@ -82,8 +82,8 @@ export const ImageCard = (props: ImageCardProps) => {
         </div>
 
         <div className={cn(
-          'absolute top-2 left-2',
-          props.isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+          'absolute top-2 left-2 opacity-0',
+          isDragging ? undefined : props.isSelected ? 'opacity-100' : 'group-hover:opacity-100'
         )}>
           <Checkbox
             checked={props.isSelected}
