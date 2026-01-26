@@ -1,4 +1,7 @@
-import { DndContext, closestCenter, DragOverlay, PointerSensor,
+import { 
+  DndContext, 
+  closestCenter,
+  PointerSensor,
   useSensor,
   useSensors } from '@dnd-kit/core';
 import { useUIState } from '@/hooks/use-ui-state';
@@ -38,15 +41,7 @@ export const ImageGrid = (props: ImageGridProps) => {
   }, [props.images.map(i => i.id).join()]);
 
   const onDragEnd = (event) => {
-    console.log('onDragEnd');
-
     const { active, over } = event;
-
-     if (!over) {
-        return; // Just return, don't reset anything
-      }
-
-    console.log(active, over);
 
     if (active.id !== over.id) {
       setSortedImags(items => {
@@ -66,10 +61,13 @@ export const ImageGrid = (props: ImageGridProps) => {
       collisionDetection={closestCenter}
       sensors={sensors}
       onDragEnd={onDragEnd}>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
         <SortableContext 
           items={sortedImages} 
           strategy={rectSortingStrategy}>
+          <FolderCard id="a" />
+          <FolderCard id="b" />
+
           {sortedImages.map(image => (
             <ImageCard
               key={image.id}

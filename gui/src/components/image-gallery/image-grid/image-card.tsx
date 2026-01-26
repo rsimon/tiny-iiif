@@ -68,31 +68,33 @@ export const ImageCard = (props: ImageCardProps) => {
       ref={setNodeRef}     
       style={style} 
       className={cn(
-        'group rounded-lg overflow-hidden image-card-shadow border border-border/50 cursor-grab active:cursor-grabbing',
+        'group rounded-lg overflow-hidden image-card-shadow border border-border cursor-grab active:cursor-grabbing',
         isDragging ? 'z-50 opacity-30' : isInitialMount.current && 'transition-all duration-200 animate-fade-in'
       )}>
       <div 
-        className="relative aspect-4/3 overflow-hidden bg-muted"
+        className="relative aspect-4/3 p-1 bg-white"
         onClick={onOpenPreview}>
-        <img
-          src={src}
-          alt={props.image.filename}
-          className="w-full h-full object-cover group-hover:scale-105 pointer-events-none" />
+        <div className="w-full h-full relative overflow-hidden rounded-sm">
+          <img
+            src={src}
+            alt={props.image.filename}
+            className="w-full h-full rounded-sm object-cover transition-transform duration-250 group-hover:scale-105 pointer-events-none" />
+        </div>
 
         <div className={cn(
-          'absolute top-3 left-3',
+          'absolute top-2 left-2',
           props.isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
         )}>
           <Checkbox
             checked={props.isSelected}
             onClick={e => e.stopPropagation()}
             onCheckedChange={checked => props.onSelect(checked as boolean)}
-            className="size-6 border-sky-950/40 rounded-full bg-white/60 data-[state=checked]:bg-green-600 data-[state=checked]:text-green-100 data-[state=checked]:border-green-100" />
+            className="size-5.5 border-sky-950/40 rounded-full bg-white/60 data-[state=checked]:bg-green-600 data-[state=checked]:text-green-100 data-[state=checked]:border-green-100" />
         </div>
       </div>
 
-      <div className="p-2 pl-3 flex items-center justify-between bg-white">
-        <span className="text-sm font-medium text-card-foreground truncate flex-1">
+      <div className="p-1 pt-0 pl-3 flex items-center justify-between bg-white">
+        <span className="text-xs font-medium text-slate-950 truncate flex-1">
           {props.image.filename}
         </span>
 
