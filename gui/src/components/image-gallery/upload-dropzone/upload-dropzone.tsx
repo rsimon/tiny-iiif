@@ -1,11 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import Uppy from '@uppy/core';
 import DropTarget from '@uppy/drop-target';
-import { cn } from '@/lib/utils';
 
 interface UploadDropzoneProps {
 
-  children: React.ReactNode;
+  children: ReactNode;
 
   className?: string;
 
@@ -30,7 +29,11 @@ export const UploadDropzone = (props: UploadDropzoneProps) => {
   }, []);
 
   return (
-    <div>
+    <div className={props.className}>
+      <div className="absolute size-full z-10 p-3 pointer-events-none">
+        <div className="size-full rounded-xl backdrop-blur
+          border border-blue-300 bg-blue-300/20" />
+      </div>
       {props.children}
     </div>
   )
