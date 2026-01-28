@@ -2,8 +2,8 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Uppy from '@uppy/core';
 import DropTarget from '@uppy/drop-target';
 import XHRUpload from '@uppy/xhr-upload';
-import { UploadDropzoneOverlay } from './upload-dropzone-overlay';
 import { useImages } from '@/hooks/use-images';
+import { UploadDropzoneOverlay } from './upload-dropzone-overlay';
 
 interface UploadDropzoneProps {
 
