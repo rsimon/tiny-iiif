@@ -116,26 +116,34 @@ export const DELETE: APIRoute = async ({ request }) => {
       });
     }
     
-    const deleted = [];
-    const failed = [];
-    
+    const deleted: string[] = [];
+    const failed: { id: string; reason: string }[] = [];
+
+    const _delete = async (id: string) => {
+      const meta = path.join(META_DIR, `${id}.json`);
+      const image = path.join(IMAGES_DIR, `${id}`);
+
+      try {
+        await fs.rm(meta);
+      } catch (error) {
+        console.error(error.message);
+        throw new Error('File not found (metadata)');
+      }
+
+      try {
+        await fs.rm(image);
+      } catch (error) {
+        console.error(error.message);
+        throw new Error('File not found (image)');
+      }
+    } 
+
     for (const id of ids) {
       try {
-        const files = await fs.readdir(IMAGES_DIR);
-        const matchingFile = files.find(f => path.parse(f).name === id);
-        
-        if (matchingFile) {
-          const filePath = path.join(IMAGES_DIR, matchingFile);
-          await fs.unlink(filePath);
-          deleted.push({ id, filename: matchingFile });
-        } else {
-          failed.push({ id, reason: 'File not found' });
-        }
+        await _delete(id);
+        deleted.push(id);
       } catch (error) {
-        failed.push({ 
-          id, 
-          reason: error instanceof Error ? error.message : 'Unknown error' 
-        });
+        failed.push({ id, reason: error.message });
       }
     }
     

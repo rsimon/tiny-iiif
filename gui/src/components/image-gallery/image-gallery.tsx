@@ -17,6 +17,7 @@ export const ImageGallery = () => {
   const viewMode = useUIState(state => state.viewMode);
 
   const selectedImageIds = useUIState(state => state.selectedImageIds);
+  const setSelectedImageIds = useUIState(state => state.setSelectedImageIds);
   
   const currentPreview = useUIState(state => state.currentPreview);
   const setCurrentPreview = useUIState(state => state.setCurrentPreview);
@@ -27,6 +28,7 @@ export const ImageGallery = () => {
 
   const onClickDelete = useCallback(() => {
     deleteImages([...selectedImageIds]);
+    setSelectedImageIds([]);
   }, [selectedImageIds]);
 
   return (
