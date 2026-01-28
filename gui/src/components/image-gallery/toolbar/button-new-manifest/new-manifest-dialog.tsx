@@ -25,29 +25,31 @@ export const NewManifestDialog = (props: NewManifestDialogProps) => {
   const [name, setName] = useState('');
   
   const onSave = () => {
-
+    
   }
 
   return (
     <Dialog open={props.open} onOpenChange={open => { if (!open) props.onClose() }}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>New IIIF Manifest</DialogTitle>
-          <DialogDescription>Create a new IIIF Manifest.</DialogDescription>
+          <DialogTitle>New Manifest</DialogTitle>
+          <DialogDescription>
+            Create a new IIIF Manifest
+          </DialogDescription>
         </DialogHeader>
         
-        <div className="grid gap-2">
+        <div className="my-4 grid gap-2">
           <Label htmlFor="name">Name</Label>
-          <Input 
+
+          <Input
             id="name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Image name"
+            onChange={evt => setName(evt.target.value)}
           />
         </div>
             
         <DialogFooter>
-          <Button variant="outline" onClick={() => props.onClose()}>Cancel</Button>
+          <Button variant="secondary" onClick={() => props.onClose()}>Cancel</Button>
           <Button onClick={onSave}>Create</Button>
         </DialogFooter>
       </DialogContent>
