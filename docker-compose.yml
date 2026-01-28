@@ -6,7 +6,6 @@ services:
       - "8182"
     volumes:
       - ./data/images:/images
-      - ./cantaloupe/cantaloupe.properties:/etc/cantaloupe/cantaloupe.properties
     restart: unless-stopped
 
   nginx:

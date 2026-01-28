@@ -1,44 +1,18 @@
 import type { APIRoute } from 'astro';
-import fs from 'fs/promises';
 import path from 'path';
-import { createImage } from './_utils/create-image';
-import type { ImageMetadata } from '@/types';
-import { IMAGES_DIR, META_DIR } from './_paths';
+import { createImage, deleteImage, listImages } from './_utils';
 
 export const prerender = false;
+
+export const IMAGES_DIR = path.join(process.cwd(), '..', 'data', 'images');
+export const META_DIR = path.join(process.cwd(), '..', 'data', 'meta');
 
 export const GET: APIRoute = async ({ url }) => {
   try {    
     const offset = parseInt(url.searchParams.get('offset') || '0');
     const limit = parseInt(url.searchParams.get('limit') || '100');
     
-    const metafiles = (await fs.readdir(META_DIR)).filter(f => f.endsWith('.json'));
-    
-    const total = metafiles.length;
-
-    const all: ImageMetadata[] = [];
-
-    for (const m of metafiles) {
-      try {
-        const raw = await fs.readFile(path.join(META_DIR, m), 'utf8');
-        const metadata = JSON.parse(raw);
-
-        if (!metadata.id) {
-          console.error('Invalid metadata');
-          console.error(raw);
-          continue;
-        }
-          
-        all.push(metadata);
-      } catch {
-        console.error(`Error reading metadata: ${m}`);
-        continue;
-      }
-    }
-
-    all.sort((a, b) => a.filename.localeCompare(b.filename));  
-
-    const images = all.slice(offset, offset + limit);
+    const { images, total } = await listImages(offset, limit);
     
     return new Response(JSON.stringify({
       total,
@@ -58,7 +32,7 @@ export const GET: APIRoute = async ({ url }) => {
       headers: { 'Content-Type': 'application/json' },
     });
   }
-};
+}
 
 export const POST: APIRoute = async ({ request }) => { 
   const file = (await request.formData())?.get('file');
@@ -105,28 +79,9 @@ export const DELETE: APIRoute = async ({ request }) => {
     const deleted: string[] = [];
     const failed: { id: string; reason: string }[] = [];
 
-    const _delete = async (id: string) => {
-      const meta = path.join(META_DIR, `${id}.json`);
-      const image = path.join(IMAGES_DIR, `${id}`);
-
-      try {
-        await fs.rm(meta);
-      } catch (error) {
-        console.error(error.message);
-        throw new Error('File not found (metadata)');
-      }
-
-      try {
-        await fs.rm(image);
-      } catch (error) {
-        console.error(error.message);
-        throw new Error('File not found (image)');
-      }
-    } 
-
     for (const id of ids) {
       try {
-        await _delete(id);
+        await deleteImage(id);
         deleted.push(id);
       } catch (error) {
         failed.push({ id, reason: error.message });

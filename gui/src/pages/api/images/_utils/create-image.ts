@@ -3,7 +3,7 @@ import sharp from 'sharp';
 import fs from 'fs/promises';
 import { customAlphabet } from 'nanoid';
 import type { ImageFormat, ImageMetadata } from '@/types';
-import { IMAGES_DIR, META_DIR } from '../_paths';
+import { IMAGES_DIR, META_DIR } from '..';
 
 const ALLOWED_FORMATS = new Set([
   'jpeg', 
