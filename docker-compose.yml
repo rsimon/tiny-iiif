@@ -1,6 +1,6 @@
 services:
   cantaloupe:
-    image: uclalibrary/cantaloupe:5.0.7-0
+    build: ./cantaloupe
     container_name: mini-iiif-cantaloupe
     expose:
       - "8182"
