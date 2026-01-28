@@ -32,6 +32,9 @@ export const useImages = () => {
     queryFn: () => list(currentPage, pageSize)
   });
 
+  const refreshImages = () =>
+    queryClient.invalidateQueries({ queryKey: ['images'] });
+
   const deleteImages = useMutation({
     mutationFn: (imageIds: string[]) => remove(imageIds),
     onSuccess: () => {
@@ -42,6 +45,7 @@ export const useImages = () => {
   return { 
     images, 
     error, 
+    refreshImages,
     deleteImages: deleteImages.mutate,
     deleteImagesAsync: deleteImages.mutateAsync,
     isDeletingImages: deleteImages.isPending

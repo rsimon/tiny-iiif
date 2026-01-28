@@ -61,13 +61,9 @@ export const GET: APIRoute = async ({ url }) => {
 };
 
 export const POST: APIRoute = async ({ request }) => { 
-  console.log('POST!');
-
-
-  const formData = await request.formData();
-  const files = [formData.getAll('file')];
+  const file = (await request.formData())?.get('file');
   
-  if (files.length === 0) {
+  if (!(file instanceof File)) {
     return new Response(JSON.stringify({ 
       error: 'No image files in request' 
     }), {
@@ -76,30 +72,20 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
   
-  const uploaded: ImageMetadata[] = [];
-  const failed: { filename: string, reason: string }[] = [];
+  try {
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const meta = await createImage(file.name, buffer);
 
-  for (const file of files) {
-    if (file instanceof File) {
-      try {
-        const buffer = Buffer.from(await file.arrayBuffer());
-        const meta = await createImage(file.name, buffer);
-        uploaded.push(meta);
-      } catch (error) {
-        failed.push({ filename: file.name, reason: error.message });
-      }
-    } else {
-      failed.push({ filename: file, reason: 'Not a file' });
-    }
+    return new Response(JSON.stringify(meta), {
+      status: 201,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
-  
-  return new Response(JSON.stringify({
-    uploaded,
-    failed
-  }), {
-    status: 201,
-    headers: { 'Content-Type': 'application/json' },
-  });
 }
 
 export const DELETE: APIRoute = async ({ request }) => {

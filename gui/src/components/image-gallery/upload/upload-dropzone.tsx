@@ -3,6 +3,7 @@ import Uppy from '@uppy/core';
 import DropTarget from '@uppy/drop-target';
 import XHRUpload from '@uppy/xhr-upload';
 import { UploadDropzoneOverlay } from './upload-dropzone-overlay';
+import { useImages } from '@/hooks/use-images';
 
 interface UploadDropzoneProps {
 
@@ -15,6 +16,8 @@ interface UploadDropzoneProps {
 export const UploadDropzone = (props: UploadDropzoneProps) => {
 
   const targetRef = useRef<HTMLDivElement>(null);
+
+  const { refreshImages } = useImages();
 
   const [ isDragOver, setIsDragOver ] = useState(false);
 
@@ -42,6 +45,9 @@ export const UploadDropzone = (props: UploadDropzoneProps) => {
     uppy.on('files-added', files => {
       console.log('Files added:', files);
     });
+
+    // Refreshes the UI after each individual image upload
+    uppy.on('upload-success', refreshImages);
 
     return () => {
       uppy.destroy();
