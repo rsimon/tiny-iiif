@@ -1,18 +1,21 @@
+import { useCallback } from 'react';
+import { SquareCheckBig, Trash2 } from 'lucide-react';
+import type Uppy from '@uppy/core';
 import { Button } from '@/components/ui/button';
-import { SidebarTrigger } from '@/components/ui/sidebar';
-import { SquareCheckBig, Trash2, Upload } from 'lucide-react';
-import { useUIState } from '@/hooks/use-ui-state';
 import { Separator } from '@/components/ui/separator';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { useUIState } from '@/hooks/use-ui-state';
 import type { ImageMetadata } from '@/types';
 import { ViewToggle } from './view-toggle';
+import { UploadButton } from './upload-button';
 
 interface ToolbarProps {
 
   images: ImageMetadata[];
 
-  onClickUpload(): void;
+  uppy: Uppy;
 
-  onClickDelete(): void;
+  onDelete(): void;
 
 }
 
@@ -24,6 +27,13 @@ export const Toolbar = (props: ToolbarProps) => {
   const selectedImageIds = useUIState(state => state.selectedImageIds);
   const setSelectedImageIds = useUIState(state => state.setSelectedImageIds);
 
+  const onUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || []);
+    files.forEach(file => {
+      props.uppy.addFile(file);
+    });
+  }, [props.uppy]);
+  
   const onSelectAll = () => {
     if (selectedImageIds.size === props.images.length)
       setSelectedImageIds([]);
@@ -42,12 +52,8 @@ export const Toolbar = (props: ToolbarProps) => {
 
         <Separator orientation="vertical" />
 
-        <Button 
-          variant="ghost"
-          onClick={props.onClickUpload}>
-          <Upload className="size-4" />
-          Upload
-        </Button>
+        <UploadButton 
+          onUpload={onUpload} />
 
         <Button 
           variant="ghost"
@@ -59,7 +65,7 @@ export const Toolbar = (props: ToolbarProps) => {
         {selectedImageIds.size > 0 && (
           <Button
             variant="destructive"
-            onClick={props.onClickDelete}>
+            onClick={props.onDelete}>
             <Trash2 className="size-4" />
             Delete {selectedImageIds.size} Image{selectedImageIds.size > 1 && 's'}
           </Button>

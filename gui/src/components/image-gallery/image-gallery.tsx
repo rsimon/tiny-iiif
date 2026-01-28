@@ -8,7 +8,7 @@ import { Toolbar } from './toolbar';
 import { ImageGrid } from './image-grid';
 import { ImageTable } from './image-table';
 import { IIIFPreview } from './iiif-preview';
-import { UploadDropzone } from './upload';
+import { UploadDropzone, useUppy } from './upload';
 
 export const ImageGallery = () => {
 
@@ -22,11 +22,9 @@ export const ImageGallery = () => {
   const currentPreview = useUIState(state => state.currentPreview);
   const setCurrentPreview = useUIState(state => state.setCurrentPreview);
 
-  const onClickUpload = useCallback(() => {
+  const { isDragOver: isFilesOverTarget, targetRef, uppy } = useUppy();
 
-  }, []);
-
-  const onClickDelete = useCallback(() => {
+  const onDelete = useCallback(() => {
     deleteImages([...selectedImageIds]);
     setSelectedImageIds([]);
   }, [selectedImageIds]);
@@ -43,10 +41,13 @@ export const ImageGallery = () => {
             <main className="grow flex flex-col min-h-0 bg-muted">  
               <Toolbar 
                 images={images}
-                onClickUpload={onClickUpload}
-                onClickDelete={onClickDelete} />
+                uppy={uppy}
+                onDelete={onDelete} />
 
-              <UploadDropzone className="grow overflow-hidden">
+              <UploadDropzone 
+                className="grow overflow-hidden"
+                targetRef={targetRef}
+                showOverlay={isFilesOverTarget}>
                 <div className="-top-full h-full p-6 overflow-y-auto">
                   {viewMode === 'grid' ? (
                     <ImageGrid images={images} />
