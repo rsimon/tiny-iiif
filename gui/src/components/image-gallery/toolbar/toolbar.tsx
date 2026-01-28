@@ -59,7 +59,7 @@ export const Toolbar = (props: ToolbarProps) => {
         {selectedImageIds.size > 0 && (
           <Button
             variant="destructive"
-            onClick={props.onClickUpload}>
+            onClick={props.onClickDelete}>
             <Trash2 className="size-4" />
             Delete {selectedImageIds.size} Image{selectedImageIds.size > 1 && 's'}
           </Button>

@@ -8,13 +8,15 @@ import { Toolbar } from './toolbar';
 import { ImageGrid } from './image-grid';
 import { ImageTable } from './image-table';
 import { IIIFPreview } from './iiif-preview';
-import { UploadDropzone, UploadDropzoneOverlay } from './upload';
+import { UploadDropzone } from './upload';
 
 export const ImageGallery = () => {
 
-  const { data: { images = [] } = {} } = useImages();
+  const { images, deleteImages } = useImages();
 
   const viewMode = useUIState(state => state.viewMode);
+
+  const selectedImageIds = useUIState(state => state.selectedImageIds);
   
   const currentPreview = useUIState(state => state.currentPreview);
   const setCurrentPreview = useUIState(state => state.setCurrentPreview);
@@ -24,8 +26,8 @@ export const ImageGallery = () => {
   }, []);
 
   const onClickDelete = useCallback(() => {
-
-  }, []);
+    deleteImages([...selectedImageIds]);
+  }, [selectedImageIds]);
 
   return (
     <SidebarProvider className="w-auto overflow-hidden">
