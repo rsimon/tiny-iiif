@@ -1,13 +1,12 @@
 import { useCallback } from 'react';
-import { Braces, Plus, SquareCheckBig, Trash2 } from 'lucide-react';
 import type Uppy from '@uppy/core';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { useUIState } from '@/hooks/use-ui-state';
 import type { ImageMetadata } from '@/types';
-import { ViewToggle } from './view-toggle';
-import { UploadButton } from './upload-button';
+import { ViewModeToggle } from './toggle-view-mode/view-mode-toggle';
+import { UploadButton } from './button-upload/upload-button';
+import { NewManifestButton } from './button-new-manifest';
+import { DeleteSelectedButton } from './button-delete-selected/delete-selected-button';
+import { SelectAllButton } from './button-select-all';
 
 interface ToolbarProps {
 
@@ -15,19 +14,9 @@ interface ToolbarProps {
 
   uppy: Uppy;
 
-  onDelete(): void;
-
-  onAddManifest(): void;
-
 }
 
 export const Toolbar = (props: ToolbarProps) => {
-
-  const viewMode = useUIState(state => state.viewMode);
-  const setViewMode = useUIState(state => state.setViewMode);
-
-  const selectedImageIds = useUIState(state => state.selectedImageIds);
-  const setSelectedImageIds = useUIState(state => state.setSelectedImageIds);
 
   const onUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
@@ -36,13 +25,6 @@ export const Toolbar = (props: ToolbarProps) => {
     });
   }, [props.uppy]);
   
-  const onSelectAll = () => {
-    if (selectedImageIds.size === props.images.length)
-      setSelectedImageIds([]);
-    else 
-      setSelectedImageIds(props.images.map(i => i.id));
-  }
-
   return (
     <div className="h-16 border-b border-border bg-card flex items-center justify-between px-2.5">
       <div className="flex items-center gap-2">
@@ -52,35 +34,18 @@ export const Toolbar = (props: ToolbarProps) => {
           All Images
         </nav>
 
-        <Button
-          onClick={props.onAddManifest}>
-          <Plus className="size-4" />
-          New Manifest
-        </Button>
+        <NewManifestButton />
 
         <UploadButton 
           onUpload={onUpload} />
 
-        <Button 
-          variant="ghost"
-          onClick={onSelectAll}>
-          <SquareCheckBig className="size-4" />
-          Select All
-        </Button>
+        <SelectAllButton 
+          images={props.images} />
 
-        {selectedImageIds.size > 0 && (
-          <Button
-            variant="destructive"
-            onClick={props.onDelete}>
-            <Trash2 className="size-4" />
-            Delete {selectedImageIds.size} Image{selectedImageIds.size > 1 && 's'}
-          </Button>
-        )}
+        <DeleteSelectedButton />
       </div>
 
-      <ViewToggle 
-        viewMode={viewMode} 
-        onViewModeChange={setViewMode} />
+      <ViewModeToggle />
     </div>
   )
 

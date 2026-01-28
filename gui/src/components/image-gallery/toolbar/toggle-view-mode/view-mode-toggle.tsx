@@ -1,17 +1,12 @@
 import { LayoutList, Grid3X3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useUIState } from '@/hooks/use-ui-state';
 import { cn } from '@/lib/utils';
-import type { ViewMode } from '@/types';
 
-interface ViewToggleProps {
+export const ViewModeToggle = () => {
 
-  viewMode: ViewMode;
-
-  onViewModeChange: (mode: ViewMode) => void;
-
-}
-
-export const ViewToggle = (props: ViewToggleProps) => {
+  const viewMode = useUIState(state => state.viewMode);
+  const setViewMode = useUIState(state => state.setViewMode);
 
   return (
     <div className="flex items-center border border-border/40 gap-1 bg-muted rounded-lg p-1">
@@ -20,9 +15,9 @@ export const ViewToggle = (props: ViewToggleProps) => {
         size="icon"
         className={cn(
           'h-8 w-8 rounded-md',
-          props.viewMode === 'table' ? 'bg-white shadow-sm hover:bg-white' : 'opacity-40'
+          viewMode === 'table' ? 'bg-white shadow-sm hover:bg-white' : 'opacity-40'
         )}
-        onClick={() => props.onViewModeChange('table')}>
+        onClick={() => setViewMode('table')}>
         <LayoutList className="h-4 w-4" />
       </Button>
 
@@ -31,9 +26,9 @@ export const ViewToggle = (props: ViewToggleProps) => {
         size="icon"
         className={cn(
           'h-8 w-8 rounded-md',
-          props.viewMode === 'grid' ? 'bg-white shadow-sm hover:bg-white' : 'opacity-40'
+          viewMode === 'grid' ? 'bg-white shadow-sm hover:bg-white' : 'opacity-40'
         )}
-        onClick={() => props.onViewModeChange('grid')}>
+        onClick={() => setViewMode('grid')}>
         <Grid3X3 className="h-4 w-4" />
       </Button>
     </div>

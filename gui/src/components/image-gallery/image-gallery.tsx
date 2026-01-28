@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { AppHeader } from '@/components/layout/app-header';
 import { AppSidebar } from '@/components/layout/app-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
@@ -12,22 +11,14 @@ import { UploadDropzone, useUppy } from './upload';
 
 export const ImageGallery = () => {
 
-  const { images, deleteImages } = useImages();
+  const { images } = useImages();
 
   const viewMode = useUIState(state => state.viewMode);
-
-  const selectedImageIds = useUIState(state => state.selectedImageIds);
-  const setSelectedImageIds = useUIState(state => state.setSelectedImageIds);
   
   const currentPreview = useUIState(state => state.currentPreview);
   const setCurrentPreview = useUIState(state => state.setCurrentPreview);
 
   const { isDragOver: isFilesOverTarget, targetRef, uppy } = useUppy();
-
-  const onDelete = useCallback(() => {
-    deleteImages([...selectedImageIds]);
-    setSelectedImageIds([]);
-  }, [selectedImageIds]);
 
   return (
     <SidebarProvider className="w-auto overflow-hidden">
@@ -41,8 +32,7 @@ export const ImageGallery = () => {
             <main className="grow flex flex-col min-h-0 bg-muted">  
               <Toolbar 
                 images={images}
-                uppy={uppy}
-                onDelete={onDelete} />
+                uppy={uppy} />
 
               <UploadDropzone 
                 className="grow overflow-hidden"
