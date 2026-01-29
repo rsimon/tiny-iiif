@@ -119,6 +119,7 @@ export const ImageGrid = () => {
             key={m.id} 
             manifest={m} />
         ))}
+        
         <SortableImageList images={sortedImages} />
       </div>
     </DndContext>

@@ -3,6 +3,7 @@ import { EllipsisVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { ManifestMetadata } from '@/types';
+import { useUIState } from '@/hooks/use-ui-state';
 
 interface FolderCardProps {
 
@@ -12,9 +13,18 @@ interface FolderCardProps {
 
 export const FolderCard = (props: FolderCardProps) => {
 
+  const setCurrentDirectory = useUIState(state => state.setCurrentDirectory);
+
   const { isOver, setNodeRef } = useDroppable({
     id: props.manifest.id,
     data: { type: 'folder' }
+  });
+
+  const onEnterFolder = () => setCurrentDirectory({ 
+    id: props.manifest.id,
+    name: props.manifest.name,
+    type: 'manifest',
+    breadcrumbs: []
   });
 
   return (
@@ -24,7 +34,9 @@ export const FolderCard = (props: FolderCardProps) => {
         'group rounded-lg border border-border bg-white',
         isOver ? 'ring-6 ring-slate-500/30' : 'image-card-shadow'
       )}>
-      <div className="relative aspect-4/3 p-1">
+      <button 
+        className="w-full relative aspect-4/3 p-1 cursor-pointer"
+        onClick={onEnterFolder}>
         <div className="size-full relative rounded-sm bg-muted flex items-center justify-center">
           <div 
             className={cn(
@@ -40,7 +52,7 @@ export const FolderCard = (props: FolderCardProps) => {
             )} />
           </div>
         </div>
-      </div>
+      </button>
 
       <div className="p-1 pt-0 pl-3 flex items-center justify-between">
         <span className="text-xs font-medium text-slate-950 truncate flex-1">

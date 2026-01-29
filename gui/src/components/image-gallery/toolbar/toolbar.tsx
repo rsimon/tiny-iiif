@@ -7,6 +7,7 @@ import { UploadButton } from './button-upload/upload-button';
 import { NewManifestButton } from './button-new-manifest';
 import { DeleteSelectedButton } from './button-delete-selected/delete-selected-button';
 import { SelectAllButton } from './button-select-all';
+import { NavBreadcrumbs } from './nav-breadcrumbs';
 
 interface ToolbarProps {
 
@@ -30,9 +31,7 @@ export const Toolbar = (props: ToolbarProps) => {
       <div className="flex items-center gap-2">
         <SidebarTrigger className="mb-px" />
 
-        <nav className="text-slate-700 mr-8 text-sm font">
-          All Images
-        </nav>
+        <NavBreadcrumbs />
 
         <NewManifestButton />
 

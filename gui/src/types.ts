@@ -1,3 +1,21 @@
+export interface Directory {
+
+  id: string;
+
+  name: string;
+
+  type: DirectoryType;
+
+}
+
+export interface CurrentDirectory extends Directory {
+
+  breadcrumbs: Directory[];
+
+}
+
+export type DirectoryType = 'manifest' | 'range';
+
 export type ViewMode = 'grid' | 'table';
 
 export interface ImageMetadata {

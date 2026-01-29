@@ -1,7 +1,10 @@
-import type { ImageMetadata, ViewMode } from '@/types';
+import type { CurrentDirectory, ImageMetadata, ViewMode } from '@/types';
 import { create } from 'zustand';
 
 export interface UIState {
+
+  currentDirectory?: CurrentDirectory;
+  setCurrentDirectory: (current?: CurrentDirectory) => void;
 
   viewMode: ViewMode;
   setViewMode: (mode: ViewMode) => void;
@@ -22,6 +25,9 @@ export interface UIState {
 }
 
 export const useUIState = create<UIState>((set) => ({
+
+  currentDirectory: undefined, // Root
+  setCurrentDirectory: current => set({ currentDirectory: current }),
 
   viewMode: 'grid',
   setViewMode: mode => set({ viewMode: mode }),
