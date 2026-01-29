@@ -1,4 +1,4 @@
-export interface Directory {
+export interface SubDirectory {
 
   id: string;
 
@@ -6,13 +6,25 @@ export interface Directory {
 
   type: DirectoryType;
 
+  breadcrumbs: { id: string, name: string }[];
+
+  folders?: SubDirectory[];
+
+  images?: ImageMetadata[];
+
 }
 
-export interface CurrentDirectory extends Directory {
+export interface RootDirectory {
 
-  breadcrumbs: Directory[];
+  type: 'root';
+
+  folders?: SubDirectory[];
+
+  images?: ImageMetadata[];
 
 }
+
+export type Directory = RootDirectory | SubDirectory;
 
 export type DirectoryType = 'manifest' | 'range';
 
@@ -24,12 +36,16 @@ export interface ImageMetadata {
 
   filename: string;
 
-  format: ImageFormat;
-
   width: number;
 
   height: number;
-        
+
+}
+
+export interface ExtendedImageMetadata extends ImageMetadata {
+
+  format: ImageFormat;
+
   uploadedAt: string;
         
   fileSize: number;
@@ -44,7 +60,7 @@ export interface APIListImagesResponse {
 
   limit: number;
 
-  images: ImageMetadata[];
+  images: ExtendedImageMetadata[];
 
 }
 
