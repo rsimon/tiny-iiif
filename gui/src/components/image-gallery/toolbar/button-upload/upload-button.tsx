@@ -19,7 +19,7 @@ export const UploadButton = (props: UploadButtonProps) => {
         variant="ghost"
         onClick={onClickUpload}>
         <Upload className="size-4" />
-        Upload Images
+        Upload
       </Button>
 
       <input

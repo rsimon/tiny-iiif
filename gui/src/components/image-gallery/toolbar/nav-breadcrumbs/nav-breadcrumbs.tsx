@@ -14,26 +14,27 @@ export const NavBreadcrumbs = () => {
   const currentDirectory = useUIState(state => state.currentDirectory);
   const setCurrentDirectory = useUIState(state => state.setCurrentDirectory);
 
-  console.log('current', currentDirectory);
+  const goTo = (directory?: Directory) => {
+    const breadcrumbs = currentDirectory?.breadcrumbs || [];
 
-  const onGoTo = (directory: Directory) => {
-    const { breadcrumbs } = currentDirectory;
-
-    const destination = {
+    const destination = directory ? {
       ...directory,
       breadcrumbs: breadcrumbs.slice(0, breadcrumbs.indexOf(directory))
-    };
-
-    console.log('go to', destination);
+    } : undefined;
 
     setCurrentDirectory(destination);
   }
 
   return (
-    <Breadcrumb>
-      <BreadcrumbList>
+    <Breadcrumb className="mr-10">
+      <BreadcrumbList className="flex-nowrap">
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">All Images</BreadcrumbLink>
+          <Button
+            variant="link"
+            className="px-0 text-xs md:text-sm"
+            onClick={() => goTo()}>
+            All
+          </Button>
         </BreadcrumbItem>
 
         {currentDirectory?.breadcrumbs.map(dir => (
@@ -43,12 +44,23 @@ export const NavBreadcrumbs = () => {
             <BreadcrumbItem>
               <Button
                 variant="ghost"
-                onClick={() => onGoTo(dir)}>
+                onClick={() => goTo(dir)}
+                className="text-xs md:text-sm">
                 {dir.name}
               </Button>
             </BreadcrumbItem>
           </>
         ))}
+
+        {currentDirectory && (
+          <>
+            <BreadcrumbSeparator />
+
+            <BreadcrumbItem className="text-xs md:text-sm">
+              {currentDirectory.name}
+            </BreadcrumbItem>
+          </>
+        )}
       </BreadcrumbList>
     </Breadcrumb>
   )
