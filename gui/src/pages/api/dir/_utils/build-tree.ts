@@ -42,8 +42,7 @@ export const buildDirectoryTree = async (): Promise<DirectoryTree> => {
 
   for (const m of manifestFiles) {
     try {
-      const raw = await fs.readFile(path.join(META_DIR, m), 'utf8');
-
+      const raw = await fs.readFile(path.join(MANIFESTS_DIR, m), 'utf8');
       const manifest = JSON.parse(raw);
 
       const id = parseId(manifest);
@@ -56,7 +55,7 @@ export const buildDirectoryTree = async (): Promise<DirectoryTree> => {
       }
 
       const images = parseImages(manifest);
-        
+
       manifests.push({
         id,
         name, 
@@ -70,7 +69,7 @@ export const buildDirectoryTree = async (): Promise<DirectoryTree> => {
     }
   }
 
-  const allImages = metafiles.map(m => parseId(m));
+  const allImages = metafiles.map(m => m.replace(/\.[^.]+$/, ''));
   const imagesInManifests = new Set(manifests.flatMap(m => (m.images || []).map(i => i.id)));
 
   const unassignedImageIds = allImages.filter(i => !imagesInManifests.has(i));

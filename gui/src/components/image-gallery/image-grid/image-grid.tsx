@@ -76,7 +76,9 @@ const measuringConfig = {
 
 export const ImageGrid = () => {
 
-  const { manifests, images } = useDirectory();
+  const { manifests, images, moveImagesToFolder } = useDirectory();
+
+  const selectedImageIds = useUIState(state => state.selectedImageIds);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -96,9 +98,17 @@ export const ImageGrid = () => {
   const onDragEnd = (event: any) => {
     const { active, over } = event;
 
-    if (over.data.current.type === 'folder') return;
+    if (over.data.current.type === 'folder') {
+      if (selectedImageIds.size === 0) return;
 
-    if (active.id !== over.id) {
+      const destination = manifests.find(m => m.id === over.id);
+
+      const selected = [...selectedImageIds]
+        .map(id => images.find(i => i.id === id)).filter(Boolean);
+
+      moveImagesToFolder(destination, selected);
+    } else if (active.id !== over.id) {
+      // Change sorting (dummy implementation!)
       setSortedImages(items => {
         const oldIndex = items.findIndex(i => i.id === active.id);
         const newIndex = items.findIndex(i => i.id === over.id);
@@ -117,10 +127,11 @@ export const ImageGrid = () => {
         {manifests.map(m => (
           <FolderCard 
             key={m.id} 
-            manifest={m} />
+            folder={m} />
         ))}
         
-        <SortableImageList images={sortedImages} />
+        <SortableImageList 
+          images={sortedImages} />
       </div>
     </DndContext>
   )

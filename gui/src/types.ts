@@ -24,6 +24,9 @@ export interface RootDirectory {
 
 }
 
+export const isSubDirectory = (dir: RootDirectory | SubDirectory): dir is SubDirectory =>
+  (dir as SubDirectory)?.id !== undefined;
+
 export type Directory = RootDirectory | SubDirectory;
 
 export type DirectoryType = 'manifest' | 'range';
@@ -69,26 +72,6 @@ export interface APIListImagesResponse {
 // - https://cantaloupe-project.github.io/manual/5.0/processors.html
 export type ImageFormat = 'jpeg' | 'jpg' | 'jp2' | 'png' | 'tiff' | 'tif' | 'webp';
 
-export interface ManifestMetadata {
-
-  id: string;
-
-  name: string;
-
-}
-
-export interface APIListManifestsResponse {
-
-  total: number;
-
-  offset: number;
-
-  limit: number;
-
-  manifests: ManifestMetadata[];
-
-}
-
 export interface APIListDirectoryResponse {
 
   total: number;
@@ -101,20 +84,13 @@ export interface APIListDirectoryResponse {
 
 }
 
-interface APIListDirectoryResponseManifestItem extends ManifestMetadata {
-
-  type: 'manifest'
-
-}
-
-interface APIListDirectoryResponseImageItem extends ImageMetadata {
+export interface APIListDirectoryResponseImageItem extends ImageMetadata {
 
   type: 'image'
 
 }
 
-export type APIListDirectoryResponseItem = 
-  APIListDirectoryResponseManifestItem | APIListDirectoryResponseImageItem;
+export type APIListDirectoryResponseItem = SubDirectory | APIListDirectoryResponseImageItem;
 
 
 

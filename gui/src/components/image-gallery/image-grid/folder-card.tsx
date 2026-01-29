@@ -2,12 +2,12 @@ import { useDroppable } from '@dnd-kit/core';
 import { EllipsisVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import type { CurrentDirectory, ManifestMetadata } from '@/types';
+import type { SubDirectory } from '@/types';
 import { useUIState } from '@/hooks/use-ui-state';
 
 interface FolderCardProps {
 
-  manifest: ManifestMetadata;
+  folder: SubDirectory;
 
 }
 
@@ -16,20 +16,11 @@ export const FolderCard = (props: FolderCardProps) => {
   const setCurrentDirectory = useUIState(state => state.setCurrentDirectory);
 
   const { isOver, setNodeRef } = useDroppable({
-    id: props.manifest.id,
+    id: props.folder.id,
     data: { type: 'folder' }
   });
 
-  const onEnterFolder = () => {
-    const destination: CurrentDirectory = { 
-      id: props.manifest.id,
-      name: props.manifest.name,
-      type: 'manifest',
-      breadcrumbs: []
-    };
-
-    setCurrentDirectory(destination);
-  }
+  const onEnterFolder = () => setCurrentDirectory(props.folder);
 
   return (
     <div 
@@ -60,7 +51,7 @@ export const FolderCard = (props: FolderCardProps) => {
 
       <div className="p-1 pt-0 pl-3 flex items-center justify-between">
         <span className="text-xs font-medium text-slate-950 truncate flex-1">
-          {props.manifest.name}
+          {props.folder.name}
         </span>
 
         <Button
