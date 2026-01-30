@@ -79,6 +79,7 @@ export const ImageGrid = () => {
   const { manifests, images, moveImagesToFolder } = useDirectory();
 
   const selectedImageIds = useUIState(state => state.selectedImageIds);
+  const setSelectedImageIds = useUIState(state => state.setSelectedImageIds);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -107,6 +108,7 @@ export const ImageGrid = () => {
         .map(id => images.find(i => i.id === id)).filter(Boolean);
 
       moveImagesToFolder(destination, selected);
+      setSelectedImageIds([]);
     } else if (active.id !== over.id) {
       // Change sorting (dummy implementation!)
       setSortedImages(items => {

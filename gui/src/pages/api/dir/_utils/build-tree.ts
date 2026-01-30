@@ -18,7 +18,7 @@ const parseName = (manifest: any) => manifest?.label?.en?.[0];
 
 const parseImages = (manifest: any): ImageMetadata[] => 
   manifest?.items?.map((i: any) => { 
-    const id = parseId(i.id);
+    const id = i.id?.split('/').pop()
     const name = i.label?.en?.[0];
     const { width, height } = i;
 
@@ -55,6 +55,9 @@ export const buildDirectoryTree = async (): Promise<DirectoryTree> => {
       }
 
       const images = parseImages(manifest);
+
+      console.log('images in manifest ' + id);
+      console.log(images);
 
       manifests.push({
         id,

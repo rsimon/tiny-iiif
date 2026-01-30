@@ -33,12 +33,12 @@ export const useImages = () => {
   });
 
   const refreshImages = () =>
-    queryClient.invalidateQueries({ queryKey: ['images'] });
+    queryClient.invalidateQueries({ queryKey: ['directory'] });
 
   const deleteImages = useMutation({
     mutationFn: (imageIds: string[]) => remove(imageIds),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['images'] });
+      queryClient.invalidateQueries({ queryKey: ['directory'] });
     }
   });
 

@@ -74,7 +74,8 @@ export const ImageCard = (props: ImageCardProps) => {
       style={style} 
       className={cn(
         'group rounded-lg bg-white image-card-shadow border border-border cursor-grab active:cursor-grabbing',
-        props.isDragged ? 'opacity-30' : isDragging ? 'z-50 opacity-0' : isInitialMount.current && 'transition-all duration-200 animate-fade-in'
+        props.isDragged ? 'opacity-30' : isDragging ? 'z-50 opacity-0' : undefined,
+        'transition-all duration-200 animate-fade-in'
       )}>
       <div 
         className="relative aspect-4/3 p-1"

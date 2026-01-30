@@ -33,7 +33,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
     items: [
       ...items,
       ...images.map((i, idx) => ({
-        id: `http://localhost/manifests/${manifest.id}/canvas/${items.length + idx + 1}`,
+        id: `http://localhost/manifests/${folder}/canvas/${i.id}`,
         type: 'Canvas',
         label: {
           en: [
@@ -43,10 +43,10 @@ export const PATCH: APIRoute = async ({ params, request }) => {
         height: i.height,
         width: i.width,
         items: [{
-          id: `http://localhost/manifests/${manifest.id}/canvas/${items.length + idx + 1}/page/1`,
+          id: `http://localhost/manifests/${folder}/canvas/${i.id}/page/1`,
           type: 'AnnotationPage',
           items: [{
-            id: `http://localhost/manifests/${manifest.id}/canvas/${items.length + idx + 1}/annotation/1`,
+            id: `http://localhost/manifests/${folder}/canvas/${i.id}/annotation/1`,
             type: 'Annotation',
             motivation: 'painting',
             body: {
@@ -60,7 +60,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
                 type: 'ImageService2'
               }]
             },
-            target: `http://localhost/manifests/${manifest.id}/canvas/${items.length + idx + 1}`
+            target: `http://localhost/manifests/${folder}/canvas/${i.id}`
           }]
         }]
       }))

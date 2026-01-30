@@ -1,6 +1,7 @@
 import { AppHeader } from '@/components/layout/app-header';
 import { AppSidebar } from '@/components/layout/app-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import { useUIState } from '@/hooks/use-ui-state';
 import { Toolbar } from './toolbar';
 import { ImageGrid } from './image-grid';
@@ -19,36 +20,38 @@ export const ImageGallery = () => {
 
   return (
     <SidebarProvider className="w-auto overflow-hidden">
-      <div className="h-screen grow flex flex-col bg-background">
-        <AppHeader />
+      <TooltipProvider>
+        <div className="h-screen grow flex flex-col bg-background">
+          <AppHeader />
 
-        <div className="flex-1 flex min-h-0">
-          <AppSidebar />
+          <div className="flex-1 flex min-h-0">
+            <AppSidebar />
 
-          <SidebarInset>
-            <main className="grow flex flex-col min-h-0 bg-muted">  
-              <Toolbar uppy={uppy} />
+            <SidebarInset>
+              <main className="grow flex flex-col min-h-0 bg-muted">  
+                <Toolbar uppy={uppy} />
 
-              <UploadDropzone 
-                className="grow overflow-hidden"
-                targetRef={targetRef}
-                showOverlay={isFilesOverTarget}>
-                <div className="-top-full h-full p-6 overflow-y-auto">
-                  {viewMode === 'grid' ? (
-                    <ImageGrid />
-                  ) : (
-                    <ImageTable />
-                  )}
-                </div>
-              </UploadDropzone>
-            </main>
-          </SidebarInset>
+                <UploadDropzone 
+                  className="grow overflow-hidden"
+                  targetRef={targetRef}
+                  showOverlay={isFilesOverTarget}>
+                  <div className="-top-full h-full p-6 overflow-y-auto">
+                    {viewMode === 'grid' ? (
+                      <ImageGrid />
+                    ) : (
+                      <ImageTable />
+                    )}
+                  </div>
+                </UploadDropzone>
+              </main>
+            </SidebarInset>
+          </div>
         </div>
-      </div>
 
-      <IIIFPreview
-        image={currentPreview} 
-        onClose={() => setCurrentPreview(undefined)} />
+        <IIIFPreview
+          image={currentPreview} 
+          onClose={() => setCurrentPreview(undefined)} />
+      </TooltipProvider>
     </SidebarProvider>
   )
 

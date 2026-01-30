@@ -26,7 +26,8 @@ export const NewManifestDialog = (props: NewManifestDialogProps) => {
 
   const { createManifest } = useManifests();
   
-  const onSave = () => createManifest(name);
+  const onSave = () =>
+    createManifest(name).then(() => props.onClose());
 
   return (
     <Dialog open={props.open} onOpenChange={open => { if (!open) props.onClose() }}>
@@ -43,9 +44,9 @@ export const NewManifestDialog = (props: NewManifestDialogProps) => {
 
           <Input
             id="name"
+            autoComplete="off"
             value={name}
-            onChange={evt => setName(evt.target.value)}
-          />
+            onChange={evt => setName(evt.target.value)} />
         </div>
             
         <DialogFooter>

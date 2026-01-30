@@ -17,7 +17,7 @@ export const GET: APIRoute = async ({ url }) => {
 
   const directory = folder 
     ? tree.getManifest(folder)
-    : tree.root; 
+    : tree.root;
 
   const allItems: APIListDirectoryResponseItem[] = [
     ...(directory.folders || []),
