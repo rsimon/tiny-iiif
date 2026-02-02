@@ -2,7 +2,7 @@ FROM node:lts
 
 WORKDIR /app
 
-COPY .env .
+# COPY .env .
 COPY tsconfig.json .
 COPY package.json .
 COPY . .

@@ -24,9 +24,13 @@ services:
     container_name: tiny-iiif-nginx
     ports:
       - "80:80"
+    environment:
+      - TINY_USERNAME=${TINY_USERNAME}
+      - TINY_PASSWORD=${TINY_PASSWORD}
     volumes:
       - ./nginx/conf/:/etc/nginx/conf.d/:ro
       - ./data/manifests/:/var/www/manifests:ro
+      - ./nginx/entrypoint.sh:/docker-entrypoint.d/99-generate-htpasswd.sh:ro
     depends_on:
       - cantaloupe
       - tiny
