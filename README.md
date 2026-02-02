@@ -9,27 +9,23 @@ A minimal Docker-based IIIF server. Backed by Cantaloupe, NGINX and a tiny admin
 
 ## Installation
 
+- Create a copy of the file `.env.example` called `.env``
+
+  ```
+  cp .env.example .env
+  ```
+
+- Edit the file to change your username and password for the tiny admin GUI. (Otherwise, the default loing is tiny / tiny). 
+
 - Run `docker compose up` to launch:
   - Cantaloupe
   - tiny.iiif admin environment
   - NGINX proxy
+
 - NGINX will map the following routes:
   - `/iiif` to Cantaloupe
   - `/manifests` to the static file manifest folder
   - `/tiny` to the admin GUI
-- The default username and password for the admin GUI are tiny/tiny 
-
-### Changing Username and Password
-
-**Important:** Change the default login credentials before deploying to production!
-
-```sh
-# Generate new credentials
-docker run --rm -it httpd:alpine htpasswd -nb your-username your-password > nginx/.htpasswd
-
-# Restart nginx to apply changes
-docker-compose restart nginx
-```
 
 ## Development
 
