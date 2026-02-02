@@ -2,9 +2,11 @@
 
 Publish your images as IIIF in a minute - or less!
 
+![Screenshot of the tiny.iiif admin GUI](/screenshot.jpg "Screenshot of the tiny.iiif admin GUI")
+
 ## Overview
 
-**tiny.iiif* is a minimal IIIF server. It fills the gap between hand-editing your own Presentation manifests and setting up a full collection management system.
+**tiny.iiif** is a minimal IIIF server. It fills the gap between hand-editing your own Presentation manifests and setting up a full collection management system.
 
 ## Features
 - **Drag & drop images** → instant IIIF Image Service (version 2 and 3) powered by Cantaloupe.
