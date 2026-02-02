@@ -1,6 +1,6 @@
 # tiny.iiif
 
-Publish your images as IIIF in a minute - or less!
+Publish your images as [IIIF](https://iiif.io/) in a minute - or less!
 
 ![Screenshot of the tiny.iiif admin GUI](/screenshot.jpg "Screenshot of the tiny.iiif admin GUI")
 
@@ -9,11 +9,11 @@ Publish your images as IIIF in a minute - or less!
 **tiny.iiif** is a minimal IIIF server. It fills the gap between running a full collection management system, and hand-editing your own Presentation manifest files.
 
 ## Features
-- **Drag & drop images** → instant IIIF Image Service (version 2 and 3) powered by Cantaloupe.
+- **Drag & drop images** → instant IIIF Image Service (version 2 and 3) powered by [Cantaloupe](https://cantaloupe-project.github.io/).
 - **Create a folder, add images** → instant IIIF Presentation v3 manifest
 - **Zero configuration** → works out of the box with sensible defaults
 - **User-friendly admin GUI** → quick, modern, easy to use
-- **Production-ready** → Docker-based deployment with NGINX reverse proxy
+- **Production-ready** → Docker-based deployment with [NGINX](https://nginx.org/) as reverse proxy
 
 ## Prerequisites
 
@@ -41,14 +41,9 @@ Publish your images as IIIF in a minute - or less!
    - IIIF Image API: http://localhost/iiif
    - Manifests: http://localhost/manifests
 
-- NGINX will map the following routes:
-  - `/iiif` to Cantaloupe
-  - `/manifests` to the static file manifest folder
-  - `/tiny` to the admin GUI
-
 ## Usage
 
-Once tiny.iiif is running:
+Once **tiny.iiif** is running:
 
 1. Open the admin GUI at http://localhost/tiny
 2. Log in with your credentials (default: `tiny` / `tiny`)
@@ -57,9 +52,11 @@ Once tiny.iiif is running:
 
 ## Development
 
-This repository includes a dedicated Docker setup for developers working on the **admin GUI**. In development mode, the backend (Cantaloup and NGINX) run in Docker, but the admin GUI runs locally with live code reload.
+This repository includes a dedicated Docker setup for developers working on the admin GUI.
 
-### Additinoal Prerequisites
+In development mode, the backend (Cantaloup and NGINX) run in Docker, but the admin GUI runs locally with live code reload.
+
+### Additional Prerequisites
 
 - NodeJS 20+
 - npm 11+
