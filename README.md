@@ -1,67 +1,96 @@
 # tiny.iiif
 
-A minimal Docker-based IIIF server. Backed by Cantaloupe, NGINX and a tiny admin GUI.
+Publish your images as IIIF in a minute - or less!
+
+## Overview
+
+**tiny.iiif* is a minimal IIIF server. It fills the gap between hand-editing your own Presentation manifests and setting up a full collection management system.
+
+## Features
+- **Drag & drop images** → instant IIIF Image Service (version 2 and 3) powered by Cantaloupe.
+- **Create a folder, add images** → instant IIIF Presentation v3 manifest
+- **Zero configuration** → works out of the box with sensible defaults
+- **User-friendly admin GUI** → quick, modern, easy to use
+- **Production-ready** → Docker-based deployment with NGINX reverse proxy
 
 ## Prerequisites
 
 - Docker 24.0+
 - Docker Compose 2.x
 
-## Installation
+## Quick Start
 
-- Create a copy of the file `.env.example` called `.env``
+1. **Create your environment file**
 
-  ```
-  cp .env.example .env
-  ```
+   ```sh
+   cp .env.example .env
+   ```
 
-- Edit the file to change your username and password for the tiny admin GUI. (Otherwise, the default loing is tiny / tiny). 
+2. **Configure authentication**: edit `.env` to change your username and password for the admin GUI. (Default credentials are `tiny` / `tiny`.)
 
-- Run `docker compose up` to launch:
-  - Cantaloupe
-  - tiny.iiif admin environment
-  - NGINX proxy
+3. **Launch tiny.iiif**
+
+   ```sh 
+   docker compose up
+   ````
+
+4. **Access services**
+   - Admin GUI: http://localhost/tiny
+   - IIIF Image API: http://localhost/iiif
+   - Manifests: http://localhost/manifests
 
 - NGINX will map the following routes:
   - `/iiif` to Cantaloupe
   - `/manifests` to the static file manifest folder
   - `/tiny` to the admin GUI
 
+## Usage
+
+Once tiny.iiif is running:
+
+1. Open the admin GUI at http://localhost/tiny
+2. Log in with your credentials (default: `tiny` / `tiny`)
+3. Drag and drop images to publish them via Cantaloupe
+4. Create folders and add images to publish IIIF Presentation manifests
+
 ## Development
 
-This repository includes a dedicated Docker setup for development, intended for developers working on the admin GUI, with hot reloading.
+This repository includes a dedicated Docker setup for developers working on the **admin GUI**. In development mode, the backend (Cantaloup and NGINX) run in Docker, but the admin GUI runs locally with live code reload.
 
-In development mode, only the backend (Cantaloup and NGINX) is launched via Docker. The admin GUI must be started manually. You need the following pre-requisites:
+### Additinoal Prerequisites
 
 - NodeJS 20+
 - npm 11+
 
 ### Start Development Backend
 
-- Start the backend
+1. **Start the backend**
 
-  ```sh 
-  docker compose -f ./docker-compose.dev.yml up --build` to start the backend
-  ```
+   ```sh 
+   docker compose -f ./docker-compose.dev.yml up --build` to start the backend
+   ```
 
-- Change into the `tiny` folder
+2. **Install frontend dependencies**
 
-  ```sh
-  cd tiny
-  ````
+   ```sh
+   cd tiny
+   npm install
+   ````
 
-- Install dependencies
-
-  ```sh
-  npm install
-  ```
-
-- Start development server
+3. **Start development server**
   
-  ```sh
-  npm start
-  ````
+   ```sh
+   npm start
+   ````
 
-- Go to <http://localhost:4321>
+4. **Access the admin GUI** at <http://localhost:4321>
+
+## License
+
+[MIT](LICENSE)
+
+---
+
+**Status:** Work in progress. Contributions and feedback welcome!
 
 
