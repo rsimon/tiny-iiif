@@ -1,16 +1,27 @@
 services:
   cantaloupe:
     build: ./cantaloupe
-    container_name: mini-iiif-cantaloupe
+    container_name: tiny-iiif-cantaloupe
     expose:
       - "8182"
     volumes:
       - ./data/images:/images
     restart: unless-stopped
 
+  tiny:
+    build: ./tiny
+    container_name: tiny-iiif-gui
+    expose:
+      - "4321"
+    volumes:
+      - ./data/:/data
+    restart: always
+    depends_on:
+      - cantaloupe
+
   nginx:
     image: nginx:alpine
-    container_name: mini-iiif-nginx
+    container_name: tiny-iiif-nginx
     ports:
       - "80:80"
     volumes:
@@ -18,3 +29,4 @@ services:
       - ./data/manifests/:/var/www/manifests:ro
     depends_on:
       - cantaloupe
+      - tiny

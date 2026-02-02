@@ -43,7 +43,7 @@ export const Toolbar = (props: ToolbarProps) => {
         {isRoot ? (
           <NewManifestButton />
         ) : (
-          <CopyURLButton url={`http://localhost/manifests/${currentDirectory.id}.json`} />
+          <CopyURLButton url={`/manifests/${currentDirectory.id}.json`} />
         )}
       </div>
 

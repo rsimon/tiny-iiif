@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useUIState } from './use-ui-state';
 import type { APIListImagesResponse } from '@/types';
 
-export const API_BASE = '/api';
+export const API_BASE = '/tiny/api';
 
 const list = async (currentPage: number, pageSize: number): Promise<APIListImagesResponse> =>
   fetch(`${API_BASE}/images?offset=${pageSize * (currentPage - 1)}&limit=${pageSize}`)

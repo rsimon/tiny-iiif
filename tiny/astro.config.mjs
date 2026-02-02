@@ -4,6 +4,7 @@ import node from '@astrojs/node';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  base: '/tiny',
   adapter: node({
     mode: 'standalone',
   }),

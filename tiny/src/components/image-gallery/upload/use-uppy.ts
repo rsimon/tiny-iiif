@@ -29,13 +29,15 @@ export const useUppy= () => {
     });
 
     uppy.use(XHRUpload, {
-      endpoint: '/api/images',
+      endpoint: '/tiny/api/images',
       formData: true,
       fieldName: 'file',
       limit: 1
     });
 
     uppy.on('upload-success', refreshImages);
+
+    // TODO error feedback!
 
     setUppy(uppy);
 

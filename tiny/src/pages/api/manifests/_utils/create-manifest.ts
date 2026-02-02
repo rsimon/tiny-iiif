@@ -1,17 +1,16 @@
 import path from 'path';
 import fs from 'fs/promises';
 import { customAlphabet } from 'nanoid';
-import type { ManifestMetadata } from '@/types';
 import { MANIFESTS_DIR } from '..';
 
 const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 10);
 
-export const createManifest = async (name: string): Promise<ManifestMetadata> => {
+export const createManifest = async (name: string) => {
   const id = nanoid();
 
   const manifest = {
     '@context': 'http://iiif.io/api/presentation/3/context.json',
-    id: `http://localhost/manifests/${id}.json`,
+    id: `/manifests/${id}.json`,
     type: 'Manifest',
     label: {
       en: [

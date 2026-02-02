@@ -7,7 +7,7 @@ import type { ExtendedImageMetadata } from '@/types';
 
 export const prerender = false;
 
-export const PATCH: APIRoute = async ({ params, request }) => {
+export const PATCH: APIRoute = async ({ params, request, url }) => {
   const body = await request.json();
 
   const { folder } = params;
@@ -33,7 +33,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
     items: [
       ...items,
       ...images.map((i, idx) => ({
-        id: `http://localhost/manifests/${folder}/canvas/${i.id}`,
+        id: `${url.origin}/manifests/${folder}/canvas/${i.id}`,
         type: 'Canvas',
         label: {
           en: [
@@ -43,24 +43,24 @@ export const PATCH: APIRoute = async ({ params, request }) => {
         height: i.height,
         width: i.width,
         items: [{
-          id: `http://localhost/manifests/${folder}/canvas/${i.id}/page/1`,
+          id: `${url.origin}/manifests/${folder}/canvas/${i.id}/page/1`,
           type: 'AnnotationPage',
           items: [{
-            id: `http://localhost/manifests/${folder}/canvas/${i.id}/annotation/1`,
+            id: `${url.origin}/manifests/${folder}/canvas/${i.id}/annotation/1`,
             type: 'Annotation',
             motivation: 'painting',
             body: {
-              id: `http://localhost/iiif/2/${i.id}/full/max/0/default.jpg`,
+              id: `${url.origin}/iiif/2/${i.id}/full/max/0/default.jpg`,
               type: 'Image',
               height: i.height,
               width: i.width,
               service: [{
-                id: `http://localhost/iiif/2/${i.id}`,
+                id: `${url.origin}/iiif/2/${i.id}`,
                 profile: 'level1',
                 type: 'ImageService2'
               }]
             },
-            target: `http://localhost/manifests/${folder}/canvas/${i.id}`
+            target: `${url.origin}/manifests/${folder}/canvas/${i.id}`
           }]
         }]
       }))

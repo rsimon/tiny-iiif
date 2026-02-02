@@ -28,7 +28,7 @@ export function useImages() {
       const images: ImageFile[] = data.images.map((img: ImageMetadata) => ({
         id: img.id,
         name: img.filename,
-        url: `http://localhost/iiif/2/${img.id}/full/max/0/default.jpg`, // Cantaloupe IIIF URL
+        url: `/iiif/2/${img.id}/full/max/0/default.jpg`, // Cantaloupe IIIF URL
         width: img.width,
         height: img.height,
         size: img.fileSize,

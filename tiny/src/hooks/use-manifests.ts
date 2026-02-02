@@ -1,7 +1,7 @@
 import type { SubDirectory } from '@/types';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-export const API_BASE = '/api';
+export const API_BASE = '/tiny/api';
 
 const create = async (name: string): Promise<SubDirectory> => 
   fetch(`${API_BASE}/manifests`, {

@@ -5,3 +5,4 @@ data/manifests/*
 data/meta/*
 !data/*/.gitkeep
 .DS_Store
+.env

@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { isSubDirectory, type APIListDirectoryResponse, type ImageMetadata, type SubDirectory } from '@/types';
 import { useUIState } from './use-ui-state';
 
-export const API_BASE = '/api';
+export const API_BASE = '/tiny/api';
 
 const list = async (currentPage: number, limit: number, currentDirectory?: string): Promise<APIListDirectoryResponse> => {
   const offset = limit * (currentPage - 1);
