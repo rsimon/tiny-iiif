@@ -76,7 +76,7 @@ const measuringConfig = {
 
 export const ImageGrid = () => {
 
-  const { manifests, images, moveImagesToFolder } = useDirectory();
+  const { folders, images, moveImagesToFolder } = useDirectory();
 
   const selectedImageIds = useUIState(state => state.selectedImageIds);
   const setSelectedImageIds = useUIState(state => state.setSelectedImageIds);
@@ -102,7 +102,7 @@ export const ImageGrid = () => {
     if (over.data.current.type === 'folder') {
       if (selectedImageIds.size === 0) return;
 
-      const destination = manifests.find(m => m.id === over.id);
+      const destination = folders.find(m => m.id === over.id);
 
       const selected = [...selectedImageIds]
         .map(id => images.find(i => i.id === id)).filter(Boolean);
@@ -126,10 +126,10 @@ export const ImageGrid = () => {
       sensors={sensors}
       onDragEnd={onDragEnd}>
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-        {manifests.map(m => (
+        {folders.map(folder => (
           <FolderCard 
-            key={m.id} 
-            folder={m} />
+            key={folder.id} 
+            folder={folder} />
         ))}
         
         <SortableImageList 

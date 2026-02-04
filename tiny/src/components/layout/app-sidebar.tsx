@@ -1,4 +1,7 @@
 import { ChartLine, ChevronDown, ChevronLeft, Images, Library } from 'lucide-react';
+import { Collapsible, CollapsibleContent } from '../ui/collapsible';
+import { CollapsibleTrigger } from '@radix-ui/react-collapsible';
+import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import {
   Sidebar,
@@ -8,12 +11,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
-  SidebarMenuSubButton,
   useSidebar
 } from '@/components/ui/sidebar';
-import { Collapsible, CollapsibleContent } from '../ui/collapsible';
-import { CollapsibleTrigger } from '@radix-ui/react-collapsible';
-import { cn } from '@/lib/utils';
 
 export const AppSidebar = () => {
 

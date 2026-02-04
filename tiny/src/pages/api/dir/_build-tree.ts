@@ -1,14 +1,13 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { MANIFESTS_DIR } from '../../manifests';
-import { META_DIR } from '../../images';
-import type { ExtendedImageMetadata, ImageMetadata, RootDirectory, SubDirectory } from '@/types';
+import { MANIFESTS_DIR, META_DIR } from '../_paths';
+import type { ExtendedImageMetadata, ImageMetadata, Manifest, RootFolder } from '@/types';
 
 export interface DirectoryTree {
 
-  root: RootDirectory;
+  root: RootFolder;
 
-  getManifest(id: string): SubDirectory;
+  getManifest(id: string): Manifest;
 
 }
 
@@ -38,7 +37,7 @@ export const buildDirectoryTree = async (): Promise<DirectoryTree> => {
   const manifestFiles = (await fs.readdir(MANIFESTS_DIR)).filter(f => f.endsWith('.json'));
 
   // In the tiny.iiif view, each manifest is going to be represented as a directory
-  const manifests: SubDirectory[] = [];
+  const manifests: Manifest[] = [];
 
   for (const m of manifestFiles) {
     try {
@@ -56,14 +55,10 @@ export const buildDirectoryTree = async (): Promise<DirectoryTree> => {
 
       const images = parseImages(manifest);
 
-      console.log('images in manifest ' + id);
-      console.log(images);
-
       manifests.push({
         id,
         name, 
         type: 'manifest',
-        breadcrumbs: [],
         images
       });
     } catch {
@@ -91,7 +86,7 @@ export const buildDirectoryTree = async (): Promise<DirectoryTree> => {
     unassignedImages.push(metadata);
   }
 
-  const root: RootDirectory = {
+  const root: RootFolder = {
     type: 'root',
     folders: manifests,
     images: unassignedImages

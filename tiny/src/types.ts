@@ -2,7 +2,7 @@
 /** BASE TYPES                 **/
 /********************************/
 
-export interface RootDirectory {
+export interface RootFolder {
 
   type: 'root';
 
@@ -44,7 +44,9 @@ export interface ManifestRange {
 
 }
 
-export type Directory = RootDirectory | Manifest | ManifestRange;
+export type SubFolder = Manifest | ManifestRange;
+
+export type Folder = RootFolder | SubFolder;
 
 export type ViewMode = 'grid' | 'table';
 
@@ -99,16 +101,19 @@ export type DirectoryItem = Manifest | ManifestRange | ImageMetadata;
 
 export type ListDirectoryResponse = APIResponse<DirectoryItem>;
 
-export const isRootDirectory = (item: Directory): item is RootDirectory =>
-  (item as RootDirectory)?.type === 'root';
+export const isRootFolder = (item: Folder): item is RootFolder =>
+  (item as RootFolder)?.type === 'root';
 
-export const isManifest = (item: Directory | ImageMetadata): item is Manifest =>
-  (item as Manifest)?.type !== 'manifest';
+export const isManifest = (item: Folder | ImageMetadata): item is Manifest =>
+  (item as Manifest)?.type === 'manifest';
 
-export const isManifestRange = (item: Directory | ImageMetadata): item is ManifestRange =>
-  (item as ManifestRange)?.type !== 'range';
+export const isManifestRange = (item: Folder | ImageMetadata): item is ManifestRange =>
+  (item as ManifestRange)?.type === 'range';
 
-export const isImage = (item: Directory | ImageMetadata): item is ImageMetadata =>
+export const isSubFolder = (item: Folder | ImageMetadata): item is SubFolder =>
+  (item as SubFolder)?.type === 'manifest' || (item as SubFolder)?.type === 'range';
+
+export const isImage = (item: Folder | ImageMetadata): item is ImageMetadata =>
   (!('type' in item) && 'filename' in item && 'width' in item && 'height' in item);
 
 

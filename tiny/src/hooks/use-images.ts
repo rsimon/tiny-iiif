@@ -1,18 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useUIState } from './use-ui-state';
-import type { APIListImagesResponse } from '@/types';
-
-export const API_BASE = '/tiny/api';
-
-const list = async (currentPage: number, pageSize: number): Promise<APIListImagesResponse> =>
-  fetch(`${API_BASE}/images?offset=${pageSize * (currentPage - 1)}&limit=${pageSize}`)
-    .then(res => {
-      if (!res.ok) throw new Error('Failed to fetch images');
-      return res.json() as Promise<APIListImagesResponse>;
-    });
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const remove = async (ids: string[]) =>
-  fetch(`${API_BASE}/images`, {
+  fetch('/tiny/api/images', {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ ids })
@@ -24,17 +13,6 @@ const remove = async (ids: string[]) =>
 export const useImages = () => {
   const queryClient = useQueryClient();
 
-  const currentPage = useUIState((state) => state.currentPage);
-  const pageSize = useUIState((state) => state.pageSize);
-
-  const { data: { images = [] } = {}, error } = useQuery({
-    queryKey: ['images', currentPage, pageSize],
-    queryFn: () => list(currentPage, pageSize)
-  });
-
-  const refreshImages = () =>
-    queryClient.invalidateQueries({ queryKey: ['directory'] });
-
   const deleteImages = useMutation({
     mutationFn: (imageIds: string[]) => remove(imageIds),
     onSuccess: () => {
@@ -43,11 +21,9 @@ export const useImages = () => {
   });
 
   return { 
-    images, 
-    error, 
-    refreshImages,
     deleteImages: deleteImages.mutate,
     deleteImagesAsync: deleteImages.mutateAsync,
     isDeletingImages: deleteImages.isPending
-  };
+  }
+
 }

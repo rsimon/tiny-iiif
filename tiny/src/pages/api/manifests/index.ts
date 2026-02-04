@@ -3,6 +3,7 @@ import fs from 'fs/promises';
 import type { APIRoute } from 'astro';
 import { customAlphabet } from 'nanoid';
 import { MANIFESTS_DIR } from '../_paths';
+import type { Manifest } from '@/types';
 
 export const prerender = false;
 
@@ -44,8 +45,13 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const meta = await createManifest(name);
+
+    const manifest: Manifest = {
+      type: 'manifest',
+      ...meta
+    };
     
-    return new Response(JSON.stringify(meta), {
+    return new Response(JSON.stringify(manifest), {
       status: 201,
       headers: { 'Content-Type': 'application/json' },
     });

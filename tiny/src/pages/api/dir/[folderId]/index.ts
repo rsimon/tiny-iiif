@@ -1,9 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
 import type { APIRoute } from 'astro';
-import { MANIFESTS_DIR } from '../../manifests';
-import { META_DIR } from '../../images';
 import type { ExtendedImageMetadata } from '@/types';
+import { MANIFESTS_DIR, META_DIR } from '../../_paths';
 
 export const prerender = false;
 

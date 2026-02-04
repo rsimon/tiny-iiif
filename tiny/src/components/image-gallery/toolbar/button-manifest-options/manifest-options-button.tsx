@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Braces, Clipboard, EllipsisVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
-import type { SubDirectory } from '@/types';
+import type { Manifest } from '@/types';
 import { getManifestURL } from '@/lib/get-manifest-url';
 import { ManifestMetadataDialog } from './manifest-metadata-dialog';
 import {
@@ -14,7 +14,7 @@ import {
 
 interface ManifestOptionsButtonProps {
 
-  manifest: SubDirectory;
+  manifest: Manifest;
 
 }
 

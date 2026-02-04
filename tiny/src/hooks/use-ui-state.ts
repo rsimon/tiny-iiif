@@ -1,10 +1,10 @@
-import type { Directory, ImageMetadata, ViewMode } from '@/types';
+import type { Folder, ImageMetadata, ViewMode } from '@/types';
 import { create } from 'zustand';
 
 export interface UIState {
 
-  currentDirectory?: Directory;
-  setCurrentDirectory: (current?: Directory) => void;
+  currentDirectory?: Folder;
+  setCurrentDirectory: (current?: Folder) => void;
 
   viewMode: ViewMode;
   setViewMode: (mode: ViewMode) => void;

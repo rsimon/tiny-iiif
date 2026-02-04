@@ -1,9 +1,6 @@
 import type { APIRoute } from 'astro';
-import { buildDirectoryTree } from './_utils/build-tree';
-import type { 
-  APIListDirectoryResponseImageItem, 
-  APIListDirectoryResponseItem 
-} from '@/types';
+import { buildDirectoryTree } from './_build-tree';
+import type { DirectoryItem } from '@/types';
 
 export const prerender = false;
 
@@ -19,9 +16,12 @@ export const GET: APIRoute = async ({ url }) => {
     ? tree.getManifest(folder)
     : tree.root;
 
-  const allItems: APIListDirectoryResponseItem[] = [
-    ...(directory.folders || []),
-    ...(directory.images || []).map(i => ({ type: 'image', ...i }as APIListDirectoryResponseImageItem))
+  const subfolders = (directory.type === 'root' ? directory.folders : directory.ranges) || [];
+  const images = directory.images || [];
+
+  const allItems: DirectoryItem[] = [
+    ...subfolders,
+    ...images
   ];
 
   const items = allItems.slice(offset, offset + limit);

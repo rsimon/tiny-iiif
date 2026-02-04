@@ -2,12 +2,12 @@ import { useDroppable } from '@dnd-kit/core';
 import { EllipsisVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import type { SubDirectory } from '@/types';
+import type { SubFolder } from '@/types';
 import { useUIState } from '@/hooks/use-ui-state';
 
 interface FolderCardProps {
 
-  folder: SubDirectory;
+  folder: SubFolder;
 
 }
 

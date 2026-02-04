@@ -8,7 +8,7 @@ import { DeleteSelectedButton } from './button-delete-selected/delete-selected-b
 import { SelectAllButton } from './button-select-all';
 import { NavBreadcrumbs } from './nav-breadcrumbs';
 import { useUIState } from '@/hooks/use-ui-state';
-import { isSubDirectory } from '@/types';
+import { isManifest, isRootFolder } from '@/types';
 import { ManifestOptionsButton } from './button-manifest-options';
 
 interface ToolbarProps {
@@ -23,8 +23,6 @@ export const Toolbar = (props: ToolbarProps) => {
 
   const currentDirectory = useUIState(state => state.currentDirectory);
 
-  const isRoot = !isSubDirectory(currentDirectory);
-
   const onUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
     files.forEach(file => {
@@ -37,12 +35,12 @@ export const Toolbar = (props: ToolbarProps) => {
       <div className="flex items-center gap-1.5">
         <NavBreadcrumbs />
 
-        {isRoot ? (
+        {isRootFolder(currentDirectory) ? (
           <NewManifestButton />
-        ) : (
+        ) : isManifest(currentDirectory) ? (
           <ManifestOptionsButton 
             manifest={currentDirectory} />
-        )}
+        ) : null}
       </div>
 
       <div className="flex flex-row items-center gap-2 pb-1.5 md:pb-0">
