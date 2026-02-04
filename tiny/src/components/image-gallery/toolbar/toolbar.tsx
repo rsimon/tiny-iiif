@@ -9,7 +9,6 @@ import { SelectAllButton } from './button-select-all';
 import { NavBreadcrumbs } from './nav-breadcrumbs';
 import { useUIState } from '@/hooks/use-ui-state';
 import { isSubDirectory } from '@/types';
-import { CopyURLButton } from './button-copy-url';
 import { ManifestOptionsButton } from './button-manifest-options';
 
 interface ToolbarProps {
