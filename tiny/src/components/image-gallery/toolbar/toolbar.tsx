@@ -41,7 +41,8 @@ export const Toolbar = (props: ToolbarProps) => {
         {isRoot ? (
           <NewManifestButton />
         ) : (
-          <ManifestOptionsButton />
+          <ManifestOptionsButton 
+            manifest={currentDirectory} />
         )}
       </div>
 
