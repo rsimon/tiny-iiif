@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useUIState } from './use-ui-state';
 import { isRootFolder, isSubFolder, type ImageMetadata, type ListDirectoryResponse, type SubFolder } from '@/types';
 import { isImageMetadata } from 'node_modules/astro/dist/assets/types';
+import { useMemo } from 'react';
 
 const list = async (currentPage: number, limit: number, currentDirectory?: string): Promise<ListDirectoryResponse> => {
   const offset = limit * (currentPage - 1);
@@ -53,10 +54,14 @@ export const useDirectory = () => {
   const moveImagesToFolder = (folder: SubFolder, images: ImageMetadata[]) =>
     moveImages(folder.id, images.map(i => i.id)).then(refreshDirectory);
 
+  const isEmpty = useMemo(() => {
+    return (images.length + folders.length) === 0;
+  }, [images, folders]);
+
   return {
-    items,
     images, 
     folders, 
+    isEmpty,
     moveImagesToFolder,
     refreshDirectory
   }
