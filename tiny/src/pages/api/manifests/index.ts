@@ -1,26 +1,32 @@
 import path from 'path';
+import fs from 'fs/promises';
 import type { APIRoute } from 'astro';
-import { createManifest, listManifests } from './_utils';
+import { customAlphabet } from 'nanoid';
+import { MANIFESTS_DIR } from '../_paths';
 
 export const prerender = false;
 
-export const MANIFESTS_DIR = path.join(process.cwd(), '..', 'data', 'manifests');
+const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 10);
 
-export const GET: APIRoute = async ({ url }) => {
-  const offset = parseInt(url.searchParams.get('offset') || '0');
-  const limit = parseInt(url.searchParams.get('limit') || '100');
-    
-  const { manifests, total } = await listManifests(offset, limit);
+export const createManifest = async (name: string) => {
+  const id = nanoid();
 
-  return new Response(JSON.stringify({
-    total,
-    offset,
-    limit,
-    manifests
-  }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  const manifest = {
+    '@context': 'http://iiif.io/api/presentation/3/context.json',
+    id: `/manifests/${id}.json`,
+    type: 'Manifest',
+    label: {
+      en: [
+        name
+      ]
+    },
+    items: []
+  };
+
+  const manifestPath = path.join(MANIFESTS_DIR, `${id}.json`);
+  await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 2), 'utf8');
+
+  return { id, name };
 }
 
 export const POST: APIRoute = async ({ request }) => {

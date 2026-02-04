@@ -2,8 +2,8 @@ import path from 'path';
 import sharp from 'sharp';
 import fs from 'fs/promises';
 import { customAlphabet } from 'nanoid';
-import type { ImageFormat, ImageMetadata } from '@/types';
-import { IMAGES_DIR, META_DIR } from '..';
+import type { ExtendedImageMetadata, ImageFormat } from '@/types';
+import { IMAGES_DIR, META_DIR } from '../_paths';
 
 const ALLOWED_FORMATS = new Set([
   'jpeg', 
@@ -17,7 +17,7 @@ const ALLOWED_FORMATS = new Set([
 
 const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 10);
 
-export const createImage = async (filename: string, buffer: Buffer): Promise<ImageMetadata> => {
+export const createImage = async (filename: string, buffer: Buffer): Promise<ExtendedImageMetadata> => {
   const id = nanoid();
 
   const { width, height, format }  = await sharp(buffer).metadata();
@@ -35,7 +35,7 @@ export const createImage = async (filename: string, buffer: Buffer): Promise<Ima
 
   const { size } = await fs.stat(imagePath);
 
-  const meta: ImageMetadata = {
+  const meta: ExtendedImageMetadata = {
     id,
     filename,
     format: format as ImageFormat,
