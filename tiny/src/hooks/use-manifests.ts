@@ -10,6 +10,14 @@ const create = async (name: string): Promise<Manifest> =>
     return res.json() as Promise<Manifest>;
   });
 
+const remove = async (id: string) =>
+  fetch(`/tiny/api/manifests/${id}`, {
+    method: 'DELETE'
+  }).then(res => {
+    if (!res.ok) throw new Error('Failed to delete manifest');
+    return res.json();
+  });
+
 export const useManifests = () => {
   const queryClient = useQueryClient();
 
@@ -18,7 +26,10 @@ export const useManifests = () => {
 
   const createManifest = (name: string) => create(name).then(refreshDirectory);
 
+  const deleteManifest = (id: string) => remove(id).then(refreshDirectory);
+
   return { 
-    createManifest
+    createManifest,
+    deleteManifest
   };
 }

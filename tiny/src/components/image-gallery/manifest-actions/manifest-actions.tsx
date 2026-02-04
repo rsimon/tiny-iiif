@@ -15,6 +15,8 @@ import {
   DropdownMenuSubTrigger, 
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
+import { useManifests } from '@/hooks/use-manifests';
+import { ConfirmDeleteDialog } from './delete-manifest';
 
 interface ManifestActionProps {
 
@@ -32,6 +34,9 @@ const VIEWERS = {
 export const ManifestActions = (props: ManifestActionProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [metadataDialogOpen, setMetadataDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+  const { deleteManifest } = useManifests();
 
   const onPreview = (viewer: string) => {
     const url =
@@ -55,60 +60,79 @@ export const ManifestActions = (props: ManifestActionProps) => {
     setMetadataDialogOpen(true);
   }
 
+  const onDelete = () => {
+    setDropdownOpen(false);
+    setDeleteDialogOpen(true);
+  }
+
+  const onConfirmDelete = () => {
+    deleteManifest(props.manifest.id);
+    setDeleteDialogOpen(false);
+  }
+
   return (
-    <DropdownMenu 
-      open={dropdownOpen} 
-      onOpenChange={setDropdownOpen}>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="text-muted-foreground">
-          <EllipsisVertical className="size-3.5" />
-        </Button>
-      </DropdownMenuTrigger>
+    <>
+      <DropdownMenu 
+        open={dropdownOpen} 
+        onOpenChange={setDropdownOpen}>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="icon" className="text-muted-foreground">
+            <EllipsisVertical className="size-3.5" />
+          </Button>
+        </DropdownMenuTrigger>
 
-      <DropdownMenuContent 
-        align="start"
-        sideOffset={0}>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            Preview
-          </DropdownMenuSubTrigger>
+        <DropdownMenuContent 
+          align="start"
+          sideOffset={0}>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              Preview
+            </DropdownMenuSubTrigger>
 
-          <DropdownMenuPortal>
-            <DropdownMenuSubContent>
-              <DropdownMenuItem onSelect={() => onPreview('mirador')}>
-                Mirador
-              </DropdownMenuItem>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem onSelect={() => onPreview('mirador')}>
+                  Mirador
+                </DropdownMenuItem>
 
-              <DropdownMenuItem onSelect={() => onPreview('theseus')}>
-                Theseus
-              </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => onPreview('theseus')}>
+                  Theseus
+                </DropdownMenuItem>
 
-              <DropdownMenuItem onSelect={() => onPreview('uv')}>
-                Universal Viewer
-              </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => onPreview('uv')}>
+                  Universal Viewer
+                </DropdownMenuItem>
 
-              <DropdownMenuItem onSelect={() => onPreview('liiive')}>
-                liiive.now
-              </DropdownMenuItem>
-            </DropdownMenuSubContent>
-          </DropdownMenuPortal>
-        </DropdownMenuSub>
+                <DropdownMenuItem onSelect={() => onPreview('liiive')}>
+                  liiive.now
+                </DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
 
-        <DropdownMenuItem onClick={onCopyToClipboard}>
-          Copy Manifest URL
-        </DropdownMenuItem>
+          <DropdownMenuItem onClick={onCopyToClipboard}>
+            Copy Manifest URL
+          </DropdownMenuItem>
 
-        <DropdownMenuItem onSelect={onEditMetadata}>
-          Edit Metadata
-        </DropdownMenuItem>
-        
-        <DropdownMenuSeparator />
+          <DropdownMenuItem onSelect={onEditMetadata}>
+            Edit Metadata
+          </DropdownMenuItem>
+          
+          <DropdownMenuSeparator />
 
-        <DropdownMenuItem variant="destructive">
-          <Trash2 /> Delete manifest
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <DropdownMenuItem 
+            variant="destructive"
+            onSelect={onDelete}>
+            <Trash2 /> Delete manifest
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <ConfirmDeleteDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        onConfirm={onConfirmDelete} />
+    </>
   )
 
 }
