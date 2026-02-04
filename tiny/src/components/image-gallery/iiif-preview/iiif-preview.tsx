@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
-import type { ImageMetadata } from '@/types';
+import { X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { getInfoJsonURL } from '@/lib/get-info-json-url';
+import type { ImageMetadata } from '@/types';
+import { IIIFViewer } from './iiif-viewer';
 import { 
   Dialog, 
   DialogClose, 
@@ -9,9 +12,6 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog';
-import { IIIFViewer } from './iiif-viewer';
-import { X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 interface IIIFPreviewProps {
 

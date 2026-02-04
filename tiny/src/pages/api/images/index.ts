@@ -1,38 +1,8 @@
 import type { APIRoute } from 'astro';
-import path from 'path';
-import { createImage, deleteImage, listImages } from './_utils';
+import { createImage } from './_create-image';
+import { deleteImage } from './_delete-image';
 
 export const prerender = false;
-
-export const IMAGES_DIR = path.join(process.cwd(), '..', 'data', 'images');
-export const META_DIR = path.join(process.cwd(), '..', 'data', 'meta');
-
-export const GET: APIRoute = async ({ url }) => {
-  try {    
-    const offset = parseInt(url.searchParams.get('offset') || '0');
-    const limit = parseInt(url.searchParams.get('limit') || '100');
-    
-    const { images, total } = await listImages(offset, limit);
-    
-    return new Response(JSON.stringify({
-      total,
-      offset,
-      limit,
-      images
-    }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  } catch (error) {
-    return new Response(JSON.stringify({ 
-      error: 'Failed to list images',
-      message: error instanceof Error ? error.message : 'Unknown error'
-    }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-}
 
 export const POST: APIRoute = async ({ request }) => { 
   const file = (await request.formData())?.get('file');

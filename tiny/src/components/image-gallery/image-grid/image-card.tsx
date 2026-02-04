@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useRef } from 'react';
+import { EllipsisVertical } from 'lucide-react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from "@dnd-kit/utilities";
+import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { getThumbnailURL } from '@/lib/get-thumbnail-url';
 import { useUIState } from '@/hooks/use-ui-state';
 import type { ImageMetadata } from '@/types';
-import { Button } from '@/components/ui/button';
-import { EllipsisVertical } from 'lucide-react';
 
 interface ImageCardProps {
 

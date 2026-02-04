@@ -1,7 +1,7 @@
 import { Home } from 'lucide-react';
 import { useUIState } from '@/hooks/use-ui-state';
 import { Button } from '@/components/ui/button';
-import { isSubDirectory, type SubDirectory } from '@/types';
+import { isManifestRange, isSubFolder, type SubFolder } from '@/types';
 import { 
   Breadcrumb, 
   BreadcrumbItem, 
@@ -14,12 +14,12 @@ export const NavBreadcrumbs = () => {
   const currentDirectory = useUIState(state => state.currentDirectory);
   const setCurrentDirectory = useUIState(state => state.setCurrentDirectory);
 
-  const goTo = (directory?: SubDirectory) => {
-    const breadcrumbs = directory ? directory.breadcrumbs : [];
+  const goTo = (folder?: SubFolder) => {
+    const breadcrumbs = isManifestRange(folder) ? folder.breadcrumbs : [];
 
-    const destination = directory ? {
-      ...directory,
-      breadcrumbs: breadcrumbs.slice(0, breadcrumbs.findIndex(b => b.id === directory.id))
+    const destination = folder ? {
+      ...folder,
+      breadcrumbs: breadcrumbs.slice(0, breadcrumbs.findIndex(b => b.id === folder.id))
     } : undefined;
 
     setCurrentDirectory(destination);
@@ -39,7 +39,7 @@ export const NavBreadcrumbs = () => {
 
         <BreadcrumbSeparator />
 
-        {isSubDirectory(currentDirectory) && (
+        {isSubFolder(currentDirectory) && (
           <BreadcrumbItem className="text-xs text-foreground font-medium tracking-wide md:text-sm">
             {currentDirectory.name}
           </BreadcrumbItem>

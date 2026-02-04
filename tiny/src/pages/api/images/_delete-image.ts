@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs/promises';
-import { IMAGES_DIR, META_DIR } from '..';
+import { IMAGES_DIR, META_DIR } from '../_paths';
 
 export const deleteImage = async (id: string) => {
   const meta = path.join(META_DIR, `${id}.json`);

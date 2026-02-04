@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Uppy from '@uppy/core';
 import DropTarget from '@uppy/drop-target';
 import XHRUpload from '@uppy/xhr-upload';
-import { useImages } from '@/hooks/use-images';
+import { useDirectory } from '@/hooks/use-directory';
 
 export const useUppy= () => {
 
@@ -10,7 +10,7 @@ export const useUppy= () => {
 
   const [ isDragOver, setIsDragOver ] = useState(false);
 
-  const { refreshImages } = useImages();
+  const { refreshDirectory } = useDirectory();
 
   const [ uppy, setUppy ] = useState<Uppy>();
 
@@ -35,7 +35,7 @@ export const useUppy= () => {
       limit: 1
     });
 
-    uppy.on('upload-success', refreshImages);
+    uppy.on('upload-success', refreshDirectory);
 
     // TODO error feedback!
 
