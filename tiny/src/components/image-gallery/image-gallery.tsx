@@ -2,6 +2,7 @@ import { AppHeader } from '@/components/layout/app-header';
 import { AppSidebar } from '@/components/layout/app-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { Toaster } from "@/components/ui/sonner"
 import { useUIState } from '@/hooks/use-ui-state';
 import { Toolbar } from './toolbar';
 import { ImageGrid } from './image-grid';
@@ -29,6 +30,8 @@ export const ImageGallery = () => {
 
             <SidebarInset>
               <main className="grow flex flex-col min-h-0 bg-muted">  
+                <Toaster position="top-center" offset={6} />
+                
                 <Toolbar uppy={uppy} />
 
                 <UploadDropzone 

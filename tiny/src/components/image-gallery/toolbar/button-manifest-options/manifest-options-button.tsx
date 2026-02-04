@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { EllipsisVertical } from 'lucide-react';
+import { Braces, Clipboard, EllipsisVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 import type { SubDirectory } from '@/types';
 import { getManifestURL } from '@/utils/get-manifest-url';
 import { ManifestMetadataDialog } from './manifest-metadata-dialog';
@@ -27,11 +28,14 @@ export const ManifestOptionsButton = (props: ManifestOptionsButtonProps) => {
     setMetadataDialogOpen(true);
   }
 
-  const onCopyToClipboard = () => {
+  const onCopyToClipboard = async () => {
     try {
-      navigator.clipboard.writeText(getManifestURL(props.manifest));
+      const url = getManifestURL(props.manifest);
+      await navigator.clipboard.writeText(url);
+      toast.success('Manifest URL copied to clipboard');
     } catch (error) {
       console.error('Failed to copy:', error);
+      toast.error('Failed to copy URL');
     }
   }
 
@@ -43,12 +47,12 @@ export const ManifestOptionsButton = (props: ManifestOptionsButtonProps) => {
             <EllipsisVertical className="size-4" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent align="start">
           <DropdownMenuItem onSelect={onEditMetadata}>
-            Edit metadata
+            <Braces /> Edit metadata
           </DropdownMenuItem>
           <DropdownMenuItem onClick={onCopyToClipboard}>
-            Copy URL to clipboard
+            <Clipboard /> Copy URL to clipboard
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -57,5 +61,6 @@ export const ManifestOptionsButton = (props: ManifestOptionsButtonProps) => {
         open={metadataDialogOpen}
         onOpenChange={setMetadataDialogOpen} />
     </>
-  );
-};
+  )
+
+}
