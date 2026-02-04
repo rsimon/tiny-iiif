@@ -13,7 +13,7 @@ export const GET: APIRoute = async ({ url }) => {
   const tree = await buildDirectoryTree();
 
   const directory = folder 
-    ? tree.getManifest(folder)
+    ? tree.getManifest(folder) || tree.root
     : tree.root;
 
   const subfolders = (directory.type === 'root' ? directory.folders : directory.ranges) || [];

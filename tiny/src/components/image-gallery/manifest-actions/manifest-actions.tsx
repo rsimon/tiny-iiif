@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useManifests } from '@/hooks/use-manifests';
 import { ConfirmDeleteDialog } from './delete-manifest';
+import { useUIState } from '@/hooks/use-ui-state';
 
 interface ManifestActionProps {
 
@@ -32,6 +33,8 @@ const VIEWERS = {
 };
 
 export const ManifestActions = (props: ManifestActionProps) => {
+  const setCurrentDirectory = useUIState(state => state.setCurrentDirectory);
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [metadataDialogOpen, setMetadataDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -66,8 +69,10 @@ export const ManifestActions = (props: ManifestActionProps) => {
   }
 
   const onConfirmDelete = () => {
-    deleteManifest(props.manifest.id);
-    setDeleteDialogOpen(false);
+    deleteManifest(props.manifest.id).then(() => {
+      setCurrentDirectory();
+      setDeleteDialogOpen(false);
+    });
   }
 
   return (
