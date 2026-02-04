@@ -13,7 +13,7 @@ export const CreateManifestButton = () => {
     <>
       <Button
         variant="outline"
-        className="border-dashed bg-transparent"
+        className="border-dashed bg-transparent text-muted-foreground font-normal"
         onClick={onCreateNewManifest}>
         <Plus className="size-4" />
         New Manifest

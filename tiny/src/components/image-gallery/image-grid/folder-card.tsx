@@ -25,11 +25,11 @@ export const FolderCard = (props: FolderCardProps) => {
     <div 
       ref={setNodeRef}
       className={cn(
-        'group rounded-lg border border-border bg-white',
+        'rounded-lg border border-border bg-white',
         isOver ? 'ring-6 ring-slate-500/30' : 'image-card-shadow'
       )}>
       <button 
-        className="w-full relative aspect-4/3 p-1 cursor-pointer"
+        className="group w-full relative aspect-4/3 p-1 cursor-pointer"
         onClick={onEnterFolder}>
         <div className="size-full relative rounded-sm bg-muted flex items-center justify-center">
           <div 
@@ -49,7 +49,7 @@ export const FolderCard = (props: FolderCardProps) => {
       </button>
 
       <div className="p-1 pt-0 pl-3 flex items-center justify-between">
-        <span className="text-xs font-medium text-slate-950 truncate flex-1">
+        <span className="text-xs text-slate-950 truncate flex-1">
           {props.folder.name}
         </span>
 

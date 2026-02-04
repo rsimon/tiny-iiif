@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -26,11 +26,19 @@ export const CreateManifestDialog = (props: CreateManifestDialogProps) => {
 
   const { createManifest } = useManifests();
   
+  useEffect(() => {
+    setName('');
+  }, [props.open]);
+  
+  const onOpenChange = (open: boolean) => {
+    if (!open) props.onClose();
+  }
+
   const onSave = () =>
     createManifest(name).then(() => props.onClose());
 
   return (
-    <Dialog open={props.open} onOpenChange={open => { if (!open) props.onClose() }}>
+    <Dialog open={props.open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>New Manifest</DialogTitle>
