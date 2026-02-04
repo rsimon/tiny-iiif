@@ -9,7 +9,7 @@ import { SelectAllButton } from './select-all';
 import { NavBreadcrumbs } from './nav-breadcrumbs';
 import { useUIState } from '@/hooks/use-ui-state';
 import { isManifest, isRootFolder } from '@/types';
-import { ManifestActions } from './manifest-actions';
+import { ManifestActions } from '../manifest-actions';
 
 interface ToolbarProps {
 

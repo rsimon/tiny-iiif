@@ -1,9 +1,8 @@
 import { useDroppable } from '@dnd-kit/core';
-import { EllipsisVertical } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import type { SubFolder } from '@/types';
+import { isManifest, type SubFolder } from '@/types';
 import { useUIState } from '@/hooks/use-ui-state';
+import { ManifestActions } from '../manifest-actions';
 
 interface FolderCardProps {
 
@@ -54,11 +53,9 @@ export const FolderCard = (props: FolderCardProps) => {
           {props.folder.name}
         </span>
 
-        <Button
-          variant="ghost"
-          size="icon">
-          <EllipsisVertical />
-        </Button>
+        {isManifest(props.folder) && (
+          <ManifestActions manifest={props.folder} />
+        )}
       </div>
     </div>
   )
