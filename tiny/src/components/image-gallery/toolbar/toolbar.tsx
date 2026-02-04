@@ -35,7 +35,7 @@ export const Toolbar = (props: ToolbarProps) => {
       <div className="flex items-center gap-1.5">
         <NavBreadcrumbs />
 
-        {isRootFolder(currentDirectory) ? (
+        {!currentDirectory ? (
           <CreateManifestButton />
         ) : isManifest(currentDirectory) ? (
           <ManifestActions 
