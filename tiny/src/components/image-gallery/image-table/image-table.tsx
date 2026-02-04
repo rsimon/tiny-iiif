@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useUIState } from '@/hooks/use-ui-state';
 import { useDirectory } from '@/hooks/use-directory';
-import { getThumbnailURL } from '@/utils/get-thumbnail-url';
+import { getThumbnailURL } from '@/lib/get-thumbnail-url';
 import { 
   Table, 
   TableBody, 

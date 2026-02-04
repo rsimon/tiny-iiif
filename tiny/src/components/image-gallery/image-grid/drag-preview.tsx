@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { ImageMetadata } from '@/types';
-import { getThumbnailURL } from '@/utils/get-thumbnail-url';
+import { getThumbnailURL } from '@/lib/get-thumbnail-url';
 import { ImageCard } from './image-card';
 
 interface DragPreviewProps {

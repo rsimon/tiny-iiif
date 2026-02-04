@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { ImageMetadata } from '@/types';
-import { getInfoJsonURL } from '@/utils/get-info-json-url';
+import { getInfoJsonURL } from '@/lib/get-info-json-url';
 import { 
   Dialog, 
   DialogClose, 
@@ -52,6 +52,7 @@ export const IIIFPreview = (props: IIIFPreviewProps) => {
           className="absolute top-2 right-2">
           <Button 
             variant="ghost"
+            size="icon"
             className="bg-slate-950/50 hover:bg-slate-950/60 size-10 text-white hover:text-white">
             <X className="size-5" />
           </Button>

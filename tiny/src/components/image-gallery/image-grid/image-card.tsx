@@ -3,7 +3,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from "@dnd-kit/utilities";
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
-import { getThumbnailURL } from '@/utils/get-thumbnail-url';
+import { getThumbnailURL } from '@/lib/get-thumbnail-url';
 import { useUIState } from '@/hooks/use-ui-state';
 import type { ImageMetadata } from '@/types';
 import { Button } from '@/components/ui/button';

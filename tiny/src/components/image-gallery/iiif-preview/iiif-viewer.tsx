@@ -22,8 +22,6 @@ export const IIIFViewer = (props: IIIFViewerProps) => {
       element: elementRef.current,
       tileSources: props.url,
       showNavigationControl: false,
-      // showNavigator: true,
-      // navigatorPosition: 'BOTTOM_LEFT',
       maxZoomPixelRatio: 4,
       gestureSettingsMouse: {
         clickToZoom: true,

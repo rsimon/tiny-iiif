@@ -3,7 +3,7 @@ import { Braces, Clipboard, EllipsisVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import type { SubDirectory } from '@/types';
-import { getManifestURL } from '@/utils/get-manifest-url';
+import { getManifestURL } from '@/lib/get-manifest-url';
 import { ManifestMetadataDialog } from './manifest-metadata-dialog';
 import {
   DropdownMenu,
