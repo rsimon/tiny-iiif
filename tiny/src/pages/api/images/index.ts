@@ -5,7 +5,13 @@ import { deleteImage } from './_delete-image';
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => { 
-  const file = (await request.formData())?.get('file');
+  const formData = await request.formData();
+
+  const file = formData.get('file');
+  const manifest = formData.get('manifest');
+
+  // TODO if uploading to a manifest, add images
+  console.log('uploading to', manifest);
   
   if (!(file instanceof File)) {
     return new Response(JSON.stringify({ 

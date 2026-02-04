@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 interface UploadButtonProps {
 
   onUpload(event: React.ChangeEvent<HTMLInputElement>): void;
+  
 }
 
 export const UploadButton = (props: UploadButtonProps) => {

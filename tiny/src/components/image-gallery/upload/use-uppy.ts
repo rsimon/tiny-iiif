@@ -3,10 +3,14 @@ import Uppy from '@uppy/core';
 import DropTarget from '@uppy/drop-target';
 import XHRUpload from '@uppy/xhr-upload';
 import { useDirectory } from '@/hooks/use-directory';
+import { useUIState } from '@/hooks/use-ui-state';
+import { isManifest, isRootFolder, isSubFolder } from '@/types';
 
 export const useUppy= () => {
 
   const targetRef = useRef<HTMLDivElement>(null);
+
+  const currentDirectory = useUIState(state => state.currentDirectory);
 
   const [ isDragOver, setIsDragOver ] = useState(false);
 
@@ -17,8 +21,13 @@ export const useUppy= () => {
   useEffect(() => {
     if (!targetRef.current) return;
 
+    const manifest = isSubFolder(currentDirectory) ? currentDirectory.id : undefined;
+
     const uppy = new Uppy({
-      autoProceed: true
+      autoProceed: true,
+      meta: {
+        manifest
+      }
     });
 
     uppy.use(DropTarget, {
@@ -44,7 +53,7 @@ export const useUppy= () => {
     return () => {
       uppy.destroy();
     };
-  }, []);
+  }, [currentDirectory]);
 
   return { uppy, targetRef, isDragOver };
 
