@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import type Uppy from '@uppy/core';
-import { SidebarTrigger } from '@/components/ui/sidebar';
 import { useDirectory } from '@/hooks/use-directory';
 import { ViewModeToggle } from './toggle-view-mode/view-mode-toggle';
 import { UploadButton } from './button-upload/upload-button';
@@ -11,6 +10,7 @@ import { NavBreadcrumbs } from './nav-breadcrumbs';
 import { useUIState } from '@/hooks/use-ui-state';
 import { isSubDirectory } from '@/types';
 import { CopyURLButton } from './button-copy-url';
+import { ManifestOptionsButton } from './button-manifest-options';
 
 interface ToolbarProps {
 
@@ -34,16 +34,14 @@ export const Toolbar = (props: ToolbarProps) => {
   }, [props.uppy]);
   
   return (
-    <div className="md:h-16 border-b border-border bg-card flex flex-col md:flex-row justify-between md:items-center gap-1.5 py-1 px-2.5">
+    <div className="pl-4 md:h-16 border-b border-border bg-card flex flex-col md:flex-row justify-between md:items-center gap-1.5 py-1 px-2.5">
       <div className="flex items-center gap-1.5">
-        <SidebarTrigger className="mb-px" />
-
         <NavBreadcrumbs />
 
         {isRoot ? (
           <NewManifestButton />
         ) : (
-          <CopyURLButton url={`/manifests/${currentDirectory.id}.json`} />
+          <ManifestOptionsButton />
         )}
       </div>
 
@@ -55,6 +53,7 @@ export const Toolbar = (props: ToolbarProps) => {
           
         <UploadButton 
           onUpload={onUpload} />
+
         <ViewModeToggle />
       </div>
     </div>

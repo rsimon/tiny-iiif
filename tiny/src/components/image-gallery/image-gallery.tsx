@@ -35,7 +35,7 @@ export const ImageGallery = () => {
                   className="grow overflow-hidden"
                   targetRef={targetRef}
                   showOverlay={isFilesOverTarget}>
-                  <div className="-top-full h-full p-6 overflow-y-auto">
+                  <div className="-top-full h-full p-4 overflow-y-auto">
                     {viewMode === 'grid' ? (
                       <ImageGrid />
                     ) : (

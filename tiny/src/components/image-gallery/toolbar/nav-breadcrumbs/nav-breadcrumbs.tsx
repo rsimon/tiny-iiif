@@ -1,6 +1,7 @@
+import { Home } from 'lucide-react';
 import { useUIState } from '@/hooks/use-ui-state';
 import { Button } from '@/components/ui/button';
-import { isSubDirectory, type Directory, type SubDirectory } from '@/types';
+import { isSubDirectory, type SubDirectory } from '@/types';
 import { 
   Breadcrumb, 
   BreadcrumbItem, 
@@ -29,23 +30,19 @@ export const NavBreadcrumbs = () => {
       <BreadcrumbList className="flex-nowrap">
         <BreadcrumbItem>
           <Button
-            variant="link"
-            className="px-0 text-xs md:text-sm"
+            variant="ghost"
+            size="icon"
             onClick={() => goTo()}>
-            All Images
+            <Home />
           </Button>
         </BreadcrumbItem>
 
         <BreadcrumbSeparator />
 
         {isSubDirectory(currentDirectory) && (
-          <>
-            <BreadcrumbSeparator />
-
-            <BreadcrumbItem className="text-xs md:text-sm">
-              {currentDirectory.name}
-            </BreadcrumbItem>
-          </>
+          <BreadcrumbItem className="text-xs text-foreground font-medium tracking-wide md:text-sm">
+            {currentDirectory.name}
+          </BreadcrumbItem>
         )}
       </BreadcrumbList>
     </Breadcrumb>
