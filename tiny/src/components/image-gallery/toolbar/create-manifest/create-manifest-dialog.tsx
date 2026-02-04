@@ -12,7 +12,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 
-interface NewManifestDialogProps {
+interface CreateManifestDialogProps {
 
   open: boolean;
 
@@ -20,7 +20,7 @@ interface NewManifestDialogProps {
 
 }
 
-export const NewManifestDialog = (props: NewManifestDialogProps) => {
+export const CreateManifestDialog = (props: CreateManifestDialogProps) => {
 
   const [name, setName] = useState('');
 

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { NewManifestDialog } from './new-manifest-dialog';
+import { CreateManifestDialog } from './create-manifest-dialog';
 
-export const NewManifestButton = () => {
+export const CreateManifestButton = () => {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -19,7 +19,7 @@ export const NewManifestButton = () => {
         New Manifest
       </Button>
 
-      <NewManifestDialog
+      <CreateManifestDialog
         open={isDialogOpen}
         onClose={() => setIsDialogOpen(false)} />  
     </>

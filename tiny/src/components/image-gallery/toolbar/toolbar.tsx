@@ -2,14 +2,14 @@ import { useCallback } from 'react';
 import type Uppy from '@uppy/core';
 import { useDirectory } from '@/hooks/use-directory';
 import { ViewModeToggle } from './toggle-view-mode/view-mode-toggle';
-import { UploadButton } from './button-upload/upload-button';
-import { NewManifestButton } from './button-new-manifest';
-import { DeleteSelectedButton } from './button-delete-selected/delete-selected-button';
-import { SelectAllButton } from './button-select-all';
+import { UploadButton } from './upload/upload-button';
+import { CreateManifestButton } from './create-manifest';
+import { DeleteSelectedButton } from './delete-selected';
+import { SelectAllButton } from './select-all';
 import { NavBreadcrumbs } from './nav-breadcrumbs';
 import { useUIState } from '@/hooks/use-ui-state';
 import { isManifest, isRootFolder } from '@/types';
-import { ManifestOptionsButton } from './button-manifest-options';
+import { ManifestActions } from './manifest-actions';
 
 interface ToolbarProps {
 
@@ -36,9 +36,9 @@ export const Toolbar = (props: ToolbarProps) => {
         <NavBreadcrumbs />
 
         {isRootFolder(currentDirectory) ? (
-          <NewManifestButton />
+          <CreateManifestButton />
         ) : isManifest(currentDirectory) ? (
-          <ManifestOptionsButton 
+          <ManifestActions 
             manifest={currentDirectory} />
         ) : null}
       </div>

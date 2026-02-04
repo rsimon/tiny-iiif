@@ -27,7 +27,7 @@ import {
 } from '@/components/ui/dialog';
 import { Fragment, useState } from 'react';
 
-interface ManifestMetadataDialogProps {
+interface EditMetadataDialogProps {
 
   open: boolean;
 
@@ -68,7 +68,7 @@ const RIGHTS_OPTIONS = [
   }
 ];
 
-export const ManifestMetadataDialog = (props: ManifestMetadataDialogProps) => {
+export const EditMetadataDialog = (props: EditMetadataDialogProps) => {
 
   const [metadata, setMetadata] = useState([
     {

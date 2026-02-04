@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import type { Manifest } from '@/types';
 import { getManifestURL } from '@/lib/get-manifest-url';
-import { ManifestMetadataDialog } from './manifest-metadata-dialog';
+import { EditMetadataDialog } from './edit-metadata-dialog';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -12,13 +12,13 @@ import {
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
 
-interface ManifestOptionsButtonProps {
+interface ManifestActionsProps {
 
   manifest: Manifest;
 
 }
 
-export const ManifestOptionsButton = (props: ManifestOptionsButtonProps) => {
+export const ManifestActions = (props: ManifestActionsProps) => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [metadataDialogOpen, setMetadataDialogOpen] = useState(false);
@@ -57,7 +57,7 @@ export const ManifestOptionsButton = (props: ManifestOptionsButtonProps) => {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <ManifestMetadataDialog
+      <EditMetadataDialog
         open={metadataDialogOpen}
         onOpenChange={setMetadataDialogOpen} />
     </>
