@@ -75,7 +75,6 @@ const measuringConfig = {
 };
 
 export const ImageGrid = () => {
-
   const { folders, images, moveImagesToFolder } = useDirectory();
 
   const selectedImageIds = useUIState(state => state.selectedImageIds);
