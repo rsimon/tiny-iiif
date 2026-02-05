@@ -13,15 +13,15 @@ interface FolderCardProps {
 }
 
 const THUMBNAIL_STYLES_DOWN = [
-  { transform: 'rotate(-6deg) translate(-8px, 8px)', zIndex: 1 },
+  { transform: 'rotate(-6deg) translate(-7px, 8px)', zIndex: 1 },
   { transform: 'rotate(-3deg) translate(-4px, 2px)', zIndex: 2 },
   { transform: 'rotate(6deg) translate(10px, 6px)', zIndex: 3 }
 ];
 
 const THUMBNAIL_STYLES_UP = [
-  { transform: 'rotate(-14deg) translate(-12px, 3px)', zIndex: 1 },
+  { transform: 'rotate(-15deg) translate(-12px, 0px)', zIndex: 1 },
   { transform: 'rotate(-3deg) translate(-2px, -4px)', zIndex: 2 },
-  { transform: 'rotate(16deg) translate(14px, -2px)', zIndex: 3 }
+  { transform: 'rotate(16deg) translate(14px, 0px)', zIndex: 3 }
 ];
 
 export const FolderCard = (props: FolderCardProps) => {
@@ -77,7 +77,7 @@ export const FolderCard = (props: FolderCardProps) => {
                       }}
                       src={getThumbnailURL(image, 40, 40)}
                       alt={image.filename}
-                      className="origin-center w-full h-full rounded border border-white object-cover transition-all"
+                      className="origin-center w-full h-full rounded border border-white object-cover transition-all duration-300"
                     />
                   </div>
                 ))}
