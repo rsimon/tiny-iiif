@@ -27,39 +27,38 @@ export const ImageGallery = () => {
       <div className="h-screen grow flex flex-col bg-background">
         <AppHeader />
 
-          <div className="flex-1 flex min-h-0 relative">
-            <SidebarProvider className="w-auto min-h-full">
-              <AppSidebar />
+        <div className="flex-1 flex min-h-0 relative">
+          <SidebarProvider className="w-full min-h-full">
+            <AppSidebar />
 
-              <SidebarInset>
-                <main className="grow flex flex-col min-h-0 bg-muted">  
-                  <Toaster position="top-center" offset={6} />
-                  
-                  <Toolbar uppy={uppy} />
+            <SidebarInset>
+              <main className="grow flex flex-col min-h-0 bg-muted">  
+                <Toaster position="top-center" offset={6} />
+                
+                <Toolbar uppy={uppy} />
 
-                  <UploadDropzone 
-                    className="grow overflow-hidden"
-                    targetRef={targetRef}
-                    showOverlay={isFilesOverTarget}>
-                    <div className="-top-full h-full p-4 overflow-y-auto">
-                      {isEmpty ? (
-                        <div className="h-full w-full flex items-center justify-center">
-                          <Blocks
-                            className="size-24 -rotate-4 text-slate-500/10" 
-                            strokeWidth={1}/>
-                        </div>
-                      ) : viewMode === 'grid' ? (
-                        <ImageGrid />
-                      ) : (
-                        <ImageTable />
-                      )}
-                    </div>
-                  </UploadDropzone>
-                </main>
-              </SidebarInset>
-            </SidebarProvider>
-          </div>
-
+                <UploadDropzone 
+                  className="grow overflow-hidden"
+                  targetRef={targetRef}
+                  showOverlay={isFilesOverTarget}>
+                  <div className="-top-full h-full p-4 overflow-y-auto">
+                    {isEmpty ? (
+                      <div className="h-full w-full flex items-center justify-center">
+                        <Blocks
+                          className="size-24 -rotate-4 text-slate-500/10" 
+                          strokeWidth={1}/>
+                      </div>
+                    ) : viewMode === 'grid' ? (
+                      <ImageGrid />
+                    ) : (
+                      <ImageTable />
+                    )}
+                  </div>
+                </UploadDropzone>
+              </main>
+            </SidebarInset>
+          </SidebarProvider>
+        </div>
       </div>
 
       <IIIFPreview
