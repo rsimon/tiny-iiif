@@ -2,7 +2,6 @@ import fs from 'fs/promises';
 import path from 'path';
 import { MANIFESTS_DIR, META_DIR } from './_paths';
 import type { ExtendedImageMetadata, ImageMetadata, Manifest, RootFolder } from '@/types';
-import { manifest } from 'astro:ssr-manifest';
 
 export interface DirectoryTree {
 

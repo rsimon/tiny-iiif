@@ -6,6 +6,7 @@ import { ConfirmActionDialog } from '@/components/shared/confirm-action-dialog';
 import { useImages } from '@/hooks/use-images';
 import { getInfoJsonURL } from '@/lib/get-info-json-url';
 import type { ImageMetadata } from '@/types';
+import { RenameImageDialog } from './rename-image';
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -20,12 +21,15 @@ interface ImageActionsProps {
 
   onPreview(): void;
 
+  onRename?(id: string, newName: string): Promise<void> | void;
+
 }
 
 export const ImageActions = (props: ImageActionsProps) => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [renameDialogOpen, setRenameDialogOpen] = useState(false);
 
   const { deleteImagesAsync } = useImages();
 
@@ -45,13 +49,18 @@ export const ImageActions = (props: ImageActionsProps) => {
     setDeleteDialogOpen(true);
   }
 
+  const onRename = () => {
+    setDropdownOpen(false);
+    setRenameDialogOpen(true);
+  }
+
   const onConfirmDelete = () => {
     deleteImagesAsync([props.image.id]).then(() => {
       setDeleteDialogOpen(false);
       toast.success('Image deleted successfully');
     }).catch(() => {
       toast.error('Failed to delete image');
-    })
+    });
   }
 
   return (
@@ -75,6 +84,10 @@ export const ImageActions = (props: ImageActionsProps) => {
           <DropdownMenuItem onClick={onCopyToClipboard}>
             Copy Image URL
           </DropdownMenuItem>
+
+          <DropdownMenuItem onClick={onRename}>
+            Rename Image
+          </DropdownMenuItem>
           
           <DropdownMenuSeparator />
 
@@ -92,6 +105,11 @@ export const ImageActions = (props: ImageActionsProps) => {
         confirmLabel="Delete Image"
         onOpenChange={setDeleteDialogOpen}
         onConfirm={onConfirmDelete} />
+
+      <RenameImageDialog
+        open={renameDialogOpen}
+        onOpenChange={setRenameDialogOpen}
+        image={props.image} />
     </>
   )
 

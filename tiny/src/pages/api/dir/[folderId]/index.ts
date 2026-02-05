@@ -8,15 +8,15 @@ export const PATCH: APIRoute = async ({ params, request, url }) => {
   try {
     const body = await request.json();
 
-    const { folder } = params;
+    const { folderId } = params;
     const { addImages } = body;
     const { reorderImages } = body;
 
     if (addImages) {
-      await addImagesToManifest(folder, addImages, url.origin);
+      await addImagesToManifest(folderId, addImages, url.origin);
     } else if (reorderImages) {
       const { images, moveToIndex } = reorderImages;
-      await reorderImagesInManifest(folder, images, moveToIndex);
+      await reorderImagesInManifest(folderId, images, moveToIndex);
     } else {
       throw new Error('Invalid PATCH request');
     }
@@ -27,7 +27,7 @@ export const PATCH: APIRoute = async ({ params, request, url }) => {
     });
   } catch (error) {
     return new Response(JSON.stringify({ 
-      error: 'Could not create manifest',
+      error: 'Could not modify manifest',
       reason: error instanceof Error ? error.message : 'Unknown'
     }), {
       status: 500,

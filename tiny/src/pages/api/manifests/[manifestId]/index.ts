@@ -16,7 +16,7 @@ export const DELETE: APIRoute = async ({ params, request  }) => {
     });
   } catch (error) {
     return new Response(JSON.stringify({ 
-      error: 'Failed to delete manifest',
+      error: 'Could not delete manifest',
       message: error instanceof Error ? error.message : 'Unknown error'
     }), {
       status: 500,

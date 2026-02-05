@@ -95,7 +95,7 @@ export const ImageGrid = () => {
 
   useEffect(() => {
     setSortedImages(images);
-  }, [images.map(i => i.id).join()]);
+  }, [images]);
 
   const onDragEnd = (event: any) => {
     const { active, over } = event;
