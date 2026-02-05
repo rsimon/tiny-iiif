@@ -98,8 +98,6 @@ export const ImageGrid = () => {
   }, [images.map(i => i.id).join()]);
 
   const onDragEnd = (event: any) => {
-    if (!isSubFolder(currentDirectory)) return;
-
     const { active, over } = event;
 
     if (over.data.current.type === 'folder') {
@@ -116,11 +114,14 @@ export const ImageGrid = () => {
       // Store previous state for rollback
       const previousSortedImages = [...sortedImages];
       
-      // Optimistic update
       const oldIndex = sortedImages.findIndex(i => i.id === active.id);
       const newIndex = sortedImages.findIndex(i => i.id === over.id);
       const newSortedImages = arrayMove(sortedImages, oldIndex, newIndex);
       setSortedImages(newSortedImages);
+
+      // Not 100% sure how to deal with this - root folder has no 
+      // natural order. Just skip?
+      if (!isSubFolder(currentDirectory)) return;
 
       const movedImages = [active.id];
       reorderImagesInFolder(currentDirectory.id, movedImages, newIndex)
