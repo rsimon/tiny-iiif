@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { addImagesToManifest } from '../../_ops/manifest-add-images';
+import { reorderImagesInManifest } from '../../_ops/manifest-reorder-images';
 
 export const prerender = false;
 
@@ -9,8 +10,16 @@ export const PATCH: APIRoute = async ({ params, request, url }) => {
 
     const { folder } = params;
     const { addImages } = body;
+    const { reorderImages } = body;
 
-    await addImagesToManifest(folder, addImages, url.origin);
+    if (addImages) {
+      await addImagesToManifest(folder, addImages, url.origin);
+    } else if (reorderImages) {
+      const { images, moveToIndex } = reorderImages;
+      await reorderImagesInManifest(folder, images, moveToIndex);
+    } else {
+      throw new Error('Invalid PATCH request');
+    }
 
     return new Response(JSON.stringify({ message: 'ok' }), {
       status: 201,

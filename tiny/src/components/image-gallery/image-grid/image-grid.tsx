@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { arrayMove, SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
+import { toast } from 'sonner';
 import { useUIState } from '@/hooks/use-ui-state';
 import { useDirectory } from '@/hooks/use-directory';
-import type { ImageMetadata } from '@/types';
+import { isSubFolder, type ImageMetadata } from '@/types';
 import { ImageCard } from './image-card';
 import { DragPreview } from './drag-preview';
+import { FolderCard } from './folder-card';
 import { 
   closestCenter,
   DndContext, 
@@ -15,12 +17,13 @@ import {
   useSensors, 
   useDndContext
 } from '@dnd-kit/core';
-import { FolderCard } from './folder-card';
-
 
 interface SortableImageListProps {
 
+  draggable: boolean;
+
   images: ImageMetadata[];
+
 }
 
 const SortableImageList = (props: SortableImageListProps) => {
@@ -49,6 +52,7 @@ const SortableImageList = (props: SortableImageListProps) => {
       strategy={rectSortingStrategy}>
       {filteredImages.map(image => (
         <ImageCard
+          draggable={props.draggable}
           key={image.id}
           image={image}
           isSelected={selectedImageIds.has(image.id)}
@@ -75,7 +79,9 @@ const measuringConfig = {
 };
 
 export const ImageGrid = () => {
-  const { folders, images, moveImagesToFolder } = useDirectory();
+  const currentDirectory = useUIState(state => state.currentDirectory);
+
+  const { folders, images, moveImagesToFolder, reorderImagesInFolder } = useDirectory();
 
   const selectedImageIds = useUIState(state => state.selectedImageIds);
   const setSelectedImageIds = useUIState(state => state.setSelectedImageIds);
@@ -88,7 +94,6 @@ export const ImageGrid = () => {
     })
   );
 
-  // TODO just for testing - dummy dnd sorting!
   const [sortedImages, setSortedImages] = useState(images);
 
   useEffect(() => {
@@ -96,6 +101,8 @@ export const ImageGrid = () => {
   }, [images.map(i => i.id).join()]);
 
   const onDragEnd = (event: any) => {
+    if (!isSubFolder(currentDirectory)) return;
+
     const { active, over } = event;
 
     if (over.data.current.type === 'folder') {
@@ -109,12 +116,26 @@ export const ImageGrid = () => {
       moveImagesToFolder(destination, selected);
       setSelectedImageIds([]);
     } else if (active.id !== over.id) {
-      // Change sorting (dummy implementation!)
-      setSortedImages(items => {
-        const oldIndex = items.findIndex(i => i.id === active.id);
-        const newIndex = items.findIndex(i => i.id === over.id);
-        return arrayMove(items, oldIndex, newIndex);
-      });
+      // Store previous state for rollback
+      const previousSortedImages = [...sortedImages];
+      
+      // Optimistic update
+      const oldIndex = sortedImages.findIndex(i => i.id === active.id);
+      const newIndex = sortedImages.findIndex(i => i.id === over.id);
+      const newSortedImages = arrayMove(sortedImages, oldIndex, newIndex);
+      setSortedImages(newSortedImages);
+
+      const movedImages = [active.id];
+      reorderImagesInFolder(currentDirectory.id, movedImages, newIndex)
+        .then(() => {
+          toast.success('Images reordered successfully');
+        })
+        .catch((error) => {
+          // Rollback on failure
+          setSortedImages(previousSortedImages);
+          toast.error('Failed to reorder images');
+          console.error('Reorder failed:', error);
+        });
     }
   }
 
@@ -132,6 +153,7 @@ export const ImageGrid = () => {
         ))}
         
         <SortableImageList 
+          draggable={isSubFolder(currentDirectory)}
           images={sortedImages} />
       </div>
     </DndContext>

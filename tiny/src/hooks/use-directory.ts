@@ -33,6 +33,20 @@ const moveImages = async (folderId: string, imageIds: string[]) =>
     return res.json();
   })
 
+const reorderImages = async (folderId: string, imageIds: string[], moveToIndex: number) =>
+  fetch(`/tiny/api/dir/${folderId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      reorderImages: {
+        images: imageIds,
+        moveToIndex
+      }
+    })
+  }).then(res => {
+    if (!res.ok) throw new Error('Failed to reorder images');
+    return res.json();
+  })
+
 export const useDirectory = () => {
   const queryClient = useQueryClient();
 
@@ -59,6 +73,9 @@ export const useDirectory = () => {
   const moveImagesToFolder = (folder: SubFolder, images: ImageMetadata[]) =>
     moveImages(folder.id, images.map(i => i.id)).then(refreshDirectory);
 
+  const reorderImagesInFolder = (manifestId: string, imageIds: string[], moveToIndex: number) =>
+    reorderImages(manifestId, imageIds, moveToIndex).then(refreshDirectory);
+
   const isEmpty = useMemo(() => {
     return (images.length + folders.length) === 0;
   }, [images, folders]);
@@ -68,6 +85,7 @@ export const useDirectory = () => {
     folders, 
     isEmpty,
     moveImagesToFolder,
+    reorderImagesInFolder,
     refreshDirectory
   }
 

@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { MANIFESTS_DIR } from './_paths';
 
-export const reorderImages = async (manifestId: string, images: string[], moveToIndex: number, origin: string) => {
+export const reorderImagesInManifest = async (manifestId: string, images: string[], moveToIndex: number) => {
   const manifestPath = path.join(MANIFESTS_DIR, `${manifestId}.json`);
   const raw = await fs.readFile(manifestPath, 'utf8');
   const manifest = JSON.parse(raw);
