@@ -55,7 +55,8 @@ export const RenameImageDialog = (props: RenameImageDialogProps) => {
       onOpenChange={props.onOpenChange}>
       
       <DialogContent 
-        className="p-5 gap-6 max-w-md sm:max-w-md">
+        className="p-5 gap-6 max-w-md sm:max-w-md"
+        onPointerDown={e => e.stopPropagation()}>
         <DialogHeader>
           <DialogTitle>Rename Image</DialogTitle>
           <DialogDescription className="sr-only">
