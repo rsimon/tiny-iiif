@@ -9,9 +9,17 @@ import {
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
 
-interface ConfirmDeleteDialogProps {
+interface ConfirmActionDialogProps {
 
   open: boolean;
+
+  title?: string;
+
+  description: string;
+
+  cancelLabel?: string;
+
+  confirmLabel?: string;
 
   onOpenChange(open: boolean): void;
   
@@ -19,7 +27,7 @@ interface ConfirmDeleteDialogProps {
 
 }
 
-export const ConfirmDeleteDialog = (props: ConfirmDeleteDialogProps) => {
+export const ConfirmActionDialog = (props: ConfirmActionDialogProps) => {
 
   return (
     <AlertDialog 
@@ -28,24 +36,26 @@ export const ConfirmDeleteDialog = (props: ConfirmDeleteDialogProps) => {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you sure?
+            {props.title || 'Are you sure?'}
           </AlertDialogTitle>
 
           <AlertDialogDescription
-            className="my-2 leading-relaxed">
-            This will delete the manifest only. Your images will remain in the root 
-            directory and can be reused in other manifests.
+            className="mt-2 mb-4 leading-relaxed">
+            {props.description}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>
+            {props.cancelLabel || 'Cancel'}
+          </AlertDialogCancel>
 
           <AlertDialogAction 
             variant="destructive" onClick={props.onConfirm}>
-            Delete Manifest
+            {props.confirmLabel || 'Confirm'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
-};
+  )
+  
+}

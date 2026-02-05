@@ -25,7 +25,7 @@ export const FolderCard = (props: FolderCardProps) => {
     <div 
       ref={setNodeRef}
       className={cn(
-        'rounded-lg border border-border bg-white',
+        'rounded-lg border border-border bg-white transition-all duration-200 animate-fade-in',
         isOver ? 'ring-6 ring-slate-500/30' : 'image-card-shadow'
       )}>
       <button 

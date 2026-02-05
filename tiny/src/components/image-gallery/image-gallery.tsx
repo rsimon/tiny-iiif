@@ -1,5 +1,5 @@
-import { AppHeader } from '@/components/layout/app-header';
-import { AppSidebar } from '@/components/layout/app-sidebar';
+import { AppHeader } from '@/components/shared/app-header';
+import { AppSidebar } from '@/components/shared/app-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from "@/components/ui/sonner"
@@ -11,8 +11,6 @@ import { IIIFPreview } from './iiif-preview';
 import { UploadDropzone, useUppy } from './upload';
 import { useDirectory } from '@/hooks/use-directory';
 import { Blocks } from 'lucide-react';
-
-
 
 export const ImageGallery = () => {
   const viewMode = useUIState(state => state.viewMode);

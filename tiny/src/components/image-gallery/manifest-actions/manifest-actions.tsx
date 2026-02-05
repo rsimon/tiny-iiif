@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { EllipsisVertical, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import { ConfirmActionDialog } from '@/components/shared/confirm-action-dialog';
+import { useManifests } from '@/hooks/use-manifests';
+import { useUIState } from '@/hooks/use-ui-state';
 import { getManifestURL } from '@/lib/get-manifest-url';
 import type { Manifest } from '@/types';
 import { 
@@ -15,11 +18,8 @@ import {
   DropdownMenuSubTrigger, 
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
-import { useManifests } from '@/hooks/use-manifests';
-import { ConfirmDeleteDialog } from './delete-manifest';
-import { useUIState } from '@/hooks/use-ui-state';
 
-interface ManifestActionProps {
+interface ManifestActionsProps {
 
   manifest: Manifest;
 
@@ -32,7 +32,7 @@ const VIEWERS = {
   'liiive': 'https://liiive.now/'
 };
 
-export const ManifestActions = (props: ManifestActionProps) => {
+export const ManifestActions = (props: ManifestActionsProps) => {
   const setCurrentDirectory = useUIState(state => state.setCurrentDirectory);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -128,13 +128,15 @@ export const ManifestActions = (props: ManifestActionProps) => {
           <DropdownMenuItem 
             variant="destructive"
             onSelect={onDelete}>
-            <Trash2 /> Delete manifest
+            <Trash2 /> Delete Manifest
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <ConfirmDeleteDialog
+      <ConfirmActionDialog
         open={deleteDialogOpen}
+        description="This will delete the manifest only. Your images will remain in the root directory and can be reused in other manifests."
+        confirmLabel="Delete Manifest"
         onOpenChange={setDeleteDialogOpen}
         onConfirm={onConfirmDelete} />
     </>

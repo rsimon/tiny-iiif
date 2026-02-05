@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { getThumbnailURL } from '@/lib/get-thumbnail-url';
 import { useUIState } from '@/hooks/use-ui-state';
 import type { ImageMetadata } from '@/types';
+import { ImageActions } from '../image-actions';
 
 interface ImageCardProps {
 
@@ -104,11 +105,9 @@ export const ImageCard = (props: ImageCardProps) => {
           {props.image.filename}
         </span>
 
-        <Button
-          variant="ghost"
-          size="icon">
-          <EllipsisVertical />
-        </Button>
+        <ImageActions 
+          image={props.image} 
+          onPreview={() => setCurrentPreview(props.image)} />
       </div>
     </div>
   )
