@@ -13,15 +13,15 @@ interface FolderCardProps {
 }
 
 const THUMBNAIL_STYLES_DOWN = [
-  { transform: 'rotate(-6deg) translate(-7px, 8px)', zIndex: 1 },
-  { transform: 'rotate(-3deg) translate(-4px, 2px)', zIndex: 2 },
-  { transform: 'rotate(6deg) translate(10px, 6px)', zIndex: 3 }
+  { transform: 'rotate(-6deg) translate(-10%, 5%)', zIndex: 1 },
+  { transform: 'rotate(-3deg) translate(-5%, -5%)', zIndex: 2 },
+  { transform: 'rotate(6deg) translate(8%, 10%)', zIndex: 3 }
 ];
 
 const THUMBNAIL_STYLES_UP = [
-  { transform: 'rotate(-15deg) translate(-12px, 0px)', zIndex: 1 },
-  { transform: 'rotate(-3deg) translate(-2px, -4px)', zIndex: 2 },
-  { transform: 'rotate(16deg) translate(14px, 0px)', zIndex: 3 }
+  { transform: 'rotate(-15deg) translate(-12%, -4%)', zIndex: 1 },
+  { transform: 'rotate(-6deg) translate(-4%, -8%)', zIndex: 2 },
+  { transform: 'rotate(16deg) translate(25%, -10%)', zIndex: 3 }
 ];
 
 export const FolderCard = (props: FolderCardProps) => {
@@ -61,32 +61,32 @@ export const FolderCard = (props: FolderCardProps) => {
               isDraggedOver ? 'scale-110' : undefined
             )}>
             <div className="absolute top-0.5 left-0 w-8/12 h-2.5 bg-[#a1a1a1] rounded-t" />
-            <div className="absolute top-2.5 w-full h-9/12 rounded shadow-sm bg-[#a1a1a1]" />
+            <div className="absolute top-2.5 w-full h-9/12 rounded shadow-sm bg-linear-to-b from-[#a1a1a1] to-[#717171] " />
 
-            {previewImages.length > 0 && (
-              <div className="absolute inset-0 flex items-center justify-center transition-transform">
+            {/* previewImages.length > 0 && (
+              <div className="absolute inset-0 flex items-center justify-center">
                 {previewImages.map((image, index) => (
                   <div
                     key={image.id}
-                    className="absolute duration-500 size-8/12 -translate-y-1 drop-shadow-[0_0_1px_rgba(0,0,0,0.65)]">
+                    className="absolute duration-300 size-[75%] drop-shadow-[0_0_1px_rgba(0,0,0,0.65)]"
+                    style={isHover ? {
+                      ...THUMBNAIL_STYLES_UP[index % THUMBNAIL_STYLES_UP.length]
+                    } : {
+                      ...THUMBNAIL_STYLES_DOWN[index % THUMBNAIL_STYLES_DOWN.length]
+                    }}>
                     <img
-                      style={isHover ? {
-                        ...THUMBNAIL_STYLES_UP[index % THUMBNAIL_STYLES_UP.length]
-                      } : {
-                        ...THUMBNAIL_STYLES_DOWN[index % THUMBNAIL_STYLES_DOWN.length]
-                      }}
                       src={getThumbnailURL(image, 40, 40)}
                       alt={image.filename}
-                      className="origin-center w-full h-full rounded border border-white object-cover transition-all duration-300"
+                      className="origin-bottom w-full h-full rounded border border-white object-cover transition-all duration-300"
                     />
                   </div>
                 ))}
               </div>
-            )}
+            ) */}
 
             <div className={cn(
-              'absolute z-10 border border-neutral-400/30 transition-transform duration-200 bottom-0 w-full h-9/12 origin-bottom rounded shadow-sm bg-[linear-gradient(#c1c1c1,#b2b2b2)] group-hover:-rotate-x-45',
-              isDraggedOver ? '-rotate-x-45' : '-rotate-x-18'
+              'absolute border border-gray-700/10 z-10 transition-transform duration-200 bottom-0 w-full h-9/12 origin-bottom rounded shadow-sm bg-[linear-gradient(#c1c1c1,#b2b2b2)] group-hover:-rotate-x-40',
+              isDraggedOver ? '-rotate-x-40' : '-rotate-x-18'
             )} />
           </div>
         </div>
