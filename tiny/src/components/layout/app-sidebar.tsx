@@ -1,6 +1,5 @@
-import { ChartLine, ChevronDown, ChevronLeft, Images, Library } from 'lucide-react';
-import { Collapsible, CollapsibleContent } from '../ui/collapsible';
-import { CollapsibleTrigger } from '@radix-ui/react-collapsible';
+import { ChartLine, ChevronDown, ChevronLeft, Images, Library, Sparkles } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import {
@@ -19,7 +18,7 @@ export const AppSidebar = () => {
   const { toggleSidebar, open } = useSidebar();
 
   return (
-    <Sidebar collapsible="icon" className="sticky">
+    <Sidebar collapsible="icon" className="sticky h-full">
       <SidebarHeader className="border-b h-16 flex justify-center items-end">
         <Button
           data-sidebar="trigger"
@@ -37,7 +36,7 @@ export const AppSidebar = () => {
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarMenu>
+        <SidebarMenu className="space-y-1.5">
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <a href="#">
@@ -70,6 +69,15 @@ export const AppSidebar = () => {
               <a href="#">
                 <ChartLine />
                 <span>Traffic Analytics</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <a href="#">
+                <Sparkles />
+                <span>Enrichment</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

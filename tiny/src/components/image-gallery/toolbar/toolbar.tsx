@@ -31,7 +31,7 @@ export const Toolbar = (props: ToolbarProps) => {
   }, [props.uppy]);
   
   return (
-    <div className="pl-4 md:h-16 border-b border-border bg-card flex flex-col md:flex-row justify-between md:items-center gap-1.5 py-1 px-2.5">
+    <div className="shrink-0 pl-4 h-16 border-b border-border bg-card flex flex-col md:flex-row justify-between md:items-center gap-1.5 py-1 px-2.5">
       <div className="flex items-center gap-1.5">
         <NavBreadcrumbs />
 
