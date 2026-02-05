@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { arrayMove, SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
+import { snapCenterToCursor } from '@dnd-kit/modifiers';
 import { toast } from 'sonner';
 import { useUIState } from '@/hooks/use-ui-state';
 import { useDirectory } from '@/hooks/use-directory';
@@ -7,15 +8,15 @@ import { isSubFolder, type ImageMetadata } from '@/types';
 import { ImageCard } from './image-card';
 import { DragPreview } from './drag-preview';
 import { FolderCard } from './folder-card';
-import { 
-  closestCenter,
+import {
   DndContext, 
   DragOverlay,
   MeasuringStrategy,
   PointerSensor,
   useSensor,
   useSensors, 
-  useDndContext
+  useDndContext,
+  rectIntersection
 } from '@dnd-kit/core';
 
 interface SortableImageListProps {
@@ -58,7 +59,8 @@ const SortableImageList = (props: SortableImageListProps) => {
       ))}
 
       {activeImage && (
-        <DragOverlay>
+        <DragOverlay
+          modifiers={[snapCenterToCursor]}>
           <DragPreview 
             active={activeImage}
             selected={selectedImages} />
@@ -139,7 +141,7 @@ export const ImageGrid = () => {
 
   return (
     <DndContext
-      collisionDetection={closestCenter}
+      collisionDetection={rectIntersection}
       measuring={measuringConfig}
       sensors={sensors}
       onDragEnd={onDragEnd}>

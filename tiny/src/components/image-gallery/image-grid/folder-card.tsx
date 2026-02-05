@@ -85,7 +85,7 @@ export const FolderCard = (props: FolderCardProps) => {
             ) */}
 
             <div className={cn(
-              'absolute border border-gray-700/10 z-10 transition-transform duration-200 bottom-0 w-full h-9/12 origin-bottom rounded shadow-sm bg-[linear-gradient(#c1c1c1,#b2b2b2)] group-hover:-rotate-x-40',
+              'absolute z-10 transition-transform duration-200 bottom-0 w-full h-9/12 origin-bottom rounded shadow-sm bg-[linear-gradient(#c1c1c1,#b2b2b2)] group-hover:-rotate-x-40',
               isDraggedOver ? '-rotate-x-40' : '-rotate-x-18'
             )} />
           </div>

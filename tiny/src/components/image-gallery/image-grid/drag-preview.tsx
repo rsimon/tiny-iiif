@@ -27,23 +27,25 @@ export const DragPreview = (props: DragPreviewProps) => {
 
   const head = useMemo(() => [...images].slice(0, styles.length).reverse(), [images]);
 
-  return head.length > 1 ? head.map((image, index) => (
-    <div 
-      key={image.id}
-      className="size-26">
-      <img
-        src={getThumbnailURL(image, 120, 120)}
-        alt={image.filename}
-        className={`
-          border border-neutral-400/50 absolute top-0 left-0 w-20 h-20 rounded-lg shadow-lg
-          flex items-center justify-center text-white text-2xl font-bold
-          transition-all duration-300`}
-        style={{
-          ...styles[index % styles.length],
-          transformOrigin: 'center center'
-        }} />
+  return head.length > 1 ? (
+    <div className="size-20">
+      {head.map((image, index) => (
+        <div 
+          key={image.id}>
+          <img
+            src={getThumbnailURL(image, 120, 120)}
+            alt={image.filename}
+            className={`
+              origin-center border border-neutral-400/50 absolute top-0 left-0 w-20 h-20 rounded-lg shadow-lg
+              flex items-center justify-center text-white text-2xl font-bold
+              transition-all duration-300`}
+            style={{
+              ...styles[index % styles.length]
+            }} />
+        </div>
+      ))}
     </div>
-  )) : (
+  ) : (
     <ImageCard
       isDragged
       image={head[0]}
