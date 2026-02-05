@@ -7,6 +7,8 @@ export interface DirectoryTree {
 
   root: RootFolder;
 
+  totalImages: number;
+
   getManifest(id: string): Manifest;
 
 }
@@ -94,6 +96,14 @@ export const buildDirectoryTree = async (): Promise<DirectoryTree> => {
 
   const getManifest = (id: string) => manifests.find(m => m.id === id);
 
-  return { root, getManifest };
+  const findManifestForImage = (imageId: string) => {
+
+  }
+
+  return { 
+    root, 
+    totalImages: allImages.length,
+    getManifest 
+  };
 
 }

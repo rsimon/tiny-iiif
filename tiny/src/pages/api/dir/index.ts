@@ -27,10 +27,15 @@ export const GET: APIRoute = async ({ url }) => {
   const items = allItems.slice(offset, offset + limit);
 
   return new Response(JSON.stringify({
+    ...(folder ? { folder } : {}),
     total: allItems.length,
     offset,
     limit,
-    items
+    items,
+    meta: {
+      totalImages: tree.totalImages,
+      totalManifests: (tree.root.folders || []).length
+    }
   }), {
     status: 200,
     headers: { 'Content-Type': 'application/json' },

@@ -56,12 +56,11 @@ export const useDirectory = () => {
 
   const currentDirectoryId = isSubFolder(currentDirectory) ? currentDirectory.id : undefined;
 
-  const { data: { items = [], images = [], folders = [] } = {}, error } = useQuery({
+  const { data: { raw, images = [], folders = [] } = {}, error } = useQuery({
     queryKey: ['directory', currentDirectory, currentPage, pageSize],
     queryFn: () => list(currentPage, pageSize, currentDirectoryId),
     select: data => ({
-      items: data.items,
-      total: data.total,
+      raw: data,
       images: data.items.filter(i => isImage(i)),
       folders: data.items.filter(i => isSubFolder(i))
     })
@@ -81,6 +80,8 @@ export const useDirectory = () => {
   }, [images, folders]);
 
   return {
+    data: raw,
+    error,
     images, 
     folders, 
     isEmpty,

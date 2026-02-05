@@ -1,5 +1,6 @@
 import { ChartLine, ChevronDown, ChevronLeft, Images, Library, Sparkles } from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useDirectory } from '@/hooks/use-directory';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import {
@@ -7,13 +8,19 @@ import {
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
   useSidebar
 } from '@/components/ui/sidebar';
 
+
 export const AppSidebar = () => {
+
+  const { data } = useDirectory();
+
+  const totalImages = data?.meta.totalImages || 0;
 
   const { toggleSidebar, open } = useSidebar();
 
@@ -38,12 +45,15 @@ export const AppSidebar = () => {
       <SidebarContent>
         <SidebarMenu className="space-y-1.5">
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild isActive>
               <a href="#">
                 <Images />
                 <span>Images</span>
               </a>
             </SidebarMenuButton>
+            {totalImages> 0 && (
+              <SidebarMenuBadge>{totalImages}</SidebarMenuBadge>
+            )}
           </SidebarMenuItem>
 
           <Collapsible className="group/collapsible">

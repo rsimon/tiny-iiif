@@ -83,7 +83,9 @@ export type ImageFormat = 'jpeg' | 'jpg' | 'jp2' | 'png' | 'tiff' | 'tif' | 'web
 /** API TYPES                  **/
 /********************************/
 
-export interface APIResponse<T extends unknown> {
+export interface ListDirectoryResponse {
+
+  folder?: string;
 
   total: number;
 
@@ -91,15 +93,19 @@ export interface APIResponse<T extends unknown> {
 
   limit: number;
 
-  items: T[];
+  items: DirectoryItem[];
+
+  meta: {
+    
+    totalImages: number;
+
+    totalManifests: number;
+    
+  }
 
 }
 
-/** Directory API **/
-
 export type DirectoryItem = Manifest | ManifestRange | ImageMetadata;
-
-export type ListDirectoryResponse = APIResponse<DirectoryItem>;
 
 export const isRootFolder = (item: Folder): item is RootFolder =>
   (item as RootFolder)?.type === 'root';

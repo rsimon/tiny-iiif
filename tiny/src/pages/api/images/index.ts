@@ -25,20 +25,15 @@ export const POST: APIRoute = async ({ request, url }) => {
     const buffer = Buffer.from(await file.arrayBuffer());
     const meta = await createImage(file.name, buffer);
 
-
-
     // Optional: add image to manifest
-    if (manifest) {
-      console.log('uploding file', meta, 'manifest', manifest);
+    if (manifest)
       await addImagesToManifest(manifest.toString(), [meta.id], url.origin);
-    }
 
     return new Response(JSON.stringify(meta), {
       status: 201,
       headers: { 'Content-Type': 'application/json' }
     });
   } catch (error) {
-    console.error(error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
