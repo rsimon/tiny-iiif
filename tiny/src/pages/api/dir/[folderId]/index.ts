@@ -1,75 +1,28 @@
-import fs from 'fs/promises';
-import path from 'path';
 import type { APIRoute } from 'astro';
-import type { ExtendedImageMetadata } from '@/types';
-import { MANIFESTS_DIR, META_DIR } from '../../_paths';
+import { addImagesToManifest } from '../../_ops/manifest-add-images';
 
 export const prerender = false;
 
 export const PATCH: APIRoute = async ({ params, request, url }) => {
-  const body = await request.json();
+  try {
+    const body = await request.json();
 
-  const { folder } = params;
-  const { addImages } = body;
+    const { folder } = params;
+    const { addImages } = body;
 
-  // Load manifest file
-  const manifestPath = path.join(MANIFESTS_DIR, `${folder}.json`);
-  const raw = await fs.readFile(manifestPath, 'utf8');
-  const manifest = JSON.parse(raw);
+    await addImagesToManifest(folder, addImages, url.origin);
 
-  // Load images metadata
-  const images: ExtendedImageMetadata[] = [];
-  
-  for (const i of addImages) {
-    const raw = await fs.readFile(path.join(META_DIR, `${i}.json`), 'utf8');
-    images.push(JSON.parse(raw));
+    return new Response(JSON.stringify({ message: 'ok' }), {
+      status: 201,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ 
+      error: 'Could not create manifest',
+      reason: error instanceof Error ? error.message : 'Unknown'
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
-
-  const items = manifest.items || [];
-
-  const patched = {
-    ...manifest,
-    items: [
-      ...items,
-      ...images.map((i, idx) => ({
-        id: `${url.origin}/manifests/${folder}/canvas/${i.id}`,
-        type: 'Canvas',
-        label: {
-          en: [
-            i.filename
-          ]
-        },
-        height: i.height,
-        width: i.width,
-        items: [{
-          id: `${url.origin}/manifests/${folder}/canvas/${i.id}/page/1`,
-          type: 'AnnotationPage',
-          items: [{
-            id: `${url.origin}/manifests/${folder}/canvas/${i.id}/annotation/1`,
-            type: 'Annotation',
-            motivation: 'painting',
-            body: {
-              id: `${url.origin}/iiif/2/${i.id}/full/max/0/default.jpg`,
-              type: 'Image',
-              height: i.height,
-              width: i.width,
-              service: [{
-                id: `${url.origin}/iiif/2/${i.id}`,
-                profile: 'level1',
-                type: 'ImageService2'
-              }]
-            },
-            target: `${url.origin}/manifests/${folder}/canvas/${i.id}`
-          }]
-        }]
-      }))
-    ]
-  }
-
-  await fs.writeFile(manifestPath, JSON.stringify(patched, null, 2), 'utf8');
-
-  return new Response(JSON.stringify({ message: 'ok' }), {
-    status: 201,
-    headers: { 'Content-Type': 'application/json' },
-  });
 }

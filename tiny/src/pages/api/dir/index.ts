@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { buildDirectoryTree } from './_build-tree';
+import { buildDirectoryTree } from '../_ops/build-tree';
 import type { DirectoryItem } from '@/types';
 
 export const prerender = false;

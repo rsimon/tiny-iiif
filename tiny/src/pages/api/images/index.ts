@@ -1,18 +1,16 @@
 import type { APIRoute } from 'astro';
-import { createImage } from './_create-image';
-import { deleteImage } from './_delete-image';
+import { createImage } from '../_ops/image-create';
+import { deleteImage } from '../_ops/image-delete';
+import { addImagesToManifest } from '../_ops/manifest-add-images';
 
 export const prerender = false;
 
-export const POST: APIRoute = async ({ request }) => { 
+export const POST: APIRoute = async ({ request, url }) => { 
   const formData = await request.formData();
 
   const file = formData.get('file');
   const manifest = formData.get('manifest');
 
-  // TODO if uploading to a manifest, add images
-  console.log('uploading to', manifest);
-  
   if (!(file instanceof File)) {
     return new Response(JSON.stringify({ 
       error: 'No image files in request' 
@@ -23,8 +21,13 @@ export const POST: APIRoute = async ({ request }) => {
   }
   
   try {
+    // Create image + metadata file
     const buffer = Buffer.from(await file.arrayBuffer());
     const meta = await createImage(file.name, buffer);
+
+    // Optional: add image to manifest
+    if (manifest)
+      await addImagesToManifest(manifest.toString(), [meta.id], url.origin);
 
     return new Response(JSON.stringify(meta), {
       status: 201,
