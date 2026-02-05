@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,7 +29,13 @@ export const RenameImageDialog = (props: RenameImageDialogProps) => {
 
   const { renameImageAsync } = useImages();
 
-  const onRename = () => {
+  useEffect(() => {
+    setName(props.image.filename);
+  }, [props.open, props.image.filename]);
+
+  const onRename = (e: React.FormEvent) => {
+    e.preventDefault();
+
     if (!name) {
       toast.error('Name cannot be empty');
       return;
@@ -64,17 +70,21 @@ export const RenameImageDialog = (props: RenameImageDialogProps) => {
           </DialogDescription>
         </DialogHeader>
 
-        <Input 
-          value={name} 
-          onChange={e => setName(e.target.value)} />
+        <form onSubmit={onRename} className="grid w-full gap-6">
+          <Input 
+            value={name} 
+            onChange={e => setName(e.target.value)} />
 
-        <DialogFooter>
-          <Button 
-            variant="ghost" 
-            onClick={() => props.onOpenChange(false)}>Cancel</Button>
+          <DialogFooter>
+            <Button 
+              type="button"
+              variant="ghost" 
+              onClick={() => props.onOpenChange(false)}>Cancel</Button>
 
-          <Button onClick={onRename}>Rename</Button>
-        </DialogFooter>
+            <Button 
+              type="submit">Rename</Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   )
