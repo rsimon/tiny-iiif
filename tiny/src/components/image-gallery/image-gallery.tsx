@@ -12,6 +12,8 @@ import { UploadDropzone, useUppy } from './upload';
 import { useDirectory } from '@/hooks/use-directory';
 import { Blocks } from 'lucide-react';
 
+
+
 export const ImageGallery = () => {
   const viewMode = useUIState(state => state.viewMode);
   

@@ -15,7 +15,6 @@ import {
   useSidebar
 } from '@/components/ui/sidebar';
 
-
 export const AppSidebar = () => {
 
   const { data } = useDirectory();
