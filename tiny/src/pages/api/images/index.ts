@@ -2,6 +2,8 @@ import type { APIRoute } from 'astro';
 import { createImage } from '../_ops/image-create';
 import { deleteImage } from '../_ops/image-delete';
 import { addImagesToManifest } from '../_ops/manifest-add-images';
+import { buildDirectoryTree } from '../_ops/build-tree';
+import { removeImagesFromManifest } from '../_ops/manifest-remove-images';
 
 export const prerender = false;
 
@@ -66,6 +68,27 @@ export const DELETE: APIRoute = async ({ request }) => {
         failed.push({ id, reason: error.message });
       }
     }
+
+    const tree = await buildDirectoryTree();
+    
+    const imagesByManifest = new Map<string, string[]>();
+
+    // Group by manifest (should normally be the same, but you never know)
+    for (const imageId of deleted) {
+      const manifest = tree.findManifestForImage(imageId);
+
+      if (manifest) {
+        if (!imagesByManifest.has(manifest.id))
+          imagesByManifest.set(manifest.id, []);
+
+        imagesByManifest.get(manifest.id)!.push(imageId);
+      }
+    }
+
+    // Bulk-remove images per manifest
+    for (const [manifestId, imageIds] of imagesByManifest) {
+      await removeImagesFromManifest(manifestId, imageIds);
+    }
     
     return new Response(JSON.stringify({
       success: true,
@@ -73,6 +96,7 @@ export const DELETE: APIRoute = async ({ request }) => {
       failed,
       deletedCount: deleted.length,
       failedCount: failed.length,
+      imagesByManifest: Object.fromEntries(imagesByManifest)
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },

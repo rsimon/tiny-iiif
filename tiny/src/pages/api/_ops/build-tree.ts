@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { MANIFESTS_DIR, META_DIR } from './_paths';
 import type { ExtendedImageMetadata, ImageMetadata, Manifest, RootFolder } from '@/types';
+import { manifest } from 'astro:ssr-manifest';
 
 export interface DirectoryTree {
 
@@ -9,7 +10,17 @@ export interface DirectoryTree {
 
   totalImages: number;
 
+  findManifestForImage(imageId: string): Manifest;
+
   getManifest(id: string): Manifest;
+
+}
+
+interface ImageInManifest {
+
+  imageId: string;
+
+  manifestId: string;
 
 }
 
@@ -70,9 +81,15 @@ export const buildDirectoryTree = async (): Promise<DirectoryTree> => {
   }
 
   const allImages = metafiles.map(m => m.replace(/\.[^.]+$/, ''));
-  const imagesInManifests = new Set(manifests.flatMap(m => (m.images || []).map(i => i.id)));
+  
+  const imagesInManifests: ImageInManifest[] = manifests.flatMap(manifest => {
+    const images = manifest.images || [];
+    return images.map(image => ({ imageId: image.id, manifestId: manifest.id }));
+  });
 
-  const unassignedImageIds = allImages.filter(i => !imagesInManifests.has(i));
+  const assignedImageIds = new Set(imagesInManifests.map(t => t.imageId));
+  const unassignedImageIds = allImages.filter(i => !assignedImageIds.has(i));
+
   const unassignedImages: ImageMetadata[] = [];
 
   for (const i of unassignedImageIds) {
@@ -94,15 +111,17 @@ export const buildDirectoryTree = async (): Promise<DirectoryTree> => {
     images: unassignedImages
   };
 
-  const getManifest = (id: string) => manifests.find(m => m.id === id);
-
   const findManifestForImage = (imageId: string) => {
-
+    const manifestId = imagesInManifests.find(t => t.imageId === imageId)?.manifestId;
+    return manifestId ? getManifest(manifestId) : undefined;
   }
+
+  const getManifest = (id: string) => manifests.find(m => m.id === id);
 
   return { 
     root, 
     totalImages: allImages.length,
+    findManifestForImage,
     getManifest 
   };
 
