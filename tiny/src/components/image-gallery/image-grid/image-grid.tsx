@@ -20,8 +20,6 @@ import {
 
 interface SortableImageListProps {
 
-  draggable: boolean;
-
   images: ImageMetadata[];
 
 }
@@ -52,7 +50,6 @@ const SortableImageList = (props: SortableImageListProps) => {
       strategy={rectSortingStrategy}>
       {filteredImages.map(image => (
         <ImageCard
-          draggable={props.draggable}
           key={image.id}
           image={image}
           isSelected={selectedImageIds.has(image.id)}
@@ -152,8 +149,7 @@ export const ImageGrid = () => {
             folder={folder} />
         ))}
         
-        <SortableImageList 
-          draggable={isSubFolder(currentDirectory)}
+        <SortableImageList
           images={sortedImages} />
       </div>
     </DndContext>

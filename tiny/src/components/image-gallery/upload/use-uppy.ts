@@ -4,7 +4,7 @@ import DropTarget from '@uppy/drop-target';
 import XHRUpload from '@uppy/xhr-upload';
 import { useDirectory } from '@/hooks/use-directory';
 import { useUIState } from '@/hooks/use-ui-state';
-import { isManifest, isRootFolder, isSubFolder } from '@/types';
+import { isSubFolder } from '@/types';
 
 export const useUppy= () => {
 
@@ -25,9 +25,7 @@ export const useUppy= () => {
 
     const uppy = new Uppy({
       autoProceed: true,
-      meta: {
-        manifest
-      }
+      ...(manifest && { meta: { manifest } })
     });
 
     uppy.use(DropTarget, {

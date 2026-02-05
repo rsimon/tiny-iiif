@@ -11,8 +11,6 @@ import type { ImageMetadata } from '@/types';
 
 interface ImageCardProps {
 
-  draggable: boolean;
-
   isDragged?: boolean;
 
   image: ImageMetadata;
@@ -49,8 +47,7 @@ export const ImageCard = (props: ImageCardProps) => {
     isDragging
   } = useSortable({ 
     id: props.image.id,
-    data: { type: 'image' },
-    disabled: !props.draggable
+    data: { type: 'image' }
   });
 
   const style = {

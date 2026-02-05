@@ -33,7 +33,7 @@ export const ImageGallery = () => {
 
             <SidebarInset>
               <main className="grow flex flex-col min-h-0 bg-muted">  
-                <Toaster position="top-center" offset={6} />
+                <Toaster position="bottom-center" />
                 
                 <Toolbar uppy={uppy} />
 
