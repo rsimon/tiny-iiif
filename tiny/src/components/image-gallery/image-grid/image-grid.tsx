@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { arrayMove, SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import { snapCenterToCursor } from '@dnd-kit/modifiers';
 import { toast } from 'sonner';
 import { useUIState } from '@/hooks/use-ui-state';
@@ -16,7 +16,8 @@ import {
   useSensor,
   useSensors, 
   useDndContext,
-  rectIntersection
+  rectIntersection,
+  type Active
 } from '@dnd-kit/core';
 
 interface SortableImageListProps {
@@ -25,9 +26,31 @@ interface SortableImageListProps {
 
 }
 
-const SortableImageList = (props: SortableImageListProps) => {
+const measuring = {
+  droppable: {
+    strategy: MeasuringStrategy.Always,
+  }
+}
 
-  const { selectedImageIds, setSelectedImage } = useUIState();
+const useDraggedImages = () => {
+  const selectedImageIds = useUIState(state => state.selectedImageIds);
+
+  const getDraggedImages= useCallback((active?: Active): string[] => {
+    if (!active) return [];
+
+    if (selectedImageIds.includes(active.id.toString())) {
+      return selectedImageIds;
+    } else {
+      return [active.id.toString()];
+    }
+  }, [selectedImageIds]);
+
+  return { getDraggedImages };
+}
+
+const SortableImageList = (props: SortableImageListProps) => {
+  const selectedImageIds = useUIState(state => state.selectedImageIds);
+  const setSelectedImage = useUIState(state => state.setSelectedImage);
 
   const selectedImages = useMemo(() => (
     [...selectedImageIds].map(id => props.images.find(i => i.id === id)).filter(Boolean)
@@ -37,9 +60,16 @@ const SortableImageList = (props: SortableImageListProps) => {
 
   const activeImage = props.images.find(i => i.id === active?.id);
 
-  const filteredImages = (activeImage && selectedImages.length > 1)
-    ? props.images.filter(i => !selectedImageIds.has(i.id)) 
-    : props.images;
+  // Can be just the active image, or all selected images
+  const { getDraggedImages } = useDraggedImages();
+
+  const draggedImages = useMemo(() => getDraggedImages(active), [getDraggedImages, active]);
+
+  // If the whole selection is "dragged", all selected images are ghosted
+  const isGhost = useCallback((image: ImageMetadata) => {
+    if (draggedImages.length === 0) return false;
+    return draggedImages.includes(image.id) && active?.id !== image.id;
+  }, [active, draggedImages]);
 
   const onDelete = (_imageId: string) => {
 
@@ -47,13 +77,14 @@ const SortableImageList = (props: SortableImageListProps) => {
 
   return (
     <SortableContext 
-      items={filteredImages} 
+      items={props.images}
       strategy={rectSortingStrategy}>
-      {filteredImages.map(image => (
+      {props.images.map(image => (
         <ImageCard
           key={image.id}
           image={image}
-          isSelected={selectedImageIds.has(image.id)}
+          isGhost={isGhost(image)}
+          isSelected={selectedImageIds.includes(image.id)}
           onSelect={selected => setSelectedImage(image.id, selected)}
           onDelete={() => onDelete(image.id)} />
       ))}
@@ -71,12 +102,6 @@ const SortableImageList = (props: SortableImageListProps) => {
 
 }
 
-const measuringConfig = {
-  droppable: {
-    strategy: MeasuringStrategy.Always,
-  }
-};
-
 export const ImageGrid = () => {
   const currentDirectory = useUIState(state => state.currentDirectory);
 
@@ -84,6 +109,8 @@ export const ImageGrid = () => {
 
   const selectedImageIds = useUIState(state => state.selectedImageIds);
   const setSelectedImageIds = useUIState(state => state.setSelectedImageIds);
+
+  const { getDraggedImages } = useDraggedImages();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -102,47 +129,60 @@ export const ImageGrid = () => {
   const onDragEnd = (event: any) => {
     const { active, over } = event;
 
-    if (over.data.current.type === 'folder') {
-      if (selectedImageIds.size === 0) return;
+    const draggedImages = getDraggedImages(active);
 
+    if (over.data.current.type === 'folder') {
       const destination = folders.find(m => m.id === over.id);
 
-      const selected = [...selectedImageIds]
+      const dragged = [...draggedImages]
         .map(id => images.find(i => i.id === id)).filter(Boolean);
 
-      moveImagesToFolder(destination, selected);
-      setSelectedImageIds([]);
+      moveImagesToFolder(destination, dragged);
     } else if (active.id !== over.id) {
       // Store previous state for rollback
       const previousSortedImages = [...sortedImages];
-      
-      const oldIndex = sortedImages.findIndex(i => i.id === active.id);
-      const newIndex = sortedImages.findIndex(i => i.id === over.id);
-      const newSortedImages = arrayMove(sortedImages, oldIndex, newIndex);
+
+      const movedImages = draggedImages.map(id => sortedImages.find(i => i.id === id)).filter(Boolean);
+      const remainingImages = sortedImages.filter(i => !draggedImages.includes(i.id));
+      const shouldInsertAt = remainingImages.findIndex(i => i.id === over.id);
+
+      const activeIndex = sortedImages.findIndex(i => i.id === active.id);
+      const overIndex = sortedImages.findIndex(i => i.id === over.id);
+
+      const insertAt =
+          activeIndex < overIndex
+            ? shouldInsertAt + 1
+            : shouldInsertAt;
+
+      const newSortedImages = [
+        ...remainingImages.slice(0, insertAt),
+        ...movedImages,
+        ...remainingImages.slice(insertAt),
+      ];
+
       setSortedImages(newSortedImages);
 
-      // Not 100% sure how to deal with this - root folder has no 
-      // natural order. Just skip?
-      if (!isSubFolder(currentDirectory)) return;
-
-      const movedImages = [active.id];
-      reorderImagesInFolder(currentDirectory.id, movedImages, newIndex)
-        .then(() => {
-          toast.success('Images reordered successfully');
-        })
-        .catch((error) => {
-          // Rollback on failure
-          setSortedImages(previousSortedImages);
-          toast.error('Failed to reorder images');
-          console.error('Reorder failed:', error);
-        });
+      if (isSubFolder(currentDirectory))
+        reorderImagesInFolder(currentDirectory.id, movedImages.map(i => i.id), insertAt)
+          .then(() => {
+            toast.success('Images reordered successfully');
+          })
+          .catch((error) => {
+            // Rollback on failure
+            setSortedImages(previousSortedImages);
+            toast.error('Failed to reorder images');
+            console.error('Reorder failed:', error);
+          });
     }
+
+    if (selectedImageIds.includes(active?.id))
+      setSelectedImageIds([]);
   }
 
   return (
     <DndContext
       collisionDetection={rectIntersection}
-      measuring={measuringConfig}
+      measuring={measuring}
       sensors={sensors}
       onDragEnd={onDragEnd}>
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">

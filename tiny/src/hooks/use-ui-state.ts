@@ -15,7 +15,7 @@ export interface UIState {
   pageSize: number;
   setPageSize: (size: number) => void;
 
-  selectedImageIds: Set<string>;
+  selectedImageIds: string[];
   setSelectedImage: (id: string, selected: boolean) => void;
   setSelectedImageIds: (ids: string[]) => void;
 
@@ -38,18 +38,19 @@ export const useUIState = create<UIState>((set) => ({
   pageSize: 100,
   setPageSize: size => set({ pageSize: size }),
 
-  selectedImageIds: new Set<string>([]),
+  selectedImageIds: [],
   setSelectedImage: (id, selected) => set(state => {
-    const newSelectedIds = new Set([...state.selectedImageIds]);
+    const { selectedImageIds } = state;
 
-    if (selected)
-      newSelectedIds.add(id);
-    else
-      newSelectedIds.delete(id);
-    
-    return { selectedImageIds: newSelectedIds };
+    if (selected) {
+      return selectedImageIds.includes(id)
+        ? { selectedImageIds }
+        : { selectedImageIds: [...selectedImageIds, id] };
+    } else {
+      return { selectedImageIds: selectedImageIds.filter(i => i !== id) };
+    }
   }),
-  setSelectedImageIds: ids => set({ selectedImageIds: new Set(ids) }),
+  setSelectedImageIds: ids => set({ selectedImageIds: ids }),
 
   currentPreview: undefined,
   setCurrentPreview: image => set({ currentPreview: image })

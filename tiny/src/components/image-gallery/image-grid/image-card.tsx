@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { EllipsisVertical } from 'lucide-react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from "@dnd-kit/utilities";
-import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { getThumbnailURL } from '@/lib/get-thumbnail-url';
@@ -11,12 +9,12 @@ import type { ImageMetadata } from '@/types';
 import { ImageActions } from '../image-actions';
 
 interface ImageCardProps {
-
-  isDragged?: boolean;
-
-  image: ImageMetadata;
   
-  isSelected?: boolean;
+  isGhost: boolean;
+
+  isSelected: boolean;
+
+  image: ImageMetadata;  
 
   onDelete(): void;
 
@@ -75,7 +73,8 @@ export const ImageCard = (props: ImageCardProps) => {
       style={style} 
       className={cn(
         'group rounded-lg bg-white image-card-shadow border border-border cursor-grab active:cursor-grabbing',
-        props.isDragged ? 'opacity-30' : isDragging ? 'z-50 opacity-0' : undefined,
+        isDragging ? 'z-50 opacity-0' : undefined,
+        props.isGhost ? 'opacity-50' : undefined,
         'transition-all duration-200 animate-fade-in'
       )}>
       <div 
