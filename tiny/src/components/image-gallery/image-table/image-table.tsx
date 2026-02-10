@@ -1,15 +1,13 @@
 import { ArrowUpDown, MoreVertical } from 'lucide-react';
 import { rectSortingStrategy, SortableContext } from '@dnd-kit/sortable';
-import { FolderIcon } from '@/components/shared/folder-icon';
 import { Button } from '@/components/ui/button';
 import { useUIState } from '@/hooks/use-ui-state';
-import { useDirectory } from '@/hooks/use-directory';
-import { ImageTableRow } from './image-table-row';
 import type { ImageMetadata, SubFolder } from '@/types';
+import { FolderTableRow } from './folder-table-row';
+import { ImageTableRow } from './image-table-row';
 import { 
   Table, 
   TableBody, 
-  TableCell, 
   TableHead, 
   TableHeader, 
   TableRow 
@@ -79,25 +77,9 @@ export const ImageTable = (props: ImageTableProps) => {
 
           <TableBody>
             {folders.map(folder => (
-              <TableRow 
+              <FolderTableRow
                 key={folder.id}
-                className="animate-fade-in cursor-grab active:cursor-grabbing">
-                <TableCell />
-
-                <TableCell className="flex justify-center">
-                  <FolderIcon />
-                </TableCell>
-
-                <TableCell colSpan={2}>
-                  {folder.name}
-                </TableCell>
-
-                <TableCell>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
-                    <MoreVertical className="h-4 w-4" />
-                  </Button>
-                </TableCell>
-              </TableRow>
+                folder={folder} />
             ))}
 
             {images.map(image => (
