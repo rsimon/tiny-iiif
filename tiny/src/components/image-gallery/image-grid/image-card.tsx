@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from "@dnd-kit/utilities";
+import { CSS } from '@dnd-kit/utilities';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { getThumbnailURL } from '@/lib/get-thumbnail-url';
@@ -14,9 +14,7 @@ interface ImageCardProps {
 
   isSelected: boolean;
 
-  image: ImageMetadata;  
-
-  onDelete(): void;
+  image: ImageMetadata;
 
   onSelect(selected: boolean): void;
 
@@ -26,7 +24,6 @@ const THUMBNAIL_HEIGHT = 400;
 const THUMBNAIL_WIDTH = Math.ceil(THUMBNAIL_HEIGHT * 4 / 3);
 
 export const ImageCard = (props: ImageCardProps) => {
-
   // Keep track of mounting - this way we can keep the mount animation 
   // when toggling between table and grid view, but have NO animation
   // on drag-and-drop grid sorting.

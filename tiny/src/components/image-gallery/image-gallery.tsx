@@ -1,26 +1,32 @@
+import { Blocks } from 'lucide-react';
+import { DndContext, rectIntersection } from '@dnd-kit/core';
 import { AppHeader } from '@/components/shared/app-header';
 import { AppSidebar } from '@/components/shared/app-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from '@/components/ui/sonner';
+import { useDirectory } from '@/hooks/use-directory';
+import { measureAlways, useImageSorting } from '@/hooks/use-image-sorting';
 import { useUIState } from '@/hooks/use-ui-state';
-import { Toolbar } from './toolbar';
 import { ImageGrid } from './image-grid';
 import { ImageTable } from './image-table';
 import { IIIFPreview } from './iiif-preview';
+import { Toolbar } from './toolbar';
 import { UploadDropzone, useUppy } from './upload';
-import { useDirectory } from '@/hooks/use-directory';
-import { Blocks } from 'lucide-react';
 
 export const ImageGallery = () => {
   const viewMode = useUIState(state => state.viewMode);
   
+  const { folders } = useDirectory();
+
   const currentPreview = useUIState(state => state.currentPreview);
   const setCurrentPreview = useUIState(state => state.setCurrentPreview);
 
   const { isEmpty } = useDirectory();
 
   const { isDragOver: isFilesOverTarget, targetRef, uppy } = useUppy();
+
+  const { sensors, sortedImages, onDragEnd } = useImageSorting();
 
   return (
     <TooltipProvider>
@@ -41,19 +47,30 @@ export const ImageGallery = () => {
                   className="grow overflow-hidden"
                   targetRef={targetRef}
                   showOverlay={isFilesOverTarget}>
-                  <div className="-top-full h-full p-4 overflow-y-auto">
-                    {isEmpty ? (
-                      <div className="h-full w-full flex items-center justify-center">
-                        <Blocks
-                          className="size-24 -rotate-4 text-slate-500/10" 
-                          strokeWidth={1}/>
-                      </div>
-                    ) : viewMode === 'grid' ? (
-                      <ImageGrid />
-                    ) : (
-                      <ImageTable />
-                    )}
-                  </div>
+
+                  <DndContext
+                    collisionDetection={rectIntersection}
+                    measuring={measureAlways}
+                    sensors={sensors}
+                    onDragEnd={onDragEnd}>
+                    <div className="-top-full h-full p-4 overflow-y-auto">
+                      {isEmpty ? (
+                        <div className="h-full w-full flex items-center justify-center">
+                          <Blocks
+                            className="size-24 -rotate-4 text-slate-500/10" 
+                            strokeWidth={1}/>
+                        </div>
+                      ) : viewMode === 'grid' ? (
+                        <ImageGrid 
+                          folders={folders} 
+                          images={sortedImages} />
+                      ) : (
+                        <ImageTable 
+                          folders={folders}
+                          images={sortedImages} />
+                      )}
+                    </div>
+                  </DndContext>
                 </UploadDropzone>
               </main>
             </SidebarInset>
@@ -65,7 +82,6 @@ export const ImageGallery = () => {
         image={currentPreview} 
         onClose={() => setCurrentPreview(undefined)} />
     </TooltipProvider>
-
   )
 
 }
