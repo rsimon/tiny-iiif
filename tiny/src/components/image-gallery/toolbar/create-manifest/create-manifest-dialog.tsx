@@ -34,8 +34,10 @@ export const CreateManifestDialog = (props: CreateManifestDialogProps) => {
     if (!open) props.onClose();
   }
 
-  const onSave = () =>
+  const onSave = (e: React.SubmitEvent) => {
+    e.preventDefault();
     createManifest(name).then(() => props.onClose());
+  }
 
   return (
     <Dialog open={props.open} onOpenChange={onOpenChange}>
@@ -47,7 +49,7 @@ export const CreateManifestDialog = (props: CreateManifestDialogProps) => {
           </DialogDescription>
         </DialogHeader>
         
-        <div className="my-4 grid gap-2">
+        <form onSubmit={onSave}  className="my-4 grid gap-2">
           <Label htmlFor="name">Name</Label>
 
           <Input
@@ -55,12 +57,17 @@ export const CreateManifestDialog = (props: CreateManifestDialogProps) => {
             autoComplete="off"
             value={name}
             onChange={evt => setName(evt.target.value)} />
-        </div>
-            
-        <DialogFooter>
-          <Button variant="secondary" onClick={() => props.onClose()}>Cancel</Button>
-          <Button onClick={onSave}>Create</Button>
-        </DialogFooter>
+              
+          <DialogFooter>
+            <Button 
+              type="button"
+              variant="ghost"
+              onClick={() => props.onClose()}>Cancel</Button>
+
+            <Button 
+              type="submit">Create</Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   )

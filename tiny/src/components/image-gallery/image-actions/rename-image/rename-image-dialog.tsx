@@ -33,7 +33,7 @@ export const RenameImageDialog = (props: RenameImageDialogProps) => {
     setName(props.image.filename);
   }, [props.open, props.image.filename]);
 
-  const onRename = (e: React.FormEvent) => {
+  const onRename = (e: React.SubmitEvent) => {
     e.preventDefault();
 
     if (!name) {

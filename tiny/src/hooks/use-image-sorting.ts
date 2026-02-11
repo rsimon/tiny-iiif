@@ -12,7 +12,7 @@ export const measureAlways = {
   }
 }
 
-const getDraggedImages = (selectedImageIds: string[], active?: string): string[] => {
+export const getDraggedImages = (selectedImageIds: string[], active?: string): string[] => {
   if (!active) return [];
 
   if (selectedImageIds.includes(active)) {

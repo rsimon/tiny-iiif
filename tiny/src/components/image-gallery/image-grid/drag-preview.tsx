@@ -2,12 +2,13 @@ import { useMemo } from 'react';
 import type { ImageMetadata } from '@/types';
 import { getThumbnailURL } from '@/lib/get-thumbnail-url';
 import { ImageCard } from './image-card';
+import { useUIState } from '@/hooks/use-ui-state';
+import { getDraggedImages } from '@/hooks/use-image-sorting';
+import { useDirectory } from '@/hooks/use-directory';
 
 interface DragPreviewProps {
 
   active: ImageMetadata;
-
-  selected?: ImageMetadata[];
 
 }
 
@@ -19,17 +20,21 @@ const styles = [
 
 export const DragPreview = (props: DragPreviewProps) => {
 
-  const { active, selected = [] } = props;
+  const { images } = useDirectory();
 
-  const images = useMemo(() => 
-    [active, ...selected.filter(i => i.id !== active.id)]
-  , [active, selected]);
+  const selectedImageIds = useUIState(state => state.selectedImageIds);
 
-  const head = useMemo(() => [...images].slice(0, styles.length).reverse(), [images]);
+  const dragged = useMemo(() => {
+    const draggedIds = getDraggedImages(selectedImageIds, props.active.id);
+    return draggedIds.slice(0, styles.length)
+      .reverse()
+      .map(id => images.find(i => i.id === id))
+      .filter(Boolean)
+  }, [selectedImageIds, props.active.id, images]);
 
-  return head.length > 1 ? (
+  return dragged.length > 1 ? (
     <div className="size-20">
-      {head.map((image, index) => (
+      {dragged.map((image, index) => (
         <div 
           key={image.id}>
           <img
@@ -46,12 +51,7 @@ export const DragPreview = (props: DragPreviewProps) => {
       ))}
     </div>
   ) : (
-    <ImageCard
-      isDragged
-      image={head[0]}
-      isSelected={false}
-      onSelect={selected => {}}
-      onDelete={() => {}} />
+    <ImageCard image={dragged[0]} />
   )
 
 }
