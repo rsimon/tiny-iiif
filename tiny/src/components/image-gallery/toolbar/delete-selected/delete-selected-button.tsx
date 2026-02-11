@@ -15,12 +15,12 @@ export const DeleteSelectedButton = () => {
     setSelected([]);
   }
 
-  return selected.size > 0 ? (
+  return selected.length > 0 ? (
     <Button
       variant="destructive"
       onClick={onDelete}>
       <Trash2 className="size-4" />
-      Delete {selected.size} Image{selected.size > 1 && 's'}
+      Delete {selected.length} Image{selected.length > 1 && 's'}
     </Button>
   ) : null;
   
