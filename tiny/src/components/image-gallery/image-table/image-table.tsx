@@ -1,6 +1,7 @@
-import { ArrowUpDown, MoreVertical } from 'lucide-react';
+import { useMemo } from 'react';
+import { DragOverlay, useDndContext } from '@dnd-kit/core';
 import { rectSortingStrategy, SortableContext } from '@dnd-kit/sortable';
-import { Button } from '@/components/ui/button';
+import { snapCenterToCursor } from '@dnd-kit/modifiers';
 import { useUIState } from '@/hooks/use-ui-state';
 import type { ImageMetadata, SubFolder } from '@/types';
 import { FolderTableRow } from './folder-table-row';
@@ -12,6 +13,7 @@ import {
   TableHeader, 
   TableRow 
 } from '@/components/ui/table';
+import { DragPreview } from './drag-preview';
 
 interface ImageTableProps {
 
@@ -28,13 +30,8 @@ export const ImageTable = (props: ImageTableProps) => {
   const selectedImageIds = useUIState(state => state.selectedImageIds);
   const setSelectedImage = useUIState(state => state.setSelectedImage);
 
-  const onSort = (property: string) => {
-
-  }
-
-  const onDelete = (image: ImageMetadata) => {
-
-  }
+  const { active } = useDndContext();
+  const activeImage = useMemo(() => props.images.find(i => i.id === active?.id), [props.images, active]);
 
   return (
     <SortableContext 
@@ -50,25 +47,11 @@ export const ImageTable = (props: ImageTableProps) => {
               <TableHead className="w-18" />
 
               <TableHead>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="text-muted-foreground hover:bg-transparent gap-1 -ml-3 font-medium"
-                  onClick={() => onSort('filename')}>
-                  Name
-                  <ArrowUpDown className="size-3" />
-                </Button>
+                Name
               </TableHead>
 
               <TableHead>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="text-muted-foreground hover:bg-transparent gap-1 -ml-3 font-medium"
-                  onClick={() => onSort('fileSize')}>
-                  Dimensions
-                  <ArrowUpDown className="size-3" />
-                </Button>
+                Dimensions
               </TableHead>
 
               <TableHead className="w-10" />
@@ -86,13 +69,19 @@ export const ImageTable = (props: ImageTableProps) => {
               <ImageTableRow 
                 key={image.id}
                 image={image}
-                isGhost={false}
                 isSelected={selectedImageIds.includes(image.id)}
                 onSelect={selected => setSelectedImage(image.id, selected)} />
             ))}
           </TableBody>
         </Table>
       </div>
+
+      {activeImage && (
+        <DragOverlay
+          modifiers={[snapCenterToCursor]}>
+          <DragPreview active={activeImage} />
+        </DragOverlay>
+      )}
     </SortableContext>
   )
 

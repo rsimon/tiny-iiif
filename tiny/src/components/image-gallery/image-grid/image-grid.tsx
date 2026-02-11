@@ -23,7 +23,6 @@ export const ImageGrid = (props: ImageGridProps) => {
   const setSelectedImage = useUIState(state => state.setSelectedImage);
 
   const { active } = useDndContext();
-
   const activeImage = useMemo(() => props.images.find(i => i.id === active?.id), [props.images, active]);
 
   return (

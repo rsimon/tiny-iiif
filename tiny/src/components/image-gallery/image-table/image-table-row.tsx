@@ -6,16 +6,15 @@ import { TableCell, TableRow } from '@/components/ui/table';
 import { getThumbnailURL } from '@/lib/get-thumbnail-url';
 import type { ImageMetadata } from '@/types';
 import { MoreVertical } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ImageTableRowProps {
 
-  isGhost: boolean;
-
-  isSelected: boolean;
-
   image: ImageMetadata;  
 
-  onSelect(selected: boolean): void;
+  isSelected?: boolean;
+
+  onSelect?(selected: boolean): void;
   
 }
 
@@ -47,11 +46,14 @@ export const ImageTableRow = (props: ImageTableRowProps) => {
       ref={setNodeRef}
       style={style} 
       data-state={props.isSelected ? 'selected' : undefined}
-      className="animate-fade-in cursor-grab active:cursor-grabbing">
+      className={cn(
+        'animate-fade-in cursor-grab active:cursor-grabbing',
+        isDragging ? 'opacity-0' : undefined
+      )}>
       <TableCell className="w-10 text-center">
         <Checkbox
           checked={props.isSelected}
-          onCheckedChange={checked => props.onSelect(checked as boolean)}
+          onCheckedChange={checked => props.onSelect?.(checked as boolean)}
           aria-label={`Select ${image.filename}`}
           className="rounded border bg-muted/30 border-slate-300 size-4.5 data-[state=checked]:bg-green-600 data-[state=checked]:text-green-100 data-[state=checked]:border-green-600" />
       </TableCell>

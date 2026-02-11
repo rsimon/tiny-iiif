@@ -68,7 +68,7 @@ export const ImageCard = (props: ImageCardProps) => {
       style={style} 
       className={cn(
         'group rounded-lg bg-white image-card-shadow border border-border cursor-grab active:cursor-grabbing',
-        isDragging ? 'z-50 opacity-0' : undefined,
+        isDragging ? 'opacity-0' : undefined,
         'transition-all duration-200 animate-fade-in'
       )}>
       <div 
