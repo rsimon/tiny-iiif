@@ -1,8 +1,9 @@
 .astro/
-node_modules/
+dist/
 data/images/*
 data/manifests/*
 data/meta/*
 !data/*/.gitkeep
+node_modules/
 .DS_Store
 .env

@@ -1,4 +1,5 @@
 import { ChartLine, ChevronDown, ChevronLeft, Images, Library, Sparkles } from 'lucide-react';
+import { Icon } from '@iconify/react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useDirectory } from '@/hooks/use-directory';
 import { cn } from '@/lib/utils';
@@ -6,12 +7,14 @@ import { Button } from '../ui/button';
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
+  SidebarTrigger,
   useSidebar
 } from '@/components/ui/sidebar';
 
@@ -22,6 +25,13 @@ export const AppSidebar = () => {
   const totalImages = data?.meta.totalImages || 0;
 
   const { toggleSidebar, open } = useSidebar();
+
+  const onClickHeart = (e: React.MouseEvent) => {
+    if (!open) {
+      e.preventDefault();
+      toggleSidebar();
+    }
+  } 
 
   return (
     <Sidebar collapsible="icon" className="sticky h-full">
@@ -92,6 +102,25 @@ export const AppSidebar = () => {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarContent>
+
+      <SidebarFooter>
+        <SidebarMenuItem>
+          <SidebarMenuButton asChild>
+            <div>
+              <Icon 
+                icon="ant-design:heart-outlined" 
+                className="cursor-pointer"
+                onClick={onClickHeart} />
+              <a 
+                href="https://rainersimon.io"
+                target="_blank"
+                className="block mb-px">
+                <span className="text-xs hover:underline">rainersimon.io</span>
+              </a>
+            </div>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarFooter>
     </Sidebar>
   )
 
