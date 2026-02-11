@@ -26,7 +26,7 @@ export const ImageGallery = () => {
 
   const { isDragOver: isFilesOverTarget, targetRef, uppy } = useUppy();
 
-  const { sensors, sortedImages, onDragEnd } = useImageSorting();
+  const { sensors, sortedImages, onDragStart, onDragEnd, onDragCancel } = useImageSorting();
 
   return (
     <TooltipProvider>
@@ -52,7 +52,9 @@ export const ImageGallery = () => {
                     collisionDetection={rectIntersection}
                     measuring={measureAlways}
                     sensors={sensors}
-                    onDragEnd={onDragEnd}>
+                    onDragStart={onDragStart}
+                    onDragEnd={onDragEnd}
+                    onDragCancel={onDragCancel}>
                     <div className="-top-full h-full p-4 overflow-y-auto">
                       {isEmpty ? (
                         <div className="h-full w-full flex items-center justify-center">

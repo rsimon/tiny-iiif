@@ -12,13 +12,13 @@ export const measureAlways = {
   }
 }
 
-const getDraggedImages = (selectedImageIds: string[], active?: Active): string[] => {
+const getDraggedImages = (selectedImageIds: string[], active?: string): string[] => {
   if (!active) return [];
 
-  if (selectedImageIds.includes(active.id.toString())) {
+  if (selectedImageIds.includes(active)) {
     return selectedImageIds;
   } else {
-    return [active.id.toString()];
+    return [active];
   }
 }
 
@@ -27,7 +27,7 @@ export const useDraggedImages = () => {
   const selectedImageIds = useUIState(state => state.selectedImageIds);
 
   const draggedImages = useMemo(() => (
-    getDraggedImages(selectedImageIds, active)
+    getDraggedImages(selectedImageIds, active?.id?.toString())
   ), [active, selectedImageIds]);
 
   return { draggedImages, active };
@@ -42,7 +42,14 @@ export const useImageSorting = () => {
   const selectedImageIds = useUIState(state => state.selectedImageIds);
   const setSelectedImageIds = useUIState(state => state.setSelectedImageIds);
 
+  const [active, setActive] = useState<string | null>(null);
+
   const [sortedImages, setSortedImages] = useState(images);
+
+  const draggedImages = useMemo(() => {
+    if (active === null) return [];
+    return getDraggedImages(selectedImageIds, active)
+  }, [selectedImageIds, active])
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -52,14 +59,27 @@ export const useImageSorting = () => {
     })
   );
 
+  const filteredImages = useMemo(() => {
+    if (draggedImages.length === 0) return sortedImages;
+    return sortedImages.filter(i => !draggedImages.includes(i.id) || i.id === active);
+  }, [sortedImages, draggedImages, active])
+
   useEffect(() => {
     setSortedImages(images);
   }, [images]);
 
-  const onDragEnd = useCallback((event: any) => {
-    const { active, over } = event;
+  const onDragStart = useCallback((event: any) => {
+    setActive(event.active?.id || null);
+  }, []);
 
-    const draggedImages = getDraggedImages(selectedImageIds, active);
+  const onDragCancel = useCallback((event: any) => {
+    setActive(null);
+  }, []);
+
+  const onDragEnd = useCallback((event: any) => {
+    setActive(null);
+
+    const { active, over } = event;
 
     if (over.data.current.type === 'folder') {
       const destination = folders.find(m => m.id === over.id);
@@ -109,6 +129,7 @@ export const useImageSorting = () => {
       setSelectedImageIds([]);
   }, [
     currentDirectory, 
+    draggedImages,
     selectedImageIds,
     sortedImages, 
     moveImagesToFolder, 
@@ -116,6 +137,12 @@ export const useImageSorting = () => {
     setSelectedImageIds 
   ]);
 
-  return { sensors, sortedImages, onDragEnd };
+  return { 
+    sensors, 
+    sortedImages: filteredImages, 
+    onDragCancel,
+    onDragEnd,
+    onDragStart, 
+  };
 
 }

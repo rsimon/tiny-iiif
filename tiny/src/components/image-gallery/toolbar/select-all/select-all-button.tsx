@@ -15,7 +15,7 @@ export const SelectAllButton = (props: SelectAllButtonProps) => {
   const setSelectedImageIds = useUIState(state => state.setSelectedImageIds);
 
   const onSelectAll = () => {
-    if (selectedImageIds.size === props.images.length)
+    if (selectedImageIds.length === props.images.length)
       setSelectedImageIds([]);
     else 
       setSelectedImageIds(props.images.map(i => i.id));
