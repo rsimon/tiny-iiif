@@ -68,22 +68,34 @@ export const useImageSorting = () => {
   const onDragEnd = useCallback((event: any) => {
     setActive(null);
 
+    // Store previous state for rollback
+    const previousSortedImages = [...sortedImages];
+
     const { active, over } = event;
 
     if (over.data.current.type === 'folder') {
       const destination = folders.find(m => m.id === over.id);
 
       const dragged = [...draggedImages]
-        .map(id => images.find(i => i.id === id)).filter(Boolean);
+        .map(id => images.find(i => i.id === id)).filter(Boolean);  
 
-      moveImagesToFolder(destination, dragged);
+      const updatedImages = sortedImages.filter(i => !draggedImages.includes(i.id));
+
+      setSortedImages(updatedImages);
+      moveImagesToFolder(destination, dragged)
+          .then(() => {
+            toast.success('Images moved successfully');
+          })
+          .catch((error) => {
+            // Rollback on failure
+            setSortedImages(previousSortedImages);
+            toast.error('Failed to move images');
+            console.error('Move failed:', error);
+          });
 
       if (selectedImageIds.includes(active?.id))
         setSelectedImageIds([]);
     } else if (active.id !== over.id) {
-      // Store previous state for rollback
-      const previousSortedImages = [...sortedImages];
-
       const movedImages = draggedImages.map(id => sortedImages.find(i => i.id === id)).filter(Boolean);
       const remainingImages = sortedImages.filter(i => !draggedImages.includes(i.id));
       const shouldInsertAt = remainingImages.findIndex(i => i.id === over.id);

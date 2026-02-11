@@ -1,5 +1,5 @@
 import { Blocks } from 'lucide-react';
-import { DndContext, rectIntersection } from '@dnd-kit/core';
+import { DndContext, pointerWithin } from '@dnd-kit/core';
 import { AppHeader } from '@/components/shared/app-header';
 import { AppSidebar } from '@/components/shared/app-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
@@ -49,7 +49,7 @@ export const ImageGallery = () => {
                   showOverlay={isFilesOverTarget}>
 
                   <DndContext
-                    collisionDetection={rectIntersection}
+                    collisionDetection={pointerWithin}
                     measuring={measureAlways}
                     sensors={sensors}
                     onDragStart={onDragStart}

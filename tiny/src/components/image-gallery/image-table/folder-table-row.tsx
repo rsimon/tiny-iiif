@@ -2,6 +2,7 @@ import { MoreVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { TableCell, TableRow } from '@/components/ui/table';
 import type { SubFolder } from '@/types';
+import { useUIState } from '@/hooks/use-ui-state';
 
 interface FolderTableRowProps {
 
@@ -11,9 +12,14 @@ interface FolderTableRowProps {
 
 export const FolderTableRow = (props: FolderTableRowProps) => {
 
+  const setCurrentDirectory = useUIState(state => state.setCurrentDirectory);
+
+  const onEnterFolder = () => setCurrentDirectory(props.folder);
+
   return (
     <TableRow 
-      className="animate-fade-in cursor-grab active:cursor-grabbing">
+      className="animate-fade-in cursor-grab active:cursor-grabbing"
+      onClick={onEnterFolder}>
       <TableCell />
 
       <TableCell className="flex justify-center">
