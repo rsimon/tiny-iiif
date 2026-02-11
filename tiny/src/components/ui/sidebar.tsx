@@ -6,7 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { PanelLeftIcon } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-is-mobile"
-import { cn } from "@/lib/utils"
+import { cn, getCookieValue } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
@@ -54,16 +54,9 @@ function useSidebar() {
 }
 
 function getSidebarStateCookie() {  
-  const cookies = document.cookie.split(';');
-  const sidebarStateCookie = cookies.find(cookie => cookie.trim().startsWith(`${SIDEBAR_COOKIE_NAME}=`));
-  
-  if (!sidebarStateCookie) return true;
-  try {
-    const value = sidebarStateCookie.split('=')[1];
-    return value === 'true';
-  } catch {
-    return true;
-  }
+  const value = getCookieValue(SIDEBAR_COOKIE_NAME);
+  if (!value) return true;
+  return value === 'true';
 }
 
 function SidebarProvider({
