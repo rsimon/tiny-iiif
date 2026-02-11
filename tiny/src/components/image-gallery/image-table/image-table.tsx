@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
-import { DragOverlay, useDndContext } from '@dnd-kit/core';
+import { DragOverlay, useDndContext, type Modifier } from '@dnd-kit/core';
 import { rectSortingStrategy, SortableContext } from '@dnd-kit/sortable';
-import { snapCenterToCursor } from '@dnd-kit/modifiers';
+import { getEventCoordinates } from '@dnd-kit/utilities';
 import { useUIState } from '@/hooks/use-ui-state';
 import type { ImageMetadata, SubFolder } from '@/types';
+import { DragPreview } from './drag-preview';
 import { FolderTableRow } from './folder-table-row';
 import { ImageTableRow } from './image-table-row';
 import { 
@@ -13,7 +14,6 @@ import {
   TableHeader, 
   TableRow 
 } from '@/components/ui/table';
-import { DragPreview } from './drag-preview';
 
 interface ImageTableProps {
 
@@ -21,6 +21,29 @@ interface ImageTableProps {
 
   images: ImageMetadata[];
 
+}
+
+// Modified from https://github.com/clauderic/dnd-kit/blob/e9215e820798459ae036896fce7fd9a6fe855772/packages/modifiers/src/snapCenterToCursor.ts#L4
+export const snapVerticalCenterToCursor: Modifier = ({
+  activatorEvent,
+  draggingNodeRect,
+  transform,
+}) => {
+  if (draggingNodeRect && activatorEvent) {
+    const activatorCoordinates = getEventCoordinates(activatorEvent);
+
+    if (!activatorCoordinates)
+      return transform;
+
+    const offsetY = activatorCoordinates.y - draggingNodeRect.top;
+
+    return {
+      ...transform,
+      y: transform.y + offsetY - draggingNodeRect.height / 2,
+    }
+  }
+
+  return transform;
 }
 
 export const ImageTable = (props: ImageTableProps) => {
@@ -78,7 +101,7 @@ export const ImageTable = (props: ImageTableProps) => {
 
       {activeImage && (
         <DragOverlay
-          modifiers={[snapCenterToCursor]}>
+          modifiers={[snapVerticalCenterToCursor]}>
           <DragPreview active={activeImage} />
         </DragOverlay>
       )}

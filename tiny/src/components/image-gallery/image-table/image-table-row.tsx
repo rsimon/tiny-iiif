@@ -1,14 +1,16 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { TableCell, TableRow } from '@/components/ui/table';
+import { useUIState } from '@/hooks/use-ui-state';
 import { getThumbnailURL } from '@/lib/get-thumbnail-url';
-import type { ImageMetadata } from '@/types';
-import { MoreVertical } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import type { ImageMetadata } from '@/types';
+import { ImageActions } from '../image-actions';
 
 interface ImageTableRowProps {
+
+  className?: string;
 
   image: ImageMetadata;  
 
@@ -21,6 +23,8 @@ interface ImageTableRowProps {
 export const ImageTableRow = (props: ImageTableRowProps) => {
 
   const { image } = props;
+
+  const setCurrentPreview = useUIState(state => state.setCurrentPreview);
 
   const {
     attributes,
@@ -48,7 +52,8 @@ export const ImageTableRow = (props: ImageTableRowProps) => {
       data-state={props.isSelected ? 'selected' : undefined}
       className={cn(
         'animate-fade-in cursor-grab active:cursor-grabbing',
-        isDragging ? 'opacity-0' : undefined
+        isDragging ? 'opacity-0' : undefined,
+        props.className
       )}>
       <TableCell className="w-10 text-center">
         <Checkbox
@@ -74,9 +79,9 @@ export const ImageTableRow = (props: ImageTableRowProps) => {
       </TableCell>
 
       <TableCell className="text-muted-foreground">
-        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
-          <MoreVertical className="h-4 w-4" />
-        </Button>
+        <ImageActions 
+          image={image} 
+          onPreview={() => setCurrentPreview(props.image)} />
       </TableCell>
     </TableRow>
   )
