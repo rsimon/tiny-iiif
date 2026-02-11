@@ -30,14 +30,14 @@ export const IMAGE_ITEM_TEMPLATE = (manifestId: string, image: ImageMetadata, or
       type: 'Annotation',
       motivation: 'painting',
       body: {
-        id: `${origin}/iiif/2/${image.id}/full/max/0/default.jpg`,
+        id: `${origin}/iiif/3/${image.id}/full/max/0/default.jpg`,
         type: 'Image',
         height: image.height,
         width: image.width,
         service: [{
-          id: `${origin}/iiif/2/${image.id}`,
+          id: `${origin}/iiif/3/${image.id}`,
           profile: 'level1',
-          type: 'ImageService2'
+          type: 'ImageService3'
         }]
       },
       target: `${origin}/manifests/${manifestId}/canvas/${image.id}`
