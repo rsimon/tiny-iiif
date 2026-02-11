@@ -60,7 +60,7 @@ export const ImageTableRow = (props: ImageTableRowProps) => {
           checked={props.isSelected}
           onCheckedChange={checked => props.onSelect?.(checked as boolean)}
           aria-label={`Select ${image.filename}`}
-          className="rounded border bg-muted/30 border-slate-300 size-4.5 data-[state=checked]:bg-green-600 data-[state=checked]:text-green-100 data-[state=checked]:border-green-600" />
+          className="rounded border bg-muted/30 border-slate-300 size-4.5 data-[state=checked]:bg-sky-900 data-[state=checked]:text-sky-100 data-[state=checked]:border-sky-900" />
       </TableCell>
 
       <TableCell className="p-3 w-18 flex justify-center">

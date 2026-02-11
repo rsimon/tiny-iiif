@@ -89,7 +89,7 @@ export const ImageCard = (props: ImageCardProps) => {
             checked={props.isSelected}
             onClick={e => e.stopPropagation()}
             onCheckedChange={checked => props.onSelect?.(checked as boolean)}
-            className="size-5.5 border-sky-950/40 rounded-full bg-white/60 data-[state=checked]:bg-green-600 data-[state=checked]:text-green-100 data-[state=checked]:border-green-100" />
+            className="size-5.5 border-sky-950/40 rounded-full bg-white/60 data-[state=checked]:bg-sky-900 data-[state=checked]:text-sky-100 data-[state=checked]:border-sky-100" />
         </div>
       </div>
 
