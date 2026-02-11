@@ -9,14 +9,12 @@ import type { ImageMetadata } from '@/types';
 import { ImageActions } from '../image-actions';
 
 interface ImageCardProps {
-  
-  isGhost: boolean;
-
-  isSelected: boolean;
 
   image: ImageMetadata;
 
-  onSelect(selected: boolean): void;
+  isSelected?: boolean;
+
+  onSelect?(selected: boolean): void;
 
 }
 
@@ -71,7 +69,6 @@ export const ImageCard = (props: ImageCardProps) => {
       className={cn(
         'group rounded-lg bg-white image-card-shadow border border-border cursor-grab active:cursor-grabbing',
         isDragging ? 'z-50 opacity-0' : undefined,
-        props.isGhost ? 'opacity-50' : undefined,
         'transition-all duration-200 animate-fade-in'
       )}>
       <div 
@@ -91,7 +88,7 @@ export const ImageCard = (props: ImageCardProps) => {
           <Checkbox
             checked={props.isSelected}
             onClick={e => e.stopPropagation()}
-            onCheckedChange={checked => props.onSelect(checked as boolean)}
+            onCheckedChange={checked => props.onSelect?.(checked as boolean)}
             className="size-5.5 border-sky-950/40 rounded-full bg-white/60 data-[state=checked]:bg-green-600 data-[state=checked]:text-green-100 data-[state=checked]:border-green-100" />
         </div>
       </div>

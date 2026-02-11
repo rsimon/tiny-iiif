@@ -22,17 +22,6 @@ const getDraggedImages = (selectedImageIds: string[], active?: string): string[]
   }
 }
 
-export const useDraggedImages = () => {
-  const { active } = useDndContext();
-  const selectedImageIds = useUIState(state => state.selectedImageIds);
-
-  const draggedImages = useMemo(() => (
-    getDraggedImages(selectedImageIds, active?.id?.toString())
-  ), [active, selectedImageIds]);
-
-  return { draggedImages, active };
-}
-
 export const useImageSorting = () => {
 
   const { folders, images, moveImagesToFolder, reorderImagesInFolder } = useDirectory();
@@ -88,6 +77,9 @@ export const useImageSorting = () => {
         .map(id => images.find(i => i.id === id)).filter(Boolean);
 
       moveImagesToFolder(destination, dragged);
+
+      if (selectedImageIds.includes(active?.id))
+        setSelectedImageIds([]);
     } else if (active.id !== over.id) {
       // Store previous state for rollback
       const previousSortedImages = [...sortedImages];
@@ -123,10 +115,10 @@ export const useImageSorting = () => {
             toast.error('Failed to reorder images');
             console.error('Reorder failed:', error);
           });
-    }
 
-    if (selectedImageIds.includes(active?.id))
-      setSelectedImageIds([]);
+      if (selectedImageIds.includes(active?.id))
+        setSelectedImageIds([]); 
+    }
   }, [
     currentDirectory, 
     draggedImages,
