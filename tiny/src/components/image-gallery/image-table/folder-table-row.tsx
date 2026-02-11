@@ -1,8 +1,8 @@
-import { MoreVertical } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useDroppable } from '@dnd-kit/core';
 import { TableCell, TableRow } from '@/components/ui/table';
-import type { SubFolder } from '@/types';
+import { isManifest, type SubFolder } from '@/types';
 import { useUIState } from '@/hooks/use-ui-state';
+import { ManifestActions } from '../manifest-actions';
 
 interface FolderTableRowProps {
 
@@ -16,8 +16,14 @@ export const FolderTableRow = (props: FolderTableRowProps) => {
 
   const onEnterFolder = () => setCurrentDirectory(props.folder);
 
+  const { isOver: isDraggedOver, setNodeRef } = useDroppable({
+    id: props.folder.id,
+    data: { type: 'folder' }
+  });
+
   return (
     <TableRow 
+      ref={setNodeRef}
       className="animate-fade-in cursor-grab active:cursor-grabbing"
       onClick={onEnterFolder}>
       <TableCell />
@@ -36,10 +42,10 @@ export const FolderTableRow = (props: FolderTableRowProps) => {
         {props.folder.name}
       </TableCell>
 
-      <TableCell>
-        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
-          <MoreVertical className="h-4 w-4" />
-        </Button>
+      <TableCell onClick={(e) => e.stopPropagation()}>
+        {isManifest(props.folder) && (
+          <ManifestActions manifest={props.folder} />
+        )}
       </TableCell>
     </TableRow>
   )

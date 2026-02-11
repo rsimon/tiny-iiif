@@ -81,7 +81,10 @@ export const ManifestActions = (props: ManifestActionsProps) => {
         open={dropdownOpen} 
         onOpenChange={setDropdownOpen}>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="text-muted-foreground">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="text-muted-foreground">
             <EllipsisVertical className="size-3.5" />
           </Button>
         </DropdownMenuTrigger>
