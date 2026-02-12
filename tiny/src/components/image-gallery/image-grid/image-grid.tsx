@@ -7,6 +7,7 @@ import type { ImageMetadata, SubFolder } from '@/types';
 import { DragPreview } from './drag-preview';
 import { FolderCard } from './folder-card';
 import { ImageCard } from './image-card';
+import { PaginationControl } from '../pagination-control';
 
 interface ImageGridProps {
 
@@ -26,31 +27,38 @@ export const ImageGrid = (props: ImageGridProps) => {
   const activeImage = useMemo(() => props.images.find(i => i.id === active?.id), [props.images, active]);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-      <SortableContext 
-        items={props.images}
-        strategy={rectSortingStrategy}>
-        {folders.map(folder => (
-          <FolderCard 
-            key={folder.id} 
-            folder={folder} />
-        ))}
+    <div>
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <SortableContext 
+          items={props.images}
+          strategy={rectSortingStrategy}>
+          {folders.map(folder => (
+            <FolderCard 
+              key={folder.id} 
+              folder={folder} />
+          ))}
 
-        {images.map(image => (
-          <ImageCard
-            key={image.id}
-            image={image}
-            isSelected={selectedImageIds.includes(image.id)}
-            onSelect={selected => setSelectedImage(image.id, selected)} />
-        ))}
+          {images.map(image => (
+            <ImageCard
+              key={image.id}
+              image={image}
+              isSelected={selectedImageIds.includes(image.id)}
+              onSelect={selected => setSelectedImage(image.id, selected)} />
+          ))}
 
-        {activeImage && (
-          <DragOverlay
-            modifiers={[snapCenterToCursor]}>
-            <DragPreview active={activeImage} />
-          </DragOverlay>
-        )}
-      </SortableContext>
+          {activeImage && (
+            <DragOverlay
+              modifiers={[snapCenterToCursor]}>
+              <DragPreview active={activeImage} />
+            </DragOverlay>
+          )}
+        </SortableContext>
+      </div>
+
+      <div className="mt-4">
+        <PaginationControl 
+          className="justify-start" />
+      </div>
     </div>
   )
 

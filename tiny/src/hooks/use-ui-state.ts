@@ -37,7 +37,7 @@ export const useUIState = create<UIState>()(
       currentPage: 1,
       setCurrentPage: page => set({ currentPage: page }),
 
-      pageSize: 100,
+      pageSize: 25,
       setPageSize: size => set({ pageSize: size }),
 
       selectedImageIds: [],
