@@ -29,12 +29,7 @@ export const PaginationControl = (props: PaginationControlProps) => {
   
   const { data } = useDirectory();
 
-  // No data yet
-  if (!data) return null;
-
-  // Only one page
-  const totalPages = Math.ceil(data.total / pageSize);  
-  if (totalPages < 2) return null;
+  const totalPages = Math.ceil((data?.total || 0) / pageSize);  
 
   const computeItems = useCallback(() => {
     const items: PaginationItem[] = [];
@@ -97,7 +92,7 @@ export const PaginationControl = (props: PaginationControlProps) => {
 
   const items = useMemo(() => computeItems(), [computeItems]);
 
-  return (
+  return totalPages > 1 ? (
     <Pagination className={props.className}>
       <PaginationContent>
         {items.map((item, index) => (
@@ -134,6 +129,6 @@ export const PaginationControl = (props: PaginationControlProps) => {
         ))}
       </PaginationContent>
     </Pagination>
-  )
+  ) : null;
   
 }

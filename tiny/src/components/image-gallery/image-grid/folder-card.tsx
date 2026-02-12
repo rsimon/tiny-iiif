@@ -93,7 +93,7 @@ export const FolderCard = (props: FolderCardProps) => {
       </button>
 
       <div className="pt-0 p-1 pl-2 flex items-stretch justify-between">
-        <div className="pt-0.5 text-xs text-slate-950 flex flex-col truncate flex-1 space-y-0">
+        <div className="pt-0.5 text-xs text-slate-950 flex flex-col truncate flex-1 space-y-px">
           <div className="font-medium">{props.folder.name}</div>
 
           {(props.folder.images || []).length > 0 ? (
