@@ -33,7 +33,7 @@ function DialogOverlay({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Overlay>) {
   return (
-    <div className="fixed inset-0 bg-neutral-300/30 z-50 backdrop-blur-[3px]">
+    <div className="fixed inset-0 bg-neutral-900/30 z-50 backdrop-blur-[3px]">
       <DialogPrimitive.Overlay
         data-slot="dialog-overlay"
         className={cn(
