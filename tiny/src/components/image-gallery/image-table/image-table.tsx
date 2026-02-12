@@ -14,6 +14,7 @@ import {
   TableHeader, 
   TableRow 
 } from '@/components/ui/table';
+import { PaginationControl } from '../pagination-control';
 
 interface ImageTableProps {
 
@@ -97,6 +98,11 @@ export const ImageTable = (props: ImageTableProps) => {
             ))}
           </TableBody>
         </Table>
+      </div>
+
+      <div className="mt-4">
+        <PaginationControl 
+          className="justify-start" />
       </div>
 
       {activeImage && (
