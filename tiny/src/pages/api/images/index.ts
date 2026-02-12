@@ -28,7 +28,7 @@ export const POST: APIRoute = async ({ request, url }) => {
     const meta = await createImage(file.name, buffer);
 
     // Optional: add image to manifest
-    if (manifest)
+    if (manifest && manifest !== 'undefined' && manifest !== 'null')
       await addImagesToManifest(manifest.toString(), [meta.id], url.origin);
 
     return new Response(JSON.stringify(meta), {

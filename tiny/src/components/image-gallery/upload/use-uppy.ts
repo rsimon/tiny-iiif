@@ -54,7 +54,7 @@ export const useUppy= () => {
   useEffect(() => {
     const manifest = isSubFolder(currentDirectory) ? currentDirectory.id : undefined;
     uppy.setOptions({
-      meta: manifest ? { manifest } : {}
+      meta: { manifest }
     });
   }, [currentDirectory]);
 
