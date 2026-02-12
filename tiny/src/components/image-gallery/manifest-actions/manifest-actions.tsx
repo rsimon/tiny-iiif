@@ -18,6 +18,7 @@ import {
   DropdownMenuSubTrigger, 
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
+import { EditMetadataDialog } from './edit-metadata';
 
 interface ManifestActionsProps {
 
@@ -142,6 +143,10 @@ export const ManifestActions = (props: ManifestActionsProps) => {
         confirmLabel="Delete Manifest"
         onOpenChange={setDeleteDialogOpen}
         onConfirm={onConfirmDelete} />
+
+      <EditMetadataDialog 
+        open={metadataDialogOpen} 
+        onOpenChange={setMetadataDialogOpen} />
     </>
   )
 
