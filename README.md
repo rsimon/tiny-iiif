@@ -87,6 +87,18 @@ In development mode:
 
 4. **Access the admin GUI** at <http://localhost:4321>
 
+## Managed Hosting
+
+If you would like to use **tiny.iiif** but don't want to set up and maintain your own server, I can host it for you. You'll get your own private tiny.iiif instance at a custom address of your choice:
+
+```
+https://your-name.tiny-iiif.org
+```
+
+Managed hosting is available for a modest fee, which directly supports the continued development of the project.
+
+If this sounds useful, [drop me a short email](mailto:hello@rainersimon.io) and I'll put together an offer that fits your needs.
+
 ## License
 
 [MIT](LICENSE)
