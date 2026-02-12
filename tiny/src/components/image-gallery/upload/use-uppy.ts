@@ -16,17 +16,10 @@ export const useUppy= () => {
 
   const { refreshDirectory } = useDirectory();
 
-  const [ uppy, setUppy ] = useState<Uppy>();
+  const [ uppy ] = useState<Uppy>(new Uppy({ autoProceed: true }));
 
   useEffect(() => {
-    if (!targetRef.current) return;
-
-    const manifest = isSubFolder(currentDirectory) ? currentDirectory.id : undefined;
-
-    const uppy = new Uppy({
-      autoProceed: true,
-      ...(manifest && { meta: { manifest } })
-    });
+    if (!targetRef.current || !uppy) return;
 
     uppy.use(DropTarget, {
       target: targetRef.current,
@@ -42,15 +35,27 @@ export const useUppy= () => {
       limit: 1
     });
 
-    uppy.on('upload-success', refreshDirectory);
+    uppy.on('complete', () => {
+      uppy.cancelAll();
+      refreshDirectory();
+    });
 
     // TODO error feedback!
-
-    setUppy(uppy);
+    uppy.on('error', e => {
+      uppy.cancelAll();
+      console.error('Uppy error', e);
+    });
 
     return () => {
       uppy.destroy();
     };
+  }, []);
+
+  useEffect(() => {
+    const manifest = isSubFolder(currentDirectory) ? currentDirectory.id : undefined;
+    uppy.setOptions({
+      meta: manifest ? { manifest } : {}
+    });
   }, [currentDirectory]);
 
   return { uppy, targetRef, isDragOver };
