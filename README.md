@@ -89,7 +89,7 @@ In development mode:
 
 ## Managed Hosting
 
-If you would like to use **tiny.iiif** but don't want to set up and maintain your own server, I can host it for you. You'll get your own private tiny.iiif instance at a custom address:
+If you would like to use **tiny.iiif** but don't want to set up and maintain your own server, I can host it for you. You'll get your own private tiny.iiif instance at a custom address of your choice:
 
 ```
 https://your-name.tiny-iiif.org
