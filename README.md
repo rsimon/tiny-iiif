@@ -95,9 +95,7 @@ If you would like to use **tiny.iiif** but don't want to set up and maintain you
 https://your-name.tiny-iiif.org
 ```
 
-Managed hosting is available for a modest fee, which directly supports the continued development of the project.
-
-If this sounds useful, [drop me a short email](mailto:hello@rainersimon.io) and I'll put together an offer that fits your needs.
+Managed hosting is available for a modest fee, which directly supports the continued development of the project. If this sounds useful, [drop me a short email](mailto:hello@rainersimon.io) and I'll put together an offer that fits your needs.
 
 ## License
 
