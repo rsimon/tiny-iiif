@@ -12,7 +12,7 @@ Publish your images as [IIIF](https://iiif.io/) in a minute - or less!
 - **Drag & drop images** → instant IIIF Image Service (version 2 and 3) powered by [Cantaloupe](https://cantaloupe-project.github.io/).
 - **Create a folder, add images** → instant IIIF Presentation v3 manifest
 - **Zero configuration** → works out of the box with sensible defaults
-- **User-friendly admin GUI** → quick, modern, easy to use
+- **User-friendly admin interface** → simple, modern, easy to use
 - **Production-ready** → Docker-based deployment with [NGINX](https://nginx.org/) as reverse proxy
 
 ## Prerequisites
@@ -34,7 +34,7 @@ Publish your images as [IIIF](https://iiif.io/) in a minute - or less!
 3. **Launch tiny.iiif**
 
    ```sh 
-   docker compose up
+   docker compose up --build
    ```
 
 4. **Access services**
@@ -53,9 +53,11 @@ Once **tiny.iiif** is running:
 
 ## Development
 
-This repository includes a dedicated Docker setup for developers working on the admin GUI.
+This repository includes a separate Docker setup for frontend development.
 
-In development mode, the backend (Cantaloupe and NGINX) run in Docker, but the admin GUI runs locally with live code reload.
+In development mode:
+- Cantaloupe and NGINX run in Docker
+- The admin GUI runs locally with live reload
 
 ### Additional Prerequisites
 
@@ -88,6 +90,18 @@ In development mode, the backend (Cantaloupe and NGINX) run in Docker, but the a
 ## License
 
 [MIT](LICENSE)
+
+## Managed Hosting
+
+If you would like to use **tiny.iiif** but don't want to set up and maintain your own server, I can host it for you. You'll get your own private tiny.iiif instance at a custom address:
+
+```
+https://your-name.tiny-iiif.org
+```
+
+Managed hosting is available for a modest fee, which directly supports the continued development of the project.
+
+If this sounds useful, [drop me a short email](mailto:hello@rainersimon.io) and I'll put together an offer that fits your needs.
 
 ---
 
