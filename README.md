@@ -22,14 +22,13 @@ Publish your images as [IIIF](https://iiif.io/) in a minute - or less!
 
 ## Quick Start
 
-1. **Create your environment file**
+1. **Create an environment file** - copy the included `.env.example`
 
    ```sh
    cp .env.example .env
    ```
 
-2. **Configure authentication**
-   Edit `.env` to change your username and password for the admin GUI. (Default credentials are `tiny` / `tiny`.)
+2. **Configure authentication** - edit `.env` to change your username and password for the admin GUI. (Default credentials are `tiny` / `tiny`.)
 
 3. **Launch tiny.iiif**
 
