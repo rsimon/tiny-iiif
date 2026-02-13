@@ -84,7 +84,7 @@ In development mode:
    npm start
    ```
 
-4. **Access the admin GUI** at <http://localhost:4321>
+4. **Access the admin GUI** at <http://localhost:4321> - note that there is **no password protection** in dev mode.
 
 ## Managed Hosting
 
