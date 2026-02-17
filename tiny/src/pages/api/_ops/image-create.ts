@@ -30,8 +30,17 @@ export const createImage = async (filename: string, buffer: Buffer): Promise<Ext
 
   const imagePath = path.join(IMAGES_DIR, id);
 
-  // Write image file to /images folder
-  await fs.writeFile(imagePath, buffer);
+  // Convert to pyramid TIFF for better performance with Cantaloupe
+  await sharp(buffer)
+    .tiff({
+      pyramid: true,
+      tile: true,
+      tileWidth: 256,
+      tileHeight: 256,
+      compression: 'lzw'
+    })
+    // Write to /images folder
+    .toFile(imagePath);
 
   const { size } = await fs.stat(imagePath);
 
