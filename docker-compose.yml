@@ -32,6 +32,8 @@ services:
       - ./nginx/conf/:/etc/nginx/conf.d/:ro
       - ./data/manifests/:/var/www/manifests:ro
       - ./nginx/entrypoint.sh:/docker-entrypoint.d/99-generate-htpasswd.sh:ro
+      - ./nginx/certbot/www:/var/www/certbot/:ro
+      - ./nginx/certbot/conf/:/etc/nginx/ssl/:ro
     depends_on:
       - cantaloupe
       - tiny
