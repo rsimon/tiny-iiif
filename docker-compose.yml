@@ -24,6 +24,7 @@ services:
     container_name: tiny-iiif-nginx
     ports:
       - "80:80"
+      - "443:443"
     environment:
       - TINY_USERNAME=${TINY_USERNAME}
       - TINY_PASSWORD=${TINY_PASSWORD}
@@ -34,3 +35,9 @@ services:
     depends_on:
       - cantaloupe
       - tiny
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./nginx/certbot/www/:/var/www/certbot/:rw
+      - ./nginx/certbot/conf/:/etc/letsencrypt/:rw
