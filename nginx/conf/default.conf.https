@@ -15,8 +15,8 @@ server {
   listen 443 ssl;
   server_name yourdomain.com;
 
-  ssl_certificate     /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
+  ssl_certificate /etc/nginx/ssl/live/yourdomain.com/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/yourdomain.com/privkey.pem;
   ssl_protocols       TLSv1.2 TLSv1.3;
 
   location /manifests/ {
