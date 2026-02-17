@@ -1,8 +1,8 @@
 import type { ImageMetadata } from '@/types';
 
-export const MANIFEST_TEMPLATE = (manifestId: string, name: string) => ({
+export const MANIFEST_TEMPLATE = (manifestId: string, name: string, origin: string) => ({
   '@context': 'http://iiif.io/api/presentation/3/context.json',
-  id: `/manifests/${manifestId}.json`,
+  id: `${origin}/manifests/${manifestId}.json`,
   type: 'Manifest',
   label: {
     en: [
