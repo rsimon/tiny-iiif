@@ -1,6 +1,7 @@
 import type { ImageMetadata } from '@/types';
+import { getOrigin } from './utils';
 
-const BACKEND_BASE = import.meta.env.PUBLIC_BACKEND_BASE || '';
+const BACKEND_BASE = import.meta.env.PUBLIC_BACKEND_BASE || getOrigin();
 
 export const getThumbnailURL = (image: ImageMetadata, width: number, height: number, origin: string = BACKEND_BASE) => {
   const sourceAspect = image.width / image.height;
