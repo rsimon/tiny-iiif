@@ -56,6 +56,8 @@ tiny.iiif is particularly suitable for:
    - IIIF Image API: <http://localhost/iiif>
    - Manifests: <http://localhost/manifests>
 
+5. To set up HTTPS using [LetsEncrypt](https://letsencrypt.org/) follow the [HTTPS Setup Guide]().
+
 ## Usage
 
 Once **tiny.iiif** is running:
