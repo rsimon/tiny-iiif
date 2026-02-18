@@ -33,4 +33,4 @@ NGINX starts with an HTTP-only configuration per default. Once all tiny.iiif ser
    docker compose up
    ```
 
-6. **Verify HTTPS** — open `https://your-domain.org/tiny` in a browser and confirm the tiny.iiif admin UI is accessible and protected via login.
+6. **Verify HTTPS** — open `https://your-domain.org/tiny` in a browser and confirm that the tiny.iiif admin UI is accessible and protected via login.
