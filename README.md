@@ -19,6 +19,7 @@ tiny.iiif is particularly suitable for:
 - Online exhibitions
 - Developers building IIIF-powered tools
 - Institutions that need lightweight IIIF infrastructure without running a full repository stack
+- Projects that need **full IIIF hosting** — both Image and Presentation API, not just Image API
 
 ## Features
 
