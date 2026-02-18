@@ -32,7 +32,7 @@ tiny.iiif is particularly suitable for:
 - Digital Humanities research projects
 - Developers building IIIF-powered tools
 - Institutions that need lightweight IIIF infrastructure without running a full repository stack
-- Anyone who needs **full IIIF hosting** — both Image and Presentation API, not just Image API
+- Anyone who needs **full IIIF hosting** — both Image and Presentation API, not just the Image API
 
 ## Features
 
