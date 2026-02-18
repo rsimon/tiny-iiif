@@ -36,7 +36,7 @@ tiny.iiif is particularly suitable for:
 - Docker 24.0+ and Docker Compose 2.x
 - Web address for your server (custom domain or sub-domain)
 
-## Quick Start
+## Installation
 
 1. **Create an environment file** - copy the included `.env.example`
 
