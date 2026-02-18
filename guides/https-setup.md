@@ -14,27 +14,23 @@ NGINX starts with an HTTP-only configuration per default. Once all tiny.iiif ser
    docker compose run --rm certbot certonly --webroot --webroot-path /var/www/certbot/ -d your-domain.org
    ```
 
-3. **Update NGINX configuration**.
+3 **Replace the default HTTP-only config** with the HTTPS-enabled config file.
 
-   - Remove the default HTTP-only config.
+```sh
+# Rename `default.conf` to `default.conf.http`
+mv default.conf default.conf.http
 
-   ```sh
-   mv default.conf default.conf.http
-   ```
+# Make the included `default.conf.https` file the new `default.conf`
+mv default.conf.https default.conf
+```
 
-   - Make the included HTTPS config file the new default config
+4. **Edit the new default.conf file** and replace all occurrences of `yourdomain.org` (4x) with your domain name.
 
-   ```sh
-   mv default.conf.https default.conf
-   ```
-
-   - In the configuration file replace all occurrences of `yourdomain.org` (4x) with your domain name.
-
-4. **Restart tiny.iiif**.
+5. **Restart tiny.iiif**.
 
    ```sh
    docker compose down
    docker compose up
    ```
 
-5. **Verify HTTPS** — open `https://your-domain.org/tiny` in a browser and confirm the tiny.iiif admin UI is accessible and protected via login.
+6. **Verify HTTPS** — open `https://your-domain.org/tiny` in a browser and confirm the tiny.iiif admin UI is accessible and protected via login.
