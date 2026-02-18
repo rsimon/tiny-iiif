@@ -38,26 +38,28 @@ tiny.iiif is particularly suitable for:
 
 ## Installation
 
-1. **Create an environment file** - copy the included `.env.example`
+1. **Clone this repository**
+
+2. **Create an environment file** - copy the included `.env.example`
 
    ```sh
    cp .env.example .env
    ```
 
-2. **Configure authentication** - edit `.env` to change your username and password for the admin GUI. (Default credentials are `tiny` / `tiny`.)
+3. **Configure authentication** - edit `.env` to change your username and password for the admin GUI. (Default credentials are `tiny` / `tiny`.)
 
-3. **Launch tiny.iiif**
+4. **Launch tiny.iiif**
 
    ```sh 
    docker compose up --build
    ```
 
-4. **Access services**
+5. **Access services**
    - Admin GUI: <http://localhost/tiny>
    - IIIF Image API: <http://localhost/iiif>
    - Manifests: <http://localhost/manifests>
 
-5. **HTTPS setup** – to set up HTTPS using [LetsEncrypt](https://letsencrypt.org/) follow the [HTTPS Setup Guide](/rsimon/tiny-iiif/blob/main/guides/https-setup.md).
+6. **Configure HTTPS** – to set up HTTPS using [LetsEncrypt](https://letsencrypt.org/) follow the [HTTPS Setup Guide](/rsimon/tiny-iiif/blob/main/guides/https-setup.md).
 
 ## Usage
 
