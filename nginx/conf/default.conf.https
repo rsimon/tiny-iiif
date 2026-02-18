@@ -1,6 +1,6 @@
 server {
   listen 80;
-  server_name yourdomain.com;
+  server_name yourdomain.org;
 
   location /.well-known/acme-challenge/ {
     root /var/www/certbot;
@@ -13,12 +13,12 @@ server {
 
 server {
   listen 443 ssl;
-  server_name yourdomain.com;
+  server_name yourdomain.org;
 
   client_max_body_size 500M;
 
-  ssl_certificate /etc/nginx/ssl/live/yourdomain.com/fullchain.pem;
-  ssl_certificate_key /etc/nginx/ssl/live/yourdomain.com/privkey.pem;
+  ssl_certificate /etc/nginx/ssl/live/yourdomain.org/fullchain.pem;
+  ssl_certificate_key /etc/nginx/ssl/live/yourdomain.org/privkey.pem;
   ssl_protocols       TLSv1.2 TLSv1.3;
 
   location /manifests/ {
