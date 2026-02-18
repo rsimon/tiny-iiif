@@ -9,7 +9,7 @@ Turn a folder of images into a working [IIIF](https://iiif.io/) setup – in a m
 - [Overview](#overview)
 - [Who is tiny.iiif for?](#who-is-tinyiiif-for)
 - [Features](#features)
-- [Self-Hosting](#self-hosting) - **on your own server**
+- [Self-Hosting](#self-hosting) — **on your own server**
   - [Requirements](#requirements)
   - [Installation](#installation)
 - [Hosted Service](#hosted-service-at-tiny-iiiforg) — **no server required**
