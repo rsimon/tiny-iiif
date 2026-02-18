@@ -19,7 +19,7 @@ Turn a folder of images into a working [IIIF](https://iiif.io/) setup – in a m
 
 ## Overview
 
-**tiny.iiif** is a lightweight IIIF server for small to medium-sized collections. It provides a simple way to publish images via the IIIF Image and Presentation APIs without deploying a full collection management system.
+**tiny.iiif** is a lightweight IIIF server for small to medium-sized collections. It provides a simple way to publish images via the IIIF [Image](https://iiif.io/api/image/3.0/) and [Presentation](https://iiif.io/api/presentation/3.0/) APIs without deploying a full collection management system.
 
 It fills the gap between large repository platforms and manually wrangling IIIF manifest JSON files.
 
