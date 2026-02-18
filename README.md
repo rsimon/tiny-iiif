@@ -4,6 +4,19 @@ Turn a folder of images into a working [IIIF](https://iiif.io/) setup – in a m
 
 ![Screenshot of the tiny.iiif admin GUI](screenshot.jpg "Screenshot of the tiny.iiif admin GUI")
 
+## Contents
+
+- [Overview](#overview)
+- [Who is tiny.iiif for?](#who-is-tinyiiif-for)
+- [Features](#features)
+- [Self-Hosting](#self-hosting) - **on your own server**
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+- [Hosted Service](#hosted-service-at-tiny-iiiforg) — **no server required**
+- [Usage](#usage)
+- [Development](#development)
+- [License](#license)
+
 ## Overview
 
 **tiny.iiif** is a lightweight IIIF server for small to medium-sized collections. It provides a simple way to publish images via the IIIF Image and Presentation APIs without deploying a full collection management system.
@@ -29,14 +42,16 @@ tiny.iiif is particularly suitable for:
 - **User-friendly admin interface** → simple, modern, easy to use
 - **Production-ready** → Docker-based deployment with [NGINX](https://nginx.org/) as reverse proxy
 
-## Prerequisites
+## Self-Hosting
+
+### Requirements
 
 - Recommended minimum hardware: virtual server with **2 CPUs and 4 GB RAM** 
 - Sufficient disk space – tiny.iiif converts all uploaded images to [pyramidal TIFF format for performance reasons](https://cantaloupe-project.github.io/manual/5.0/images.html)
 - Docker 24.0+ and Docker Compose 2.x
 - Web address for your server (custom domain or sub-domain)
 
-## Installation
+### Installation
 
 1. **Clone this repository**
 
@@ -61,21 +76,12 @@ tiny.iiif is particularly suitable for:
 
 6. **Configure HTTPS** – to set up HTTPS using [LetsEncrypt](https://letsencrypt.org/) follow the [HTTPS Setup Guide](/rsimon/tiny-iiif/blob/main/guides/https-setup.md).
 
-## Usage
-
-Once **tiny.iiif** is running:
-
-1. Open the admin GUI at <http://localhost/tiny>
-2. Log in with your credentials (default: `tiny` / `tiny`)
-3. Drag and drop images to publish them via Cantaloupe
-4. Create folders and add images to publish IIIF Presentation manifests
-
 ## Hosted Service at tiny-iiif.org
 
 For institutions and projects without in-house IT support or infrastructure to manage servers, managed hosting is available at:
 
 ```
-https://your-name.tiny-iiif.org
+https://[your-name].tiny-iiif.org
 ```
 
 Hosted service includes:
@@ -88,6 +94,15 @@ Hosted service includes:
 - Disk space starting from 50 GB
 
 For pricing details or to discuss project requirements, please contact [hello@rainersimon.io](mailto:hello@rainersimon.io). Your subscription additionally contributes directly to the continued maintenance and development of tiny.iiif as an open-source project.
+
+## Usage
+
+Once **tiny.iiif** is running:
+
+1. Open the admin GUI at <http://localhost/tiny>
+2. Log in with your credentials (default: `tiny` / `tiny`)
+3. Drag and drop images to publish them via Cantaloupe
+4. Create folders and add images to publish IIIF Presentation manifests
 
 ## Development
 
