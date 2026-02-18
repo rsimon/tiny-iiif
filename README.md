@@ -74,7 +74,7 @@ tiny.iiif is particularly suitable for:
    - IIIF Image API: <http://localhost/iiif>
    - Manifests: <http://localhost/manifests>
 
-6. **Configure HTTPS** – to set up HTTPS using [LetsEncrypt](https://letsencrypt.org/) follow the [HTTPS Setup Guide](/rsimon/tiny-iiif/blob/main/guides/https-setup.md).
+6. **Configure HTTPS** – to set up HTTPS using [LetsEncrypt](https://letsencrypt.org/) follow the [HTTPS Setup Guide](guides/https-setup.md).
 
 ## Hosted Service at tiny-iiif.org
 
@@ -106,7 +106,7 @@ Once **tiny.iiif** is running:
 
 ## Development
 
-This repository includes a separate Docker setup for frontend development. See the [Developer Guide](/rsimon/tiny-iiif/blob/main/guides/development.md) for details.
+This repository includes a separate Docker setup for frontend development. See the [Developer Guide](guides/development.md) for details.
 
 ## License
 
