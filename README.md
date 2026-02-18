@@ -15,11 +15,11 @@ It fills the gap between large repository platforms and manually wrangling IIIF 
 tiny.iiif is particularly suitable for:
 
 - Small collections (tens to a few thousand images)
-- Digital Humanities research projects
 - Online exhibitions
+- Digital Humanities research projects
 - Developers building IIIF-powered tools
 - Institutions that need lightweight IIIF infrastructure without running a full repository stack
-- Projects that need **full IIIF hosting** — both Image and Presentation API, not just Image API
+- Anyone who needs **full IIIF hosting** — both Image and Presentation API, not just Image API
 
 ## Features
 
