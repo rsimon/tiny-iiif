@@ -30,16 +30,10 @@ tiny.iiif is particularly suitable for:
 
 ## Prerequisites
 
-### Hardware Requirements
-
-Recommended minimum: virtual server with **2 CPUs and 4 GB RAM**. 
-
-Ensure sufficient disk space – tiny.iiif converts all uploaded images to [pyramidal TIFF format for performance reasons](https://cantaloupe-project.github.io/manual/5.0/images.html).
-
-### Software Requirements
-
-- Docker 24.0+
-- Docker Compose 2.x
+- Recommended minimum hardware: virtual server with **2 CPUs and 4 GB RAM**. 
+- Sufficient disk space – tiny.iiif converts all uploaded images to [pyramidal TIFF format for performance reasons](https://cantaloupe-project.github.io/manual/5.0/images.html).
+- Docker 24.0+ and Docker Compose 2.x
+- Web address for your server (custom domain or sub-domain)
 
 ## Quick Start
 
