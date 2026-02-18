@@ -56,7 +56,7 @@ tiny.iiif is particularly suitable for:
    - IIIF Image API: <http://localhost/iiif>
    - Manifests: <http://localhost/manifests>
 
-5. **HTTPS Setup** – to set up HTTPS using [LetsEncrypt](https://letsencrypt.org/) follow the [HTTPS Setup Guide](/rsimon/tiny-iiif/blob/main/guides/https-setup.md).
+5. **HTTPS setup** – to set up HTTPS using [LetsEncrypt](https://letsencrypt.org/) follow the [HTTPS Setup Guide](/rsimon/tiny-iiif/blob/main/guides/https-setup.md).
 
 ## Usage
 
@@ -66,42 +66,6 @@ Once **tiny.iiif** is running:
 2. Log in with your credentials (default: `tiny` / `tiny`)
 3. Drag and drop images to publish them via Cantaloupe
 4. Create folders and add images to publish IIIF Presentation manifests
-
-## Development
-
-This repository includes a separate Docker setup for frontend development.
-
-In development mode:
-- Cantaloupe and NGINX run in Docker
-- The admin GUI runs locally with live reload
-
-### Additional Prerequisites
-
-- NodeJS 20+
-- npm 11+
-
-### Start Development Backend
-
-1. **Start the backend**
-
-   ```sh 
-   docker compose -f ./docker-compose.dev.yml up --build
-   ```
-
-2. **Install frontend dependencies**
-
-   ```sh
-   cd tiny
-   npm install
-   ```
-
-3. **Start development server**
-  
-   ```sh
-   npm start
-   ```
-
-4. **Access the admin GUI** at <http://localhost:4321> - note that there is **no password protection** in dev mode.
 
 ## Hosted Service at tiny-iiif.org
 
@@ -121,6 +85,10 @@ Hosted service includes:
 - Disk space starting from 50 GB
 
 For pricing details or to discuss project requirements, please contact [hello@rainersimon.io](mailto:hello@rainersimon.io). Your subscription additionally contributes directly to the continued maintenance and development of tiny.iiif as an open-source project.
+
+## Development
+
+This repository includes a separate Docker setup for frontend development. See the [Developer Guide](/rsimon/tiny-iiif/blob/main/guides/development.md) for details.
 
 ## License
 
