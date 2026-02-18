@@ -30,6 +30,7 @@ tiny.iiif is particularly suitable for:
 - Small collections (tens to a few thousand images)
 - Online exhibitions
 - Digital Humanities research projects
+- DH classroom exercises
 - Developers building IIIF-powered tools
 - Institutions that need lightweight IIIF infrastructure without running a full repository stack
 - Anyone who needs **full IIIF hosting** — both Image and Presentation API, not just the Image API
