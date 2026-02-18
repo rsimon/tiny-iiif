@@ -70,7 +70,7 @@ tiny.iiif is particularly suitable for:
    docker compose up --build
    ```
 
-5. **Access services**
+5. **Access services locally**
    - Admin GUI: <http://localhost/tiny>
    - IIIF Image API: <http://localhost/iiif>
    - Manifests: <http://localhost/manifests>
