@@ -94,7 +94,7 @@ Hosted service includes:
 - tiny-iiif.org sub-domain or optional custom domain
 - Disk space starting from 50 GB
 
-For pricing details or to discuss project requirements, please contact [hello@rainersimon.io](mailto:hello@rainersimon.io). Your subscription additionally contributes directly to the continued maintenance and development of tiny.iiif as an open-source project.
+For pricing or to discuss project requirements, please contact [hello@rainersimon.io](mailto:hello@rainersimon.io). Your subscription additionally contributes directly to the continued maintenance and development of tiny.iiif as an open-source project.
 
 ## Usage
 
