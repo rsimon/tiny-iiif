@@ -15,7 +15,7 @@ It fills the gap between large repository platforms and manually wrangling IIIF 
 tiny.iiif is particularly suitable for:
 
 - Small collections (tens to a few thousand images)
-- Digital humanities research projects
+- Digital Humanities research projects
 - Online exhibitions
 - Developers building IIIF-powered tools
 - Institutions that need lightweight IIIF infrastructure without running a full repository stack
