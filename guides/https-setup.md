@@ -1,6 +1,6 @@
 # HTTPS Setup
 
-NGINX starts with an HTTP-only configuration per default. Once all tiny.iiif services are running, you can obtain a free [LetsEncrypt](https://letsencrypt.org/) certificate to enable HTTPS. 
+NGINX starts with an HTTP-only configuration per default. Once all tiny.iiif services are running on HTTP, you can obtain a free [LetsEncrypt](https://letsencrypt.org/) certificate to enable HTTPS. 
 
 1. **Run the certbot script** to simulate the certification issue process. Replace `your-domain.org` with your actual domain.
 
