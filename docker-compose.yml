@@ -1,5 +1,6 @@
 services:
   cantaloupe:
+    profiles: [cantaloupe]
     build: ./cantaloupe
     container_name: tiny-iiif-cantaloupe
     expose:
@@ -8,16 +9,38 @@ services:
       - ./data/images:/images
     restart: unless-stopped
 
+  iipsrv:
+    profiles: [iipsrv]
+    image: iipsrv/iipsrv
+    container_name: tiny-iiif-iipsrv
+    volumes:
+      - ./data/images:/images
+    environment:
+      - LOGFILE=/dev/stderr
+      - URI_MAP=iiif=>IIIF
+      - VERBOSITY=1
+      - FILESYSTEM_PREFIX=/images/
+      - IIIF_VERSION=3
+      - CORS=*
+    restart: always
+
   tiny:
     build: ./tiny
     container_name: tiny-iiif-gui
+    environment:
+      - PUBLIC_IIIF_IMAGE_PATH=${IIIF_IMAGE_PATH}
     expose:
       - "4321"
     volumes:
       - ./data/:/data
     restart: always
     depends_on:
-      - cantaloupe
+      cantaloupe:
+        condition: service_started
+        required: false
+      iipsrv:
+        condition: service_started
+        required: false
 
   nginx:
     image: nginx:alpine
@@ -28,15 +51,23 @@ services:
     environment:
       - TINY_USERNAME=${TINY_USERNAME}
       - TINY_PASSWORD=${TINY_PASSWORD}
+      - IIIF_PROXY_DESTINATION=${IIIF_PROXY_DESTINATION}
     volumes:
-      - ./nginx/conf/:/etc/nginx/conf.d/:ro
-      - ./data/manifests/:/var/www/manifests:ro
+      - ./nginx/conf/default.conf:/etc/nginx/templates/default.conf:ro
       - ./nginx/entrypoint.sh:/docker-entrypoint.d/99-generate-htpasswd.sh:ro
       - ./nginx/certbot/www:/var/www/certbot/:ro
       - ./nginx/certbot/conf/:/etc/nginx/ssl/:ro
+      - ./data/manifests/:/var/www/manifests:ro
     depends_on:
-      - cantaloupe
-      - tiny
+      tiny:
+        condition: service_started
+      cantaloupe:
+        condition: service_started
+        required: false
+      iipsrv:
+        condition: service_started
+        required: false
+    restart: unless-stopped
 
   certbot:
     image: certbot/certbot:latest
