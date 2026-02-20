@@ -44,7 +44,7 @@ tiny.iiif is particularly useful for:
 
 ### Requirements
 
-- Minimum hardware: **1 CPU and 2 GB RAM** (2 CPUs / 4 GB for Cantaloupe)
+- Minimum server hardware: **1 CPU and 2 GB RAM** (2 CPUs / 4 GB for Cantaloupe)
 - Sufficient disk space – tiny.iiif converts all uploaded images to [pyramidal TIFF format for performance reasons](https://cantaloupe-project.github.io/manual/5.0/images.html)
 - Docker 24.0+ and Docker Compose 2.x
 - A domain or subdomain pointing to your server
@@ -61,7 +61,7 @@ tiny.iiif is particularly useful for:
 
 3. **Configure authentication** - edit `.env` to change your username and password for the admin GUI. (Default credentials are `tiny` / `tiny`.)
 
-4. **Optional: Configure image server** - per default, tiny.iiif uses [IIPImage](https://iipimage.sourceforge.io/). You can select to use [Cantaloupe](https://cantaloupe-project.github.io/) instead.
+4. **Optional: Configure image server** - per default, tiny.iiif uses [IIPImage](https://iipimage.sourceforge.io/). You can choose to use [Cantaloupe](https://cantaloupe-project.github.io/) instead.
    
    - Set `COMPOSE_PROFILE=cantaloupe` in `.env`
    - Uncomment the Cantaloupe variable section: `IIIF_PROXY_DESTINATION` and `IIIF_IMAGE_PATH` 
