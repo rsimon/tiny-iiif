@@ -26,9 +26,9 @@ services:
 
   tiny:
     build: ./tiny
-    container_name: tiny-iiif-gui
-    environment:
+    args:
       - PUBLIC_IIIF_IMAGE_PATH=${IIIF_IMAGE_PATH}
+    container_name: tiny-iiif-gui
     expose:
       - "4321"
     volumes:
