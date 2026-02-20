@@ -25,9 +25,10 @@ services:
     restart: always
 
   tiny:
-    build: ./tiny
-    args:
-      - PUBLIC_IIIF_IMAGE_PATH=${IIIF_IMAGE_PATH}
+    build:
+      context: ./tiny
+      args:
+        - PUBLIC_IIIF_IMAGE_PATH=${IIIF_IMAGE_PATH}
     container_name: tiny-iiif-gui
     expose:
       - "4321"
