@@ -31,7 +31,6 @@ tiny.iiif is particularly useful for:
 - DH classroom exercises
 - Developers building IIIF-powered tools
 - Institutions that need lightweight IIIF infrastructure without running a full repository stack
-- Anyone who needs **full IIIF hosting** — both Image and Presentation API, not just the Image API
 
 ## Features
 
@@ -45,7 +44,7 @@ tiny.iiif is particularly useful for:
 
 ### Requirements
 
-- Recommended minimum hardware: virtual server with **2 CPUs and 2 GB RAM** 
+- Minimum server hardware: **1 CPU and 2 GB RAM** (2 CPUs / 4 GB for Cantaloupe)
 - Sufficient disk space – tiny.iiif converts all uploaded images to [pyramidal TIFF format for performance reasons](https://cantaloupe-project.github.io/manual/5.0/images.html)
 - Docker 24.0+ and Docker Compose 2.x
 - A domain or subdomain pointing to your server
@@ -63,15 +62,11 @@ tiny.iiif is particularly useful for:
 3. **Configure authentication**
    Edit `.env` to change your username and password for the admin GUI. (Default credentials are `tiny` / `tiny`.)
 
-4. Optional: **Configure image server**
-   Per default, tiny.iiif uses [IIPImage](https://iipimage.sourceforge.io/)  as image server. If desired, it is possible to use [Cantaloupe](https://cantaloupe-project.github.io/) instead. To switch to Cantaloupe:
+4. **Optional: Configure image server** - per default, tiny.iiif uses [IIPImage](https://iipimage.sourceforge.io/). You can choose to use [Cantaloupe](https://cantaloupe-project.github.io/) instead.
    
    - Set `COMPOSE_PROFILE=cantaloupe` in `.env`
-   - Uncomment the Cantaloupe variable section: `IIIF_PROXY_DESTINATION` and `IIIF_IMAGE_PATH`) 
+   - Uncomment the Cantaloupe variable section: `IIIF_PROXY_DESTINATION` and `IIIF_IMAGE_PATH` 
    - Comment out the IIPImage section
-
-   > [!IMPORTANT]
-   > The image server must be selected **during the installation of  tiny.iiif**. Once selected and manifests have been created, it **cannot be changed back**. That's because Cantaloupe- or IIPImage-specific URL paths are already embedded in the manifests, making them incompatible with the other image server. If you need to switch image servers after the fact, all manifests must be re-created.
 
 5. **Start tiny.iiif**
 
@@ -85,6 +80,9 @@ tiny.iiif is particularly useful for:
    - Manifests: <http://localhost/manifests>
 
 7. **Configure HTTPS** – to set up HTTPS using [LetsEncrypt](https://letsencrypt.org/) follow the [HTTPS Setup Guide](guides/https-setup.md).
+
+> [!IMPORTANT]
+> You can **only choose between IIPImage or Cantaloupe during initial setup**. Once you have created manifests, switching is no longer supported because image-server-specific URLs are embedded in the manifests. To change servers later, you must delete and re-create all manifests.
 
 ## Hosted Service at tiny-iiif.org
 
@@ -111,7 +109,7 @@ Once **tiny.iiif** is running:
 
 1. Open the admin GUI at <http://[your-domain]/tiny>
 2. Log in with your credentials (default: `tiny` / `tiny`)
-3. Drag and drop images to publish them via Cantaloupe
+3. Drag and drop images to publish them as IIIF image service
 4. Create folders and add images to publish IIIF Presentation manifests
 
 ## Development

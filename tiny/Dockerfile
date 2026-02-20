@@ -7,6 +7,10 @@ COPY tsconfig.json .
 COPY package.json .
 COPY . .
 RUN npm install
+
+ARG PUBLIC_IIIF_IMAGE_PATH
+ENV PUBLIC_IIIF_IMAGE_PATH=${PUBLIC_IIIF_IMAGE_PATH}
+
 RUN npm run build
 
 ENV HOST=0.0.0.0
