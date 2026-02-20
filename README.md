@@ -9,10 +9,8 @@ Turn a folder of images into a working [IIIF](https://iiif.io/) setup – in a m
 - [Overview](#overview)
 - [Who is tiny.iiif for?](#who-is-tinyiiif-for)
 - [Features](#features)
-- [Self-Hosting](#self-hosting) — **on your own server**
-  - [Requirements](#requirements)
-  - [Installation](#installation)
-- [Hosted Service](#hosted-service-at-tiny-iiiforg) — **no server required**
+- [Self-Hosting](#self-hosting) — on your own server
+- [Hosted Service](#hosted-service-at-tiny-iiiforg) — no server required
 - [Usage](#usage)
 - [Development](#development)
 - [License](#license)
@@ -21,11 +19,11 @@ Turn a folder of images into a working [IIIF](https://iiif.io/) setup – in a m
 
 **tiny.iiif** is a lightweight IIIF server for small to medium-sized collections. It provides a simple way to publish images via the IIIF [Image](https://iiif.io/api/image/3.0/) and [Presentation](https://iiif.io/api/presentation/3.0/) APIs without deploying a full collection management system.
 
-It fills the gap between large repository platforms and manually wrangling IIIF manifest JSON files.
+It fills the gap between large repository platforms and hand-editing IIIF manifest JSON files.
 
 ## Who is tiny.iiif for?
 
-tiny.iiif is particularly suitable for:
+tiny.iiif is particularly useful for:
 
 - Small collections (tens to a few thousand images)
 - Online exhibitions
@@ -37,7 +35,7 @@ tiny.iiif is particularly suitable for:
 
 ## Features
 
-- **Drag & drop images** → instant IIIF Image Service (version 2 and 3) powered by [Cantaloupe](https://cantaloupe-project.github.io/).
+- **Drag & drop images** → instant IIIF Image Service powered by [IIPImage](https://iipimage.sourceforge.io/) or [Cantaloupe](https://cantaloupe-project.github.io/).
 - **Create a folder, add images** → instant IIIF Presentation v3 manifest
 - **Zero configuration** → works out of the box with sensible defaults
 - **User-friendly admin interface** → simple, modern, easy to use
@@ -47,10 +45,10 @@ tiny.iiif is particularly suitable for:
 
 ### Requirements
 
-- Recommended minimum hardware: virtual server with **2 CPUs and 4 GB RAM** 
+- Recommended minimum hardware: virtual server with **2 CPUs and 2 GB RAM** 
 - Sufficient disk space – tiny.iiif converts all uploaded images to [pyramidal TIFF format for performance reasons](https://cantaloupe-project.github.io/manual/5.0/images.html)
 - Docker 24.0+ and Docker Compose 2.x
-- Web address for your server (custom domain or sub-domain)
+- A domain or subdomain pointing to your server
 
 ### Installation
 
@@ -62,20 +60,31 @@ tiny.iiif is particularly suitable for:
    cp .env.example .env
    ```
 
-3. **Configure authentication** - edit `.env` to change your username and password for the admin GUI. (Default credentials are `tiny` / `tiny`.)
+3. **Configure authentication**
+   Edit `.env` to change your username and password for the admin GUI. (Default credentials are `tiny` / `tiny`.)
 
-4. **Launch tiny.iiif**
+4. Optional: **Configure image server**
+   Per default, tiny.iiif uses [IIPImage](https://iipimage.sourceforge.io/)  as image server. If desired, it is possible to use [Cantaloupe](https://cantaloupe-project.github.io/) instead. To switch to Cantaloupe:
+   
+   - Set `COMPOSE_PROFILE=cantaloupe` in `.env`
+   - Uncomment the Cantaloupe variable section: `IIIF_PROXY_DESTINATION` and `IIIF_IMAGE_PATH`) 
+   - Comment out the IIPImage section
+
+   > [!IMPORTANT]
+   > The image server must be selected **during the installation of  tiny.iiif**. Once selected and manifests have been created, it **cannot be changed back**. That's because Cantaloupe- or IIPImage-specific URL paths are already embedded in the manifests, making them incompatible with the other image server. If you need to switch image servers after the fact, all manifests must be re-created.
+
+5. **Start tiny.iiif**
 
    ```sh 
    docker compose up --build
    ```
 
-5. **Access services locally**
+6. **Access services locally**
    - Admin GUI: <http://localhost/tiny>
    - IIIF Image API: <http://localhost/iiif>
    - Manifests: <http://localhost/manifests>
 
-6. **Configure HTTPS** – to set up HTTPS using [LetsEncrypt](https://letsencrypt.org/) follow the [HTTPS Setup Guide](guides/https-setup.md).
+7. **Configure HTTPS** – to set up HTTPS using [LetsEncrypt](https://letsencrypt.org/) follow the [HTTPS Setup Guide](guides/https-setup.md).
 
 ## Hosted Service at tiny-iiif.org
 
@@ -94,7 +103,7 @@ Hosted service includes:
 - tiny-iiif.org sub-domain or optional custom domain
 - Disk space starting from 50 GB
 
-For pricing or to discuss project requirements, please contact [hello@rainersimon.io](mailto:hello@rainersimon.io). Your subscription contributes directly to the continued maintenance and development of tiny.iiif as an open-source project.
+For pricing or to discuss project requirements, contact [hello@rainersimon.io](mailto:hello@rainersimon.io). Your subscription contributes directly to the continued maintenance and development of tiny.iiif as an open-source project.
 
 ## Usage
 
