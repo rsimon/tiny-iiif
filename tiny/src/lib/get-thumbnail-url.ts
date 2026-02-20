@@ -1,6 +1,8 @@
 import type { ImageMetadata } from '@/types';
+import { getOrigin } from './utils';
 
-const BACKEND_BASE = import.meta.env.PUBLIC_BACKEND_BASE || '';
+const BACKEND_BASE = import.meta.env.PUBLIC_BACKEND_BASE || getOrigin();
+const IIIF_IMAGE_PATH = import.meta.env.PUBLIC_IIIF_IMAGE_PATH;
 
 export const getThumbnailURL = (image: ImageMetadata, width: number, height: number, origin: string = BACKEND_BASE) => {
   const sourceAspect = image.width / image.height;
@@ -17,5 +19,5 @@ export const getThumbnailURL = (image: ImageMetadata, width: number, height: num
     requestHeight = Math.ceil(width / sourceAspect);
   }
 
-  return `${origin}/iiif/2/${image.id}/full/${requestWidth},${requestHeight}/0/default.jpg`;
+  return `${origin}${IIIF_IMAGE_PATH}${image.id}/full/${requestWidth},${requestHeight}/0/default.jpg`;
 }

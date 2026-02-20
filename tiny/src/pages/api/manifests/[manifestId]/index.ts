@@ -3,7 +3,7 @@ import { deleteManifest } from '../../_ops/manifest-delete';
 
 export const prerender = false;
 
-export const DELETE: APIRoute = async ({ params, request  }) => {
+export const DELETE: APIRoute = async ({ params }) => {
   try {
     const id = params.manifestId;
     await deleteManifest(id);

@@ -15,3 +15,5 @@ else
     echo "ERROR: TINY_USERNAME and TINY_PASSWORD must be set in .env file"
     exit 1
 fi
+
+sed "s|\${IIIF_PROXY_DESTINATION}|$IIIF_PROXY_DESTINATION|g" /etc/nginx/templates/default.conf > /etc/nginx/conf.d/default.conf

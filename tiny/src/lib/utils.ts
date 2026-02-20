@@ -17,3 +17,16 @@ export const getCookieValue = (name: string, defaultValue?: string) => {
     return defaultValue;
   }
 }
+
+export const getOrigin = (): string => {
+  if (typeof window === 'undefined') return '';
+  
+  const { protocol, hostname, port } = window.location;
+
+  const isStandardPort = 
+    (protocol === 'https:' && port === '443') ||
+    (protocol === 'http:'  && port === '80')  ||
+    port === '';
+
+  return `${protocol}//${hostname}${isStandardPort ? '' : `:${port}`}`;
+}

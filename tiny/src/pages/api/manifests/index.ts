@@ -4,7 +4,7 @@ import { createManifest } from '../_ops/manifest-create';
 
 export const prerender = false;
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, url }) => {
   try {    
     const body = await request.json();
     const { name } = body;
@@ -18,7 +18,7 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    const meta = await createManifest(name);
+    const meta = await createManifest(name, url.origin);
 
     const manifest: Manifest = {
       type: 'manifest',

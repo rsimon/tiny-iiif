@@ -1,8 +1,10 @@
 import type { ImageMetadata } from '@/types';
 
-export const MANIFEST_TEMPLATE = (manifestId: string, name: string) => ({
+const IIIF_IMAGE_PATH = import.meta.env.PUBLIC_IIIF_IMAGE_PATH;
+
+export const MANIFEST_TEMPLATE = (manifestId: string, name: string, origin: string) => ({
   '@context': 'http://iiif.io/api/presentation/3/context.json',
-  id: `/manifests/${manifestId}.json`,
+  id: `${origin}/manifests/${manifestId}.json`,
   type: 'Manifest',
   label: {
     en: [
@@ -30,12 +32,12 @@ export const IMAGE_ITEM_TEMPLATE = (manifestId: string, image: ImageMetadata, or
       type: 'Annotation',
       motivation: 'painting',
       body: {
-        id: `${origin}/iiif/3/${image.id}/full/max/0/default.jpg`,
+        id: `${origin}${IIIF_IMAGE_PATH}${image.id}/full/max/0/default.jpg`,
         type: 'Image',
         height: image.height,
         width: image.width,
         service: [{
-          id: `${origin}/iiif/3/${image.id}`,
+          id: `${origin}${IIIF_IMAGE_PATH}${image.id}`,
           profile: 'level1',
           type: 'ImageService3'
         }]
