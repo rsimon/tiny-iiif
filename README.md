@@ -31,8 +31,7 @@ tiny.iiif is particularly useful for:
 - DH classroom exercises
 - Developers building IIIF-powered tools
 - Institutions that need lightweight IIIF infrastructure without running a full repository stack
-
-...and anyone who wants **full IIIF hosting** — both Image and Presentation API, not just the Image API, static images or [Level 0 pre-rendered tiles](https://iiif.io/api/image/3.0/compliance/#5-level-0-compliance)
+- Anyone who wants **full IIIF Image and Presentation API support** — not just static images or [Level 0 pre-rendered tiles](https://iiif.io/api/image/3.0/compliance/#5-level-0-compliance)
 
 ## Features
 
