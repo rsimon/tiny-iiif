@@ -70,8 +70,8 @@ tiny.iiif is particularly useful for:
    - Uncomment the Cantaloupe variable section: `IIIF_PROXY_DESTINATION` and `IIIF_IMAGE_PATH`) 
    - Comment out the IIPImage section
 
-   > [!IMPORTANT]
-   > The image server must be selected **during the installation of  tiny.iiif**. Once selected and manifests have been created, it **cannot be changed back**. That's because Cantaloupe- or IIPImage-specific URL paths are already embedded in the manifests, making them incompatible with the other image server. If you need to switch image servers after the fact, all manifests must be re-created.
+> [!IMPORTANT]
+> The image server must be selected **during the installation of  tiny.iiif**. Once selected and manifests have been created, it **cannot be changed back**. That's because Cantaloupe- or IIPImage-specific URL paths are already embedded in the manifests, making them incompatible with the other image server. If you need to switch image servers after the fact, all manifests must be re-created.
 
 5. **Start tiny.iiif**
 
