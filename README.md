@@ -54,24 +54,25 @@ tiny.iiif is particularly useful for:
 
 1. **Clone this repository**
 
-2. **Create an environment file** - copy the included `.env.example`
+2. **Create an environment file**
+
+   Copy the included `.env.example`
 
    ```sh
    cp .env.example .env
    ```
 
 3. **Configure authentication**
+
    Edit `.env` to change your username and password for the admin GUI. (Default credentials are `tiny` / `tiny`.)
 
 4. Optional: **Configure image server**
+
    Per default, tiny.iiif uses [IIPImage](https://iipimage.sourceforge.io/)  as image server. If desired, it is possible to use [Cantaloupe](https://cantaloupe-project.github.io/) instead. To switch to Cantaloupe:
    
    - Set `COMPOSE_PROFILE=cantaloupe` in `.env`
    - Uncomment the Cantaloupe variable section: `IIIF_PROXY_DESTINATION` and `IIIF_IMAGE_PATH`) 
    - Comment out the IIPImage section
-
-> [!IMPORTANT]
-> The image server must be selected **during the installation of  tiny.iiif**. Once selected and manifests have been created, it **cannot be changed back**. That's because Cantaloupe- or IIPImage-specific URL paths are already embedded in the manifests, making them incompatible with the other image server. If you need to switch image servers after the fact, all manifests must be re-created.
 
 5. **Start tiny.iiif**
 
@@ -85,6 +86,9 @@ tiny.iiif is particularly useful for:
    - Manifests: <http://localhost/manifests>
 
 7. **Configure HTTPS** – to set up HTTPS using [LetsEncrypt](https://letsencrypt.org/) follow the [HTTPS Setup Guide](guides/https-setup.md).
+
+> [!IMPORTANT]
+> If you change the image server, you can **only do this during the installation of  tiny.iiif**. Once selected and manifests have been created, it **cannot be changed back**. That's because Cantaloupe- or IIPImage-specific URL paths are already embedded in the manifests, making them incompatible with the other image server. If you need to switch image servers after the fact, all manifests must be re-created.
 
 ## Hosted Service at tiny-iiif.org
 
