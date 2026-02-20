@@ -46,7 +46,7 @@ tiny.iiif is particularly useful for:
 ### Requirements
 
 - Recommended minimum hardware: 
-  - **2 CPUs and 2 GB RAM** 
+  - 2 CPUs and 2 GB RAM
   - 2 CPUs and 4 GB RAM when using Cantaloupe
 - Sufficient disk space – tiny.iiif converts all uploaded images to [pyramidal TIFF format for performance reasons](https://cantaloupe-project.github.io/manual/5.0/images.html)
 - Docker 24.0+ and Docker Compose 2.x
