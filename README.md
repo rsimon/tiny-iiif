@@ -81,7 +81,7 @@ tiny.iiif is particularly useful for:
 7. **Configure HTTPS** – to set up HTTPS using [LetsEncrypt](https://letsencrypt.org/) follow the [HTTPS Setup Guide](guides/https-setup.md).
 
 > [!IMPORTANT]
-> You can only choose **IIPImage or Cantaloupe during initial setup**. Once you have created manifests, switching is no longer supported because image-server-specific URLs are embedded in the manifests. To change servers later, you must delete and re-create all manifests.
+> You can **only choose between IIPImage or Cantaloupe during initial setup**. Once you have created manifests, switching is no longer supported because image-server-specific URLs are embedded in the manifests. To change servers later, you must delete and re-create all manifests.
 
 ## Hosted Service at tiny-iiif.org
 
