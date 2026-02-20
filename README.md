@@ -108,7 +108,7 @@ Once **tiny.iiif** is running:
 
 1. Open the admin GUI at <http://[your-domain]/tiny>
 2. Log in with your credentials (default: `tiny` / `tiny`)
-3. Drag and drop images to publish them via Cantaloupe
+3. Drag and drop images to publish them as IIIF image service
 4. Create folders and add images to publish IIIF Presentation manifests
 
 ## Development
