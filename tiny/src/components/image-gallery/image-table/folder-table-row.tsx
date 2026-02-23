@@ -1,6 +1,6 @@
 import { useDroppable } from '@dnd-kit/core';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { isManifest, type SubFolder } from '@/types';
+import { isManifestMetadata, type SubFolder } from '@/types';
 import { useUIState } from '@/hooks/use-ui-state';
 import { cn } from '@/lib/utils';
 import { ManifestActions } from '../manifest-actions';
@@ -50,7 +50,7 @@ export const FolderTableRow = (props: FolderTableRowProps) => {
       </TableCell>
 
       <TableCell onClick={(e) => e.stopPropagation()}>
-        {isManifest(props.folder) && (
+        {isManifestMetadata(props.folder) && (
           <ManifestActions manifest={props.folder} />
         )}
       </TableCell>

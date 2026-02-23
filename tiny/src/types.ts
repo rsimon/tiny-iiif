@@ -6,13 +6,13 @@ export interface RootFolder {
 
   type: 'root';
 
-  folders?: Manifest[];
+  folders?: ManifestMetadata[];
 
   images?: ImageMetadata[];
 
 }
 
-export interface Manifest {
+export interface ManifestMetadata {
 
   type: 'manifest';
 
@@ -20,13 +20,13 @@ export interface Manifest {
 
   name: string;
 
-  ranges?: ManifestRange[];
+  ranges?: ManifestRangeMetadata[];
 
   images?: ImageMetadata[];
 
 }
 
-export interface ManifestRange {
+export interface ManifestRangeMetadata {
 
   type: 'range';
 
@@ -38,13 +38,13 @@ export interface ManifestRange {
 
   breadcrumbs: { id: string, name: string }[];
 
-  ranges?: ManifestRange[];
+  ranges?: ManifestRangeMetadata[];
 
   images?: ImageMetadata[];
 
 }
 
-export type SubFolder = Manifest | ManifestRange;
+export type SubFolder = ManifestMetadata | ManifestRangeMetadata;
 
 export type Folder = RootFolder | SubFolder;
 
@@ -105,16 +105,16 @@ export interface ListDirectoryResponse {
 
 }
 
-export type DirectoryItem = Manifest | ManifestRange | ImageMetadata;
+export type DirectoryItem = ManifestMetadata | ManifestRangeMetadata | ImageMetadata;
 
 export const isRootFolder = (item: Folder): item is RootFolder =>
   (item as RootFolder)?.type === 'root';
 
-export const isManifest = (item: Folder | ImageMetadata): item is Manifest =>
-  (item as Manifest)?.type === 'manifest';
+export const isManifestMetadata = (item: Folder | ImageMetadata): item is ManifestMetadata =>
+  (item as ManifestMetadata)?.type === 'manifest';
 
-export const isManifestRange = (item: Folder | ImageMetadata): item is ManifestRange =>
-  (item as ManifestRange)?.type === 'range';
+export const isManifestRangeMetadata = (item: Folder | ImageMetadata): item is ManifestRangeMetadata =>
+  (item as ManifestRangeMetadata)?.type === 'range';
 
 export const isSubFolder = (item: Folder | ImageMetadata): item is SubFolder =>
   (item as SubFolder)?.type === 'manifest' || (item as SubFolder)?.type === 'range';

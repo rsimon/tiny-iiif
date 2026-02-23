@@ -1,7 +1,7 @@
 import { useDroppable } from '@dnd-kit/core';
 import { useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { isManifest, type SubFolder, type ImageMetadata } from '@/types';
+import { isManifestMetadata, type SubFolder, type ImageMetadata } from '@/types';
 import { useUIState } from '@/hooks/use-ui-state';
 import { getThumbnailURL } from '@/lib/get-thumbnail-url';
 import { ManifestActions } from '../manifest-actions';
@@ -107,7 +107,7 @@ export const FolderCard = (props: FolderCardProps) => {
           )}
         </div>
 
-        {isManifest(props.folder) && (
+        {isManifestMetadata(props.folder) && (
           <ManifestActions manifest={props.folder} />
         )}
       </div>

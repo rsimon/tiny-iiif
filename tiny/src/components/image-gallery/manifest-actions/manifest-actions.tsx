@@ -3,7 +3,7 @@ import { EllipsisVertical, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { ConfirmActionDialog } from '@/components/shared/confirm-action-dialog';
-import { useManifests } from '@/hooks/use-manifests';
+import { useManifests } from '@/hooks/use-manifest-metadata';
 import { useUIState } from '@/hooks/use-ui-state';
 import { getManifestURL } from '@/lib/get-manifest-url';
 import type { Manifest } from '@/types';

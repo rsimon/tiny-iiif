@@ -1,3 +1,5 @@
+import type { ManifestMetadata } from '@/types';
+
 export type LanguageMap = Record<string, string[]>;
 
 export interface LabelValuePair {
@@ -64,3 +66,8 @@ export const createDefaultDescriptiveProperties = (): IIIFDescriptiveProperties 
   provider: [],
   navDate: undefined,
 });
+
+export const getDescriptiveProperties = (manifest: ManifestMetadata) => {
+
+
+} 

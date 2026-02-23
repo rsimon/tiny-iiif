@@ -1,14 +1,10 @@
 import { useCallback, useState } from 'react';
 import { Save } from 'lucide-react';
+import { Accordion } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
+import type { ManifestMetadata } from '@/types';
 import { LanguageMapEditor } from './editor-primitives';
 import { createDefaultDescriptiveProperties, type IIIFDescriptiveProperties } from './manifest-editor-types';
-import { 
-  Accordion, 
-  AccordionContent, 
-  AccordionItem, 
-  AccordionTrigger 
-} from '@/components/ui/accordion';
 import { 
   Dialog, 
   DialogContent, 
@@ -19,6 +15,8 @@ import {
 } from '@/components/ui/dialog';
 
 interface ManifestEditorProps {
+
+  manifest: ManifestMetadata;
 
   open: boolean;
 
