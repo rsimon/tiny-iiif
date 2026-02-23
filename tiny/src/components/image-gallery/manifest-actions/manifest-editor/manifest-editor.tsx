@@ -83,54 +83,54 @@ export const ManifestEditor = (props: ManifestEditorProps) => {
         </DialogHeader>
 
         <div className="px-4 py-2">
-          <Accordion type="multiple" className="space-y-2" defaultValue={[]}>
-            <section className="bg-white border border-gray-300 rounded-sm shadow-sm">
+          <Accordion type="single" className="space-y-2">
+            <div>
               <LanguageMapEditor
                 label="Label"
                 description="The human-readable label for this manifest."
                 value={draft.label}
                 onChange={(v) => update('label', v)}/>
-            </section>
+            </div>
 
-            <section className="border-b">
+            <div>
               <LanguageMapEditor
                 label="Summary"
                 description="A compact textual summary for search results or small screens."
                 value={draft.label}
                 onChange={(v) => update('label', v)}/>
-            </section>
+            </div>
 
-            <section className="border-b">
+            <div>
               <LanguageMapEditor
                 label="Metadata"
                 description="Key-value pairs displayed to users."
                 value={draft.label}
                 onChange={(v) => update('label', v)}/>
-            </section>
+            </div>
 
-            <section className="border-b">
+            <div>
               <LanguageMapEditor
                 label="Required Statement"
                 description="Attribution or copyright text that viewers must display."
                 value={draft.label}
                 onChange={(v) => update('label', v)}/>
-            </section>
+            </div>
 
-            <section className="border-b">
+            <div>
               <LanguageMapEditor
                 label="Rights"
                 description="A Creative Commons or RightsStatements.org URI."
                 value={draft.label}
                 onChange={(v) => update('label', v)}/>
-            </section>
+            </div>
 
-            <section>
+            <div>
               <LanguageMapEditor
                 label="Providers"
                 description="Organizations or people that contributed to providing this resource."
                 value={draft.label}
                 onChange={(v) => update('label', v)}/>
-            </section>
+            </div>
           </Accordion>
         </div>
 

@@ -92,8 +92,12 @@ export function LanguageMapEditor(props: LanguageMapEditorProps) {
 
   return (
     <AccordionItem
-      value={props.label}>
-      <AccordionTrigger className="space-y-0.5 p-4 cursor-pointer hover:no-underline">
+      value={props.label}
+      className="border! border-transparent cursor-pointer
+        hover:border-gray-300/70 hover:rounded-sm hover:bg-white/30 hover:border
+        data-[state=open]:border-gray-300 data-[state=open]:rounded-sm data-[state=open]:bg-white data-[state=open]:border data-[state=open]:shadow-xs">
+      <AccordionTrigger 
+        className="space-y-0.5 p-4 cursor-pointer hover:no-underline">
         <div>
           <Label className="text-base font-medium">
             {props.label} 
