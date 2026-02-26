@@ -95,7 +95,7 @@ Hosted service includes:
 
 - Deployment and server management
 - Updates and maintenance
-- Secure cloud hosting in a geographic region of your choice
+- Cloud hosting in a geographic region of your choice
 - Technical support
 - tiny-iiif.org sub-domain or optional custom domain
 - Disk space starting from 50 GB
