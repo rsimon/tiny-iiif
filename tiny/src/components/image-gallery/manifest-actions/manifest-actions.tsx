@@ -6,7 +6,7 @@ import { ConfirmActionDialog } from '@/components/shared/confirm-action-dialog';
 import { useManifests } from '@/hooks/use-manifest-metadata';
 import { useUIState } from '@/hooks/use-ui-state';
 import { getManifestURL } from '@/lib/get-manifest-url';
-import type { Manifest } from '@/types';
+import type { ManifestMetadata } from '@/types';
 import { ManifestEditor } from './manifest-editor';
 import { 
   DropdownMenu, 
@@ -22,7 +22,7 @@ import {
 
 interface ManifestActionsProps {
 
-  manifest: Manifest;
+  manifest: ManifestMetadata;
 
 }
 
@@ -145,6 +145,7 @@ export const ManifestActions = (props: ManifestActionsProps) => {
         onConfirm={onConfirmDelete} />
 
       <ManifestEditor 
+        manifestId={props.manifest.id}
         open={metadataDialogOpen} 
         onOpenChange={setMetadataDialogOpen} />
     </>

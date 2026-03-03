@@ -1,5 +1,5 @@
 /********************************/
-/** BASE TYPES                 **/
+/** BASE UI ENTITY TYPES       **/
 /********************************/
 
 export interface RootFolder {
@@ -122,9 +122,51 @@ export const isSubFolder = (item: Folder | ImageMetadata): item is SubFolder =>
 export const isImage = (item: Folder | ImageMetadata): item is ImageMetadata =>
   (!('type' in item) && 'filename' in item && 'width' in item && 'height' in item);
 
+/********************************/
+/** MANIFEST TYPES             **/
+/********************************/
 
+export interface Manifest {
 
+  id: string;
 
+  label: LanguageMap;
 
+  metadata?: LabelValuePair[];
 
+  summary?: LanguageMap;
+
+  requiredStatement?: LabelValuePair;
+
+  rights?: string;
+
+  provider?: AgentResource[];
+
+  navDate?: string;
+
+}
+
+export type LanguageMap = Record<string, string[]>;
+
+export interface LabelValuePair {
+
+  label: LanguageMap;
+
+  value: LanguageMap;
+
+}
+
+export interface AgentResource {
+
+  id: string;
+  
+  type: 'Agent';
+
+  label: LanguageMap;
+
+  homepage?: { id: string; type: string; label: LanguageMap; format: string }[];
+
+  logo?: { id: string; type: string; format?: string; width?: number; height?: number }[];
+
+}
 
