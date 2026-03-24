@@ -80,7 +80,7 @@ export function LanguageMapEditor(props: LanguageMapEditorProps) {
 
   const addLanguage = () => {
     const usedLangs = Object.keys(props.value || {});
-    const next = LANGUAGES.find((l) => !usedLangs.includes(l.code))?.code || 'und';
+    const next = LANGUAGES.find(l => !usedLangs.includes(l.code))?.code || 'und';
     props.onChange({ ...props.value, [next]: [''] });
   }
 

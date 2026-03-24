@@ -92,7 +92,7 @@ export const ManifestEditorContent = (props: ManifestEditorContentProps) => {
               label="Label"
               description="The human-readable label for this manifest."
               value={draft.label}
-              onChange={(v) => update('label', v)}/>
+              onChange={v => update('label', v)}/>
           </div>
 
           <div>
@@ -100,7 +100,7 @@ export const ManifestEditorContent = (props: ManifestEditorContentProps) => {
               label="Summary"
               description="A compact textual summary for search results or small screens."
               value={draft.summary}
-              onChange={(v) => update('label', v)}/>
+              onChange={v => update('summary', v)}/>
           </div>
 
           {/*
