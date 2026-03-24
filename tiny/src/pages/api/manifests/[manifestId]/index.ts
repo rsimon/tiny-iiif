@@ -57,9 +57,6 @@ export const PUT: APIRoute = async ({ params, request }) => {
 
     const filePath = path.join(MANIFESTS_DIR, `${id}.json`);
 
-    console.log('updating ' + id);
-    console.log(JSON.stringify(body, null, 2));
-
     // Ensure the manifest already exists — PUT should replace, not create
     await fs.access(filePath);
     await fs.writeFile(filePath, JSON.stringify(body, null, 2), 'utf8');

@@ -141,7 +141,7 @@ export const ManifestEditorContent = (props: ManifestEditorContentProps) => {
         </Accordion>
       </div>
 
-      <DialogFooter className="p-6 pt-0">
+      <DialogFooter className="p-5">
         <Button
           type="button"
           variant="ghost"

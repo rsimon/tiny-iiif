@@ -91,7 +91,7 @@ export const MetadataEditor = (props: MetadataEditorProps) => {
               />
             </div>
 
-            {metadata.length > 1 && (
+            {metadata.length > 0 && (
               <Button
                 type="button"
                 variant="ghost"
