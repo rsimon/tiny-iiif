@@ -17,11 +17,13 @@ interface ManifestEditorContentProps {
 
   manifestId: string;
 
+  onClose(): void;
+
 }
 
 export const ManifestEditorContent = (props: ManifestEditorContentProps) => {
 
-  const { manifest } = useManifest(props.manifestId);
+  const { updateManifest, manifest } = useManifest(props.manifestId);
 
   const [draft, setDraft] = useState<Manifest>(manifest);
 
@@ -32,10 +34,16 @@ export const ManifestEditorContent = (props: ManifestEditorContentProps) => {
       key: K,
       val: Manifest[K]
     ) => {
-      setDraft((prev) => ({ ...prev, [key]: val }));
+      setDraft(prev => ({ ...prev, [key]: val }));
     },
     []
   );
+
+  const save = () => {
+    updateManifest(draft).then(() => props.onClose());
+  }
+
+  const reset = () => setDraft(manifest);
 
   return draft && (
     <DialogContent 
@@ -56,18 +64,21 @@ export const ManifestEditorContent = (props: ManifestEditorContentProps) => {
         <div className="flex items-center gap-2">
           <Button
             type="button"
-            variant="ghost">
+            variant="ghost"
+            onClick={reset}>
             Reset
           </Button>
 
           <Button
             type="button"
-            variant="ghost">
+            variant="ghost"
+            onClick={props.onClose}>
             Cancel
           </Button>
 
           <Button
-            type="button">
+            type="button"
+            onClick={save}>
             <Save className="h-3.5 w-3.5 mr-1.5" />
             Save
           </Button>
@@ -92,6 +103,7 @@ export const ManifestEditorContent = (props: ManifestEditorContentProps) => {
               onChange={(v) => update('label', v)}/>
           </div>
 
+          {/*
           <div>
             <LanguageMapEditor
               label="Metadata"
@@ -99,7 +111,9 @@ export const ManifestEditorContent = (props: ManifestEditorContentProps) => {
               value={draft.metadata}
               onChange={(v) => update('label', v)}/>
           </div>
+          */}
 
+          {/*
           <div>
             <LanguageMapEditor
               label="Required Statement"
@@ -107,7 +121,9 @@ export const ManifestEditorContent = (props: ManifestEditorContentProps) => {
               value={draft.requiredStatement}
               onChange={(v) => update('label', v)}/>
           </div>
+          */}
 
+          {/*
           <div>
             <LanguageMapEditor
               label="Rights"
@@ -115,7 +131,9 @@ export const ManifestEditorContent = (props: ManifestEditorContentProps) => {
               value={draft.rights}
               onChange={(v) => update('label', v)}/>
           </div>
+          */}
 
+          {/*
           <div>
             <LanguageMapEditor
               label="Providers"
@@ -123,24 +141,28 @@ export const ManifestEditorContent = (props: ManifestEditorContentProps) => {
               value={draft.provider}
               onChange={(v) => update('label', v)}/>
           </div>
+          */}
         </Accordion>
       </div>
 
       <DialogFooter className="p-6 pt-0">
         <Button
           type="button"
-          variant="ghost">
+          variant="ghost"
+          onClick={reset}>
           Reset
         </Button>
 
         <Button
           type="button"
-          variant="ghost">
+          variant="ghost"
+          onClick={props.onClose}>
           Cancel
         </Button>
 
         <Button
-          type="button">
+          type="button"
+          onClick={save}>
           <Save className="h-3.5 w-3.5 mr-1.5" />
           Save
         </Button>

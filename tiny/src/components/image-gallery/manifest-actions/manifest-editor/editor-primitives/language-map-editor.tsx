@@ -1,9 +1,10 @@
-import { CirclePlus, Pencil, Trash2, X } from 'lucide-react';
+import { CirclePlus, Trash2, X } from 'lucide-react';
+import { AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import type { LanguageMap } from '../manifest-rights-options';
+import type { LanguageMap } from '@/types';
 import { 
   Select, 
   SelectContent, 
@@ -11,7 +12,6 @@ import {
   SelectTrigger, 
   SelectValue 
 } from '@/components/ui/select';
-import { AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 interface LanguageMapEditorProps {
     
@@ -40,7 +40,7 @@ const LANGUAGES = [
 
 export function LanguageMapEditor(props: LanguageMapEditorProps) {
 
-  const entries = Object.entries(props.value);
+  const entries = Object.entries(props.value || {});
 
   const updateLang = (oldLang: string, newLang: string) => {
     const newMap: LanguageMap = {};
@@ -79,7 +79,7 @@ export function LanguageMapEditor(props: LanguageMapEditorProps) {
   }
 
   const addLanguage = () => {
-    const usedLangs = Object.keys(props.value);
+    const usedLangs = Object.keys(props.value || {});
     const next = LANGUAGES.find((l) => !usedLangs.includes(l.code))?.code || 'und';
     props.onChange({ ...props.value, [next]: [''] });
   }

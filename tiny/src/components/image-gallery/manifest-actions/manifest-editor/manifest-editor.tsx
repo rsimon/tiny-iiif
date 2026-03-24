@@ -1,5 +1,6 @@
 import { Dialog } from '@/components/ui/dialog';
 import { ManifestEditorContent } from './manifest-editor-content';
+import type { Manifest } from '@/types';
 
 interface ManifestEditorProps {
 
@@ -20,7 +21,8 @@ export const ManifestEditor = (props: ManifestEditorProps) => {
 
       {props.open && (
         <ManifestEditorContent 
-          manifestId={props. manifestId} />
+          manifestId={props.manifestId} 
+          onClose={() => props.onOpenChange(false)} />
       )}
     </Dialog>
   )
