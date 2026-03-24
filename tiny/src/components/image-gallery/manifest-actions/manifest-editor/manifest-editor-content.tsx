@@ -4,7 +4,7 @@ import { Accordion } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { useManifest } from '@/hooks/use-manifest';
 import type { Manifest } from '@/types';
-import { LanguageMapEditor } from './editor-primitives';
+import { LanguageMapEditor, MetadataEditor } from './editor-primitives';
 import { 
   DialogContent, 
   DialogDescription, 
@@ -103,15 +103,11 @@ export const ManifestEditorContent = (props: ManifestEditorContentProps) => {
               onChange={v => update('summary', v)}/>
           </div>
 
-          {/*
           <div>
-            <LanguageMapEditor
-              label="Metadata"
-              description="Key-value pairs displayed to users."
-              value={draft.metadata}
-              onChange={(v) => update('label', v)}/>
+            <MetadataEditor
+              metadata={draft.metadata}
+              onChange={m => update('metadata', m)} />
           </div>
-          */}
 
           {/*
           <div>

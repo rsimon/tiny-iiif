@@ -19,7 +19,7 @@ interface LanguageMapEditorProps {
   
   label: string;
   
-  value: LanguageMap;
+  value?: LanguageMap;
 
   multiline?: boolean;
 
