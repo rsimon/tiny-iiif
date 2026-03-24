@@ -2,7 +2,7 @@
   "name": "@tiny-iiif/tiny",
   "private": true,
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "scripts": {
     "start": "astro dev",
