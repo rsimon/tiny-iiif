@@ -3,10 +3,11 @@ import { EllipsisVertical, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { ConfirmActionDialog } from '@/components/shared/confirm-action-dialog';
-import { useManifests } from '@/hooks/use-manifests';
+import { useManifests } from '@/hooks/use-manifest-metadata';
 import { useUIState } from '@/hooks/use-ui-state';
 import { getManifestURL } from '@/lib/get-manifest-url';
-import type { Manifest } from '@/types';
+import type { ManifestMetadata } from '@/types';
+import { ManifestEditor } from './manifest-editor';
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -18,11 +19,10 @@ import {
   DropdownMenuSubTrigger, 
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
-import { EditMetadataDialog } from './edit-metadata';
 
 interface ManifestActionsProps {
 
-  manifest: Manifest;
+  manifest: ManifestMetadata;
 
 }
 
@@ -119,12 +119,12 @@ export const ManifestActions = (props: ManifestActionsProps) => {
             </DropdownMenuPortal>
           </DropdownMenuSub>
 
-          <DropdownMenuItem onClick={onCopyToClipboard}>
-            Copy Manifest URL
+          <DropdownMenuItem onSelect={onEditMetadata}>
+            Manifest Editor
           </DropdownMenuItem>
 
-          <DropdownMenuItem onSelect={onEditMetadata}>
-            Edit Metadata
+          <DropdownMenuItem onClick={onCopyToClipboard}>
+            Copy Manifest URL
           </DropdownMenuItem>
           
           <DropdownMenuSeparator />
@@ -144,7 +144,8 @@ export const ManifestActions = (props: ManifestActionsProps) => {
         onOpenChange={setDeleteDialogOpen}
         onConfirm={onConfirmDelete} />
 
-      <EditMetadataDialog 
+      <ManifestEditor 
+        manifestId={props.manifest.id}
         open={metadataDialogOpen} 
         onOpenChange={setMetadataDialogOpen} />
     </>

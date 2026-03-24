@@ -1,7 +1,7 @@
 import { Home } from 'lucide-react';
 import { useUIState } from '@/hooks/use-ui-state';
 import { Button } from '@/components/ui/button';
-import { isManifestRange, isSubFolder, type SubFolder } from '@/types';
+import { isManifestRangeMetadata, isSubFolder, type SubFolder } from '@/types';
 import { 
   Breadcrumb, 
   BreadcrumbItem, 
@@ -15,7 +15,7 @@ export const NavBreadcrumbs = () => {
   const setCurrentDirectory = useUIState(state => state.setCurrentDirectory);
 
   const goTo = (folder?: SubFolder) => {
-    const breadcrumbs = isManifestRange(folder) ? folder.breadcrumbs : [];
+    const breadcrumbs = isManifestRangeMetadata(folder) ? folder.breadcrumbs : [];
 
     const destination = folder ? {
       ...folder,

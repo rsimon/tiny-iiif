@@ -1,18 +1,18 @@
 /********************************/
-/** BASE TYPES                 **/
+/** BASE UI ENTITY TYPES       **/
 /********************************/
 
 export interface RootFolder {
 
   type: 'root';
 
-  folders?: Manifest[];
+  folders?: ManifestMetadata[];
 
   images?: ImageMetadata[];
 
 }
 
-export interface Manifest {
+export interface ManifestMetadata {
 
   type: 'manifest';
 
@@ -20,13 +20,13 @@ export interface Manifest {
 
   name: string;
 
-  ranges?: ManifestRange[];
+  ranges?: ManifestRangeMetadata[];
 
   images?: ImageMetadata[];
 
 }
 
-export interface ManifestRange {
+export interface ManifestRangeMetadata {
 
   type: 'range';
 
@@ -38,13 +38,13 @@ export interface ManifestRange {
 
   breadcrumbs: { id: string, name: string }[];
 
-  ranges?: ManifestRange[];
+  ranges?: ManifestRangeMetadata[];
 
   images?: ImageMetadata[];
 
 }
 
-export type SubFolder = Manifest | ManifestRange;
+export type SubFolder = ManifestMetadata | ManifestRangeMetadata;
 
 export type Folder = RootFolder | SubFolder;
 
@@ -105,16 +105,16 @@ export interface ListDirectoryResponse {
 
 }
 
-export type DirectoryItem = Manifest | ManifestRange | ImageMetadata;
+export type DirectoryItem = ManifestMetadata | ManifestRangeMetadata | ImageMetadata;
 
 export const isRootFolder = (item: Folder): item is RootFolder =>
   (item as RootFolder)?.type === 'root';
 
-export const isManifest = (item: Folder | ImageMetadata): item is Manifest =>
-  (item as Manifest)?.type === 'manifest';
+export const isManifestMetadata = (item: Folder | ImageMetadata): item is ManifestMetadata =>
+  (item as ManifestMetadata)?.type === 'manifest';
 
-export const isManifestRange = (item: Folder | ImageMetadata): item is ManifestRange =>
-  (item as ManifestRange)?.type === 'range';
+export const isManifestRangeMetadata = (item: Folder | ImageMetadata): item is ManifestRangeMetadata =>
+  (item as ManifestRangeMetadata)?.type === 'range';
 
 export const isSubFolder = (item: Folder | ImageMetadata): item is SubFolder =>
   (item as SubFolder)?.type === 'manifest' || (item as SubFolder)?.type === 'range';
@@ -122,9 +122,51 @@ export const isSubFolder = (item: Folder | ImageMetadata): item is SubFolder =>
 export const isImage = (item: Folder | ImageMetadata): item is ImageMetadata =>
   (!('type' in item) && 'filename' in item && 'width' in item && 'height' in item);
 
+/********************************/
+/** MANIFEST TYPES             **/
+/********************************/
 
+export interface Manifest {
 
+  id: string;
 
+  label: LanguageMap;
 
+  metadata?: LabelValuePair[];
 
+  summary?: LanguageMap;
+
+  requiredStatement?: LabelValuePair;
+
+  rights?: string;
+
+  provider?: AgentResource[];
+
+  navDate?: string;
+
+}
+
+export type LanguageMap = Record<string, string[]>;
+
+export interface LabelValuePair {
+
+  label: LanguageMap;
+
+  value: LanguageMap;
+
+}
+
+export interface AgentResource {
+
+  id: string;
+  
+  type: 'Agent';
+
+  label: LanguageMap;
+
+  homepage?: { id: string; type: string; label: LanguageMap; format: string }[];
+
+  logo?: { id: string; type: string; format?: string; width?: number; height?: number }[];
+
+}
 

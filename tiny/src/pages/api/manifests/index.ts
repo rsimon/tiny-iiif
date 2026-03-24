@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import type { Manifest } from '@/types';
+import type { ManifestMetadata } from '@/types';
 import { createManifest } from '../_ops/manifest-create';
 
 export const prerender = false;
@@ -20,7 +20,7 @@ export const POST: APIRoute = async ({ request, url }) => {
 
     const meta = await createManifest(name, url.origin);
 
-    const manifest: Manifest = {
+    const manifest: ManifestMetadata = {
       type: 'manifest',
       ...meta
     };

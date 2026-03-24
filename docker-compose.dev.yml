@@ -46,3 +46,10 @@ services:
         condition: service_started
         required: false
     restart: unless-stopped
+
+  # Mock tiny container, so that NGINX starts properly
+  tiny:
+    image: nginx:alpine
+    container_name: mock-tiny
+    expose:
+      - "4321"

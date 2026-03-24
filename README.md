@@ -59,7 +59,8 @@ tiny.iiif is particularly useful for:
    cp .env.example .env
    ```
 
-3. **Configure authentication** - edit `.env` to change your username and password for the admin GUI. (Default credentials are `tiny` / `tiny`.)
+3. **Configure authentication**
+   Edit `.env` to change your username and password for the admin GUI. (Default credentials are `tiny` / `tiny`.)
 
 4. **Optional: Configure image server** - per default, tiny.iiif uses [IIPImage](https://iipimage.sourceforge.io/). You can choose to use [Cantaloupe](https://cantaloupe-project.github.io/) instead.
    

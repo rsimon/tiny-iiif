@@ -1,13 +1,13 @@
 import { useQueryClient } from '@tanstack/react-query';
-import type { Manifest } from '@/types';
+import type { ManifestMetadata } from '@/types';
 
-const create = async (name: string): Promise<Manifest> => 
+const create = async (name: string): Promise<ManifestMetadata> => 
   fetch('/tiny/api/manifests', {
     method: 'POST',
     body: JSON.stringify({ name })
   }).then(res => {
     if (!res.ok) throw new Error('Failed to create manifest');
-    return res.json() as Promise<Manifest>;
+    return res.json() as Promise<ManifestMetadata>;
   });
 
 const remove = async (id: string) =>
